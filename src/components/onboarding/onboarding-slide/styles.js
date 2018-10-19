@@ -4,8 +4,8 @@ export default {
 		alignItems: 'center'
 	},
 	logo: {
-		width: 192.3,
-		height: 105.3
+		width: 192,
+		height: 105
 	},
 	wrapperOnboarding: {
 		top: '32%',
