@@ -1,3 +1,5 @@
+import spacings from '../../spacing/styles';
+
 export default {
 	imageBackground: {
 		flex: 1,
@@ -8,14 +10,17 @@ export default {
 		height: 105
 	},
 	wrapperOnboarding: {
-		top: '32%',
+		top: '30%',
 		alignItems: 'center',
-		width: '84%'
+		marginHorizontal: spacings.small
 	},
 	wrapperButtons: {
 		flexDirection: 'row'
 	},
 	wrapperSubTitle: {
-		height: 70
+		height: 55
+	},
+	wrapperButton: {
+		flex: 0.5
 	}
 };

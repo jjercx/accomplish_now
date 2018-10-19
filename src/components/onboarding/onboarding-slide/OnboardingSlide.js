@@ -37,13 +37,17 @@ const OnboardingSlide = ( {
 			<View style={styles.wrapperSubTitle}>
 				<Typography variant="midTitle" color="white" textAlign="center">{subTitle}</Typography>
 			</View>
-			<Spacing size="base" />
+			<Spacing size="small" />
 			<SliderCircles circles={3} activeCircle={numSlide} />
-			<Spacing size="base" />
+			<Spacing size="small" />
 			<View style={styles.wrapperButtons}>
-				<Button text="Create account" textColor={colors.blackLabels} buttonColor={colors.white} onPress={onPressNewAccount} />
+				<View style={styles.wrapperButton}>
+					<Button text="Create account" textColor={colors.blackLabels} buttonColor={colors.white} onPress={onPressNewAccount} />
+				</View>
 				<Spacing size="small" horizontal />
-				<Button text="Sign in" textColor={colors.white} buttonColor={colors.orange} onPress={onPressSignIn} />
+				<View style={styles.wrapperButton}>
+					<Button text="Sign in" textColor={colors.white} buttonColor={colors.orange} onPress={onPressSignIn} />
+				</View>
 			</View>
 			<Spacing size="base" />
 			<Typography variant="smallBody" color="white">{text}</Typography>
