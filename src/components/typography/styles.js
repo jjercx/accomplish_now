@@ -1,27 +1,23 @@
-import { Platform } from 'react-native';
+import fonts from '../../theme/fonts';
 
 const largeTitle = {
 	fontSize: 36,
-	fontWeight: '800',
-	fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'Roboto'
+	fontFamily: fonts.productSansBold
 };
 
 const midTitle = {
 	fontSize: 17,
-	fontWeight: '600',
-	fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'Roboto'
+	fontFamily: fonts.productSansRegular
 };
 
 const smallTitle = {
 	fontSize: 16,
-	fontWeight: '600',
-	fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'Roboto'
+	fontFamily: fonts.productSansRegular
 };
 
 const smallBody = {
 	fontSize: 14,
-	fontWeight: '300',
-	fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'Roboto'
+	fontFamily: fonts.productSansRegular
 };
 
 export default {

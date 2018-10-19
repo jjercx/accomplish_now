@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
+import fonts from '../../theme/fonts';
 
 const Button = ( {
 	text,
@@ -14,7 +15,7 @@ const Button = ( {
 		activeOpacity={0.9}
 		onPress={onPress}
 	>
-		<Text style={[ styles.label, { color: textColor } ]}>
+		<Text style={[ styles.label, { color: textColor, fontFamily: fonts.productSansRegular } ]}>
 			{text}
 		</Text>
 	</TouchableOpacity>
