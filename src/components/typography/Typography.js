@@ -9,12 +9,14 @@ const Typography = ( {
 	color,
 	variant,
 	children,
-	numberOfLines
+	numberOfLines,
+	textAlign
 } ) => (
 	<Text
 		style={[ {
 			color: colors[ color ],
-			...variants[ variant ]
+			...variants[ variant ],
+			textAlign
 		} ]}
 		numberOfLines={numberOfLines}
 	>
@@ -26,12 +28,14 @@ Typography.propTypes = {
 	color: PropTypes.string,
 	variant: PropTypes.string.isRequired,
 	children: PropTypes.node.isRequired,
-	numberOfLines: PropTypes.number
+	numberOfLines: PropTypes.number,
+	textAlign: PropTypes.string
 };
 
 Typography.defaultProps = {
 	color: 'primary',
-	numberOfLines: null
+	numberOfLines: null,
+	textAlign: 'center'
 };
 
 export default Typography;

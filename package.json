@@ -18,7 +18,8 @@
     "prop-types": "^15.6.2",
     "react": "16.4.1",
     "react-native": "0.56.0",
-    "react-native-navigation": "1.x.x"
+    "react-native-navigation": "1.x.x",
+    "react-native-swiper": "^1.5.13"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
