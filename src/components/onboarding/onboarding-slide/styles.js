@@ -1,6 +1,6 @@
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import spacings from '../../spacing/styles';
 import { heightToPercent, widhtToPercent } from '../../../utils/dimensions';
+import spacings from '../../spacing/styles';
 
 export default {
 	imageBackground: {

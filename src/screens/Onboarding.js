@@ -4,7 +4,8 @@ import {
 } from 'react-native';
 
 import Swiper from 'react-native-swiper';
-import OnboardingSlide from '../../components/onboarding/onboarding-slide/OnboardingSlide';
+import OnboardingSlide from '../components/onboarding/onboarding-slide/OnboardingSlide';
+import NavigatorPropType from '../types/navigator';
 
 const styles = {
 	wrapper: {
@@ -16,13 +17,13 @@ const styles = {
 
 const TEXT_ONBOARDING = 'By continuing you are agreeing with our terms of service and privacy policy.';
 const TEXT_SUBTITLE1 = 'Get  smarter. Tap into the knowledge around of you.';
-const IMG_ONBOARDING1 = require( '../../assets/images/onboardings/experts.png' );
+const IMG_ONBOARDING1 = require( '../assets/images/onboardings/experts.png' );
 
 const TEXT_SUBTITLE2 = 'Get paid. Secure, in-app payments and down to the minute time tracking, get the most of your conversations.';
-const IMG_ONBOARDING2 = require( '../../assets/images/onboardings/meetings.png' );
+const IMG_ONBOARDING2 = require( '../assets/images/onboardings/meetings.png' );
 
 const TEXT_SUBTITLE3 = 'Find your neighborhood’s most productive places to get your work done and take metings with experts.';
-const IMG_ONBOARDING3 = require( '../../assets/images/onboardings/workspaces.png' );
+const IMG_ONBOARDING3 = require( '../assets/images/onboardings/workspaces.png' );
 
 class Onboarding extends Component {
 	/* eslint-disable class-methods-use-this */
@@ -33,7 +34,8 @@ class Onboarding extends Component {
 
 	/* eslint-disable class-methods-use-this */
 	_onPressSignIn() {
-		// goToSignIn
+		const { navigator } = this.props;
+		navigator.push( { screen: 'home' } );
 	}
 	/* eslint-enable class-methods-use-this */
 
@@ -77,5 +79,9 @@ class Onboarding extends Component {
 		);
 	}
 }
+
+Onboarding.propTypes = {
+	navigator: NavigatorPropType.isRequired
+};
 
 export default Onboarding;
