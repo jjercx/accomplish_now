@@ -1,3 +1,5 @@
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { heightToPercent, widhtToPercent } from '../../../utils/dimensions';
 import spacings from '../../spacing/styles';
 
 export default {
@@ -6,19 +8,20 @@ export default {
 		alignItems: 'center'
 	},
 	logo: {
-		width: 192,
-		height: 105
+		width: wp( widhtToPercent( 192 ) ),
+		height: hp( heightToPercent( 105 ) )
 	},
 	wrapperOnboarding: {
-		top: '30%',
+		bottom: hp( '5%' ),
+		position: 'absolute',
 		alignItems: 'center',
-		marginHorizontal: spacings.small
+		marginHorizontal: wp( widhtToPercent( spacings.medium ) )
 	},
 	wrapperButtons: {
 		flexDirection: 'row'
 	},
 	wrapperSubTitle: {
-		height: 55
+		height: hp( '15%' )
 	},
 	wrapperButton: {
 		flex: 0.5

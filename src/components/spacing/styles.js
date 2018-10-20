@@ -3,6 +3,7 @@ export default {
 	tiny: 4,
 	small: 8,
 	base: 16,
+	medium: 24,
 	large: 32,
 	xLarge: 40
 };
