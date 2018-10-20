@@ -13,7 +13,7 @@ import Header from '../../components/register/Header';
 import fonts from '../../theme/fonts';
 import styles from './styles';
 
-export default class CreateAccount extends Component {
+export default class CreateWelcomeAccount extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = { enabled: false, createAccount: true };
