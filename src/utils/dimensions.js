@@ -10,7 +10,7 @@ export function heightToPercent( value ) {
 	return percentHeight;
 }
 
-export function widhtToPercent( value ) {
-	const percentHeight = ( value / W ) * 100;
-	return percentHeight;
+export function widthToPercent( value ) {
+	const percentWidth = ( value / W ) * 100;
+	return percentWidth;
 }
