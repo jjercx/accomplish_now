@@ -8,7 +8,7 @@ export function initApp( action ) {
 	case 'start': {
 		Navigation.startSingleScreenApp( {
 			screen: {
-				screen: 'createWelcomeAccount',
+				screen: 'home',
 				navigatorStyle: {
 					navBarHidden: true
 				}
