@@ -2,8 +2,8 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { heightToPercent, widhtToPercent } from '../../utils/dimensions';
 
 export default {
-  titleWrapper:{
-    marginLeft: wp( widhtToPercent(24) ),
-    marginTop: hp( heightToPercent(22) )
-  }
-}
+	titleWrapper: {
+		marginLeft: wp( widhtToPercent( 24 ) ),
+		marginTop: hp( heightToPercent( 22 ) )
+	}
+};

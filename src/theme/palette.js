@@ -3,10 +3,10 @@ export default {
 	sliderCircles: '#eff1f5',
 	blackLabels: '#3e3e43',
 	orange: '#fba104',
-	darkSkyBlue:'rgb(66, 164, 228)',
-	charcoalGrey:'rgb(62, 62, 67)',
+	darkSkyBlue:'#42a4e4',
+	charcoalGrey:'#3e3e43',
 	macaroneAndCheese:'#F2A133',
-	coolGrey:'rgb(169, 178, 186)',
+	coolGrey:'#a9b2ba',
 	disabled:'#D6D9DF',
-	pinkishGrey:'rgb(190, 190, 190)'
+	pinkishGrey:'#bebebe'
 };
