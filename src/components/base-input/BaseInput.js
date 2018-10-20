@@ -43,21 +43,30 @@ class BaseInput extends Component {
   		? { borderBottomWidth: borderBottom, borderColor }
   		: {};
 
+  	/* eslint-disable react/jsx-indent */
+  	/* eslint-disable indent */
+    /* eslint-disable react/jsx-indent-props */
   	return (
-  		<Animated.View style={[ { width }, fixedLabel, containerStyle ]}>
-  			{label ? (
-  				<Animated.Text style={[ styles.label, labelStyle, { color } ]}>
+
+	 <Animated.View style={[ { width }, fixedLabel, containerStyle ]}>
+     { label ? (
+       <Animated.Text
+         style={[ styles.label, labelStyle, { color } ]}
+       >
   					{label}
-  				</Animated.Text>
+       </Animated.Text>
   			) : null}
   			<TextInput
   				style={[ styles.input, { width: '100%' }, style ]}
   				onFocus={this.handleFocus}
-  				onBlur={this.handleBlur}
+	         onBlur={this.handleBlur}
   				{...inputProps}
   			/>
-  		</Animated.View>
+  </Animated.View>
   	);
+  	/* eslint-enable react/jsx-indent */
+    /* eslint-enable indent */
+  	/* eslint-enable react/jsx-indent-props */
   }
 }
 

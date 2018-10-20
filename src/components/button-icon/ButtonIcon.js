@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, ViewPropTypes } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 import styles from './styles';
@@ -33,14 +33,16 @@ ButtonIcon.propTypes = {
 	iconStyle: PropTypes.objectOf( PropTypes.oneOfType( [
 		PropTypes.string,
 		PropTypes.number
-	] ) )
+	] ) ),
+	style: ViewPropTypes.style
 };
 
 ButtonIcon.defaultProps = {
 	onPress: () => {},
 	text: '',
 	iconStyle: {},
-	textColor: 'black'
+	textColor: 'black',
+	style: {}
 };
 
 export default ButtonIcon;
