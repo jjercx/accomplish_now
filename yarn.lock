@@ -4600,6 +4600,10 @@ react-native-navigation@1.x.x:
   dependencies:
     lodash "4.x.x"
 
+react-native-responsive-screen@^1.1.9:
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/react-native-responsive-screen/-/react-native-responsive-screen-1.1.9.tgz#1a9858731e9e7cc1f1312877eb9b94ac32f4500f"
+
 react-native-swiper@^1.5.13:
   version "1.5.13"
   resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.13.tgz#fa695cd4ab77b9a9df2d2bfee38ea7274dd07a2e"

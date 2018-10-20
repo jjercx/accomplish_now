@@ -8,9 +8,9 @@
   },
   "rnpm": {
     "assets": [
-	"./src/assets/fonts/"
+      "./src/assets/fonts/"
     ]
-},
+  },
   "dependencies": {
     "babel-eslint": "^10.0.1",
     "eslint": "^5.7.0",
@@ -24,6 +24,7 @@
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-navigation": "1.x.x",
+    "react-native-responsive-screen": "^1.1.9",
     "react-native-swiper": "^1.5.13",
     "redux": "^4.0.1"
   },

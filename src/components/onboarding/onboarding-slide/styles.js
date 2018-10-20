@@ -1,3 +1,4 @@
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import spacings from '../../spacing/styles';
 
 export default {
@@ -10,9 +11,10 @@ export default {
 		height: 105
 	},
 	wrapperOnboarding: {
-		top: '30%',
+		bottom: hp( '5%' ),
+		position: 'absolute',
 		alignItems: 'center',
-		marginHorizontal: spacings.small
+		marginHorizontal: spacings.medium
 	},
 	wrapperButtons: {
 		flexDirection: 'row'
