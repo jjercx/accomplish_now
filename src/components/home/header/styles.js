@@ -1,15 +1,15 @@
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { widthToPercent, heightToPercent } from '../../../utils/dimensions';
+import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
+import { HTP, WTP } from '../../../utils/dimensions';
 
 export default {
 	imageBackground: {
-		height: hp( heightToPercent( 193 ) ),
+		height: hpd( HTP( 193 ) ),
 		width: '100%'
 	},
 	wrapperUserInfo: {
 		alignItems: 'flex-start',
 		justifyContent: 'center',
 		flex: 1,
-		marginLeft: wp( widthToPercent( 22 ) )
+		marginLeft: wpd( WTP( 22 ) )
 	}
 };
