@@ -7,5 +7,6 @@ export default {
 	charcoalGrey:'rgb(62, 62, 67)',
 	macaroneAndCheese:'#F2A133',
 	coolGrey:'rgb(169, 178, 186)',
-	disabled:'#D6D9DF'
+	disabled:'#D6D9DF',
+	pinkishGrey:'rgb(190, 190, 190)'
 };

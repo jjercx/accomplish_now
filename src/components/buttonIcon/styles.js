@@ -1,16 +1,32 @@
+import fonts from '../../theme/fonts';
+import Colors from '../../theme/palette';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { heightToPercent, widhtToPercent } from '../../utils/dimensions';
+
 export default {
   button: {
     flexDirection: "row",
     alignItems: "center"
   },
+  buttonForwardContainer:{
+    width: wp( widhtToPercent(60) ),
+    height: hp( heightToPercent(60) ),
+    borderRadius: hp( heightToPercent(60) )/2,
+    backgroundColor:Colors.macaroneAndCheese,
+    alignItems:'center',
+    justifyContent:'center',
+    elevation:10,
+    alignSelf:'center',
+    marginTop: hp( heightToPercent(60) )
+  },
   icon:{
-    fontSize: 25,
+    fontSize: hp( heightToPercent(25) ),
     color: 'black',
-    margin: 8
+    margin: hp( heightToPercent(8) )
   },
   label: {
     textAlign: "center",
-    fontSize: 15,
+    fontSize: hp( heightToPercent(15) ),
     fontWeight: "400"
   }
 };

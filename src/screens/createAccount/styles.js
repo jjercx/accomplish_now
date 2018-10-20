@@ -1,41 +1,33 @@
 import fonts from '../../theme/fonts';
 import Colors from '../../theme/palette';
+import Platform from 'react-native'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { heightToPercent, widhtToPercent } from '../../utils/dimensions';
 
 export default {
-  buttonForwardContainer:{
-    width:60,
-    height:60,
-    borderRadius:60/2,
-    backgroundColor:Colors.macaroneAndCheese,
-    alignItems:'center',
-    justifyContent:'center',
-    elevation:10,
-    alignSelf:'center',
-    marginTop:60
-  },
   container: {
     flex: 1
   },
   infoWrapper:{
-    marginLeft:24,
-    marginTop:20,
-    marginRight:33
+    marginLeft: wp( widhtToPercent(24) ),
+    marginTop: hp( heightToPercent(20) ),
+    marginRight: wp( widhtToPercent(33) )
   },
   inputWrapper:{
-    height:52,
+    height: hp( heightToPercent(52) ),
     borderWidth:1,
-    marginTop:25,
-    marginBottom:40,
+    marginTop: hp( heightToPercent(25) ),
+    marginBottom: hp( heightToPercent(40) ),
     alignItems:'center',
     flexDirection:'row',
-    marginHorizontal:24,
+    marginHorizontal: hp( heightToPercent(24) ),
     borderRadius:3,
     borderColor:Colors.coolGrey
   },
   inputLeftContainer:{
-    width: 62,
+    width: wp( widhtToPercent(62) ),
     borderRightWidth: 1,
-    height: 52,
+    height: hp( heightToPercent(52) ),
     justifyContent:'center',
     borderColor:Colors.coolGrey
   },
@@ -45,16 +37,13 @@ export default {
     alignItems:'center'
   },
   inputTextHint:{
-    fontSize:17,
-    marginRight:21,
-    marginLeft:10
+    fontSize: hp( heightToPercent(17) ),
+    marginRight: wp( widhtToPercent(21) ),
+    marginLeft: wp( widhtToPercent(10) )
   },
   inputText:{
-    fontSize: 17,
-    flex:1
-  },
-  titleWrapper:{
-    marginLeft:24,
-    marginTop:22
+    fontSize: hp( heightToPercent(17) ),
+    flex:1,
+    top: Platform === 'ios' ? 0 : hp( heightToPercent(1) )
   }
 }
