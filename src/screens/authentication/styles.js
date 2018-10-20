@@ -53,8 +53,7 @@ export default {
 		marginBottom: hp( HTP( 36 ) )
 	},
 	inputTextHint: {
-		fontSize: hp( HTP( 17 ) ),
-		marginRight: wp( WTP( 21 ) ),
+		marginRight: wp( WTP( 15 ) ),
 		marginLeft: wp( WTP( 10 ) )
 	},
 	inputText: {

@@ -43,7 +43,9 @@ export default class CreateWelcomeAccount extends Component {
 						<Image source={require( '../../assets/images/icons/flag.png' )} style={{ alignSelf: 'center' }} />
 					</View>
 					<View style={styles.inputRightContainer}>
-						<Typography variant="midTitle" color="charcoalGrey" textAlign="center"> +1 </Typography>
+						<View style={styles.inputTextHint}>
+							<Typography variant="midTitle" color="charcoalGrey" textAlign="center"> +1 </Typography>
+						</View>
 						<BaseInput style={styles.inputText} placeholder="(000) 000-0000" keyboardType="numeric" onChangeText={this.onChangeText} maxLength={9} />
 					</View>
 				</View>
@@ -52,7 +54,7 @@ export default class CreateWelcomeAccount extends Component {
 				>
 					{ createAccount ? (
 						<Typography variant="smallBody" color="charcoalGrey" textAlign="left">
-              By continuing you are agreeing with our
+              By continuing you are agreeing with our {' '}
 							<Text style={{ fontFamily: fonts.productSansBold }}>
                 terms of service and privacy policy.
 							</Text>
