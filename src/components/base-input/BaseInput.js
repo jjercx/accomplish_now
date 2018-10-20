@@ -73,13 +73,11 @@ class BaseInput extends Component {
 BaseInput.propTypes = {
 	label: PropTypes.string,
 	labelStyle: PropTypes.objectOf( PropTypes.array ),
-	width: PropTypes.string,
-	containerStyle: PropTypes.objectOf( PropTypes.array )
+	width: PropTypes.string
 };
 
 BaseInput.defaultProps = {
 	width: '100%',
-	containerStyle: {},
 	label: '',
 	labelStyle: {}
 };

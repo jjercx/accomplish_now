@@ -8,7 +8,6 @@ export default {
 		width: wp( WTP( 87 ) ),
 		height: hp( HTP( 87 ) ),
 		borderRadius: hp( HTP( 87 ) ) / 2,
-		backgroundColor: 'grey',
 		alignSelf: 'center',
 		marginBottom: 0,
 		marginTop: hp( HTP( 11 ) )
