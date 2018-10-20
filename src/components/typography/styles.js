@@ -15,6 +15,11 @@ const userTitleRegular = {
 	fontFamily: fonts.productSansRegular
 };
 
+const semiLargeTitle = {
+	fontSize: 29,
+	fontFamily: fonts.productSansBold
+};
+
 const midTitle = {
 	fontSize: 17,
 	fontFamily: fonts.productSansRegular
@@ -36,5 +41,6 @@ export default {
 	'largeTitle': largeTitle,
 	'midTitle': midTitle,
 	'smallTitle': smallTitle,
-	'smallBody': smallBody
+	'smallBody': smallBody,
+	'semiLargeTitle':semiLargeTitle
 };

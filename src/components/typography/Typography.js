@@ -17,7 +17,7 @@ const Typography = ( {
 			color: colors[ color ],
 			...variants[ variant ],
 			textAlign
-		} ]}
+		}]}
 		numberOfLines={numberOfLines}
 	>
 		{ children }
