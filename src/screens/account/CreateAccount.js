@@ -8,7 +8,7 @@ import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Typography from '../../components/typography/Typography';
 import BaseInput from '../../components/base-input/BaseInput';
 import ButtonForward from '../../components/button-icon/ButtonForward';
-import { heightToPercent } from '../../utils/dimensions';
+import { HTP } from '../../utils/dimensions';
 import Header from '../../components/register/Header';
 import fonts from '../../theme/fonts';
 import styles from './styles';
@@ -43,16 +43,16 @@ export default class CreateAccount extends Component {
 						<Image source={require( '../../assets/images/icons/flag.png' )} style={{ alignSelf: 'center' }} />
 					</View>
 					<View style={styles.inputRightContainer}>
-						<Text style={styles.inputTextHint}> +1 </Text>
+						<Typography variant="midTitle" color="charcoalGrey" textAlign="center"> +1 </Typography>
 						<BaseInput style={styles.inputText} placeholder="(000) 000-0000" keyboardType="numeric" onChangeText={this.onChangeText} maxLength={9} />
 					</View>
 				</View>
 				<View style={[ styles.infoWrapper,
-					{ marginBottom: createAccount ? 0 : hp( heightToPercent( 33 ) ) } ]}
+					{ marginBottom: createAccount ? 0 : hp( HTP( 33 ) ) } ]}
 				>
 					{ createAccount ? (
 						<Typography variant="smallBody" color="charcoalGrey" textAlign="left">
-              By continuing you are agreeing with our 
+              By continuing you are agreeing with our
 							<Text style={{ fontFamily: fonts.productSansBold }}>
                 terms of service and privacy policy.
 							</Text>
