@@ -32,6 +32,7 @@ export default class CreateWelcomeAccount extends Component {
 		let { enabled, createAccount } = this.state;
 		let title = createAccount ? 'Create Account' : 'Welcome back';
 
+		/* eslint-disable react/jsx-one-expression-per-line */
 		return (
 			<View style={styles.container}>
 				<Header title={title} />
@@ -64,5 +65,6 @@ export default class CreateWelcomeAccount extends Component {
 				<ButtonForward enabled={enabled} />
 			</View>
 		);
+		/* eslint-enable react/jsx-one-expression-per-line */
 	}
 }

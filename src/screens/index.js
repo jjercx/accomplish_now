@@ -1,13 +1,16 @@
 import { Navigation } from 'react-native-navigation';
 import Onboarding from './Onboarding';
 import Home from './Home';
+import CreateWelcomeAccount from './authentication/CreateWelcomeAccount';
+import TermsAndConditions from './policies/termsAndConditions';
+import PrivacyPolicy from './policies/privacyPolicy';
 
 export function initApp( action ) {
 	switch ( action ) {
 	case 'start': {
 		Navigation.startSingleScreenApp( {
 			screen: {
-				screen: 'onboarding',
+				screen: 'createWelcomeAccount',
 				navigatorStyle: {
 					navBarHidden: true
 				}
@@ -32,4 +35,7 @@ export function initApp( action ) {
 export function registerScreens() {
 	Navigation.registerComponent( 'onboarding', () => Onboarding );
 	Navigation.registerComponent( 'home', () => Home );
+	Navigation.registerComponent( 'createWelcomeAccount', () => CreateWelcomeAccount );
+	Navigation.registerComponent( 'termsAndConditions', () => TermsAndConditions );
+	Navigation.registerComponent( 'privacyPolicy', () => PrivacyPolicy );
 }
