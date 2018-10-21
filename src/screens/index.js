@@ -2,14 +2,13 @@ import { Navigation } from 'react-native-navigation';
 import Onboarding from './Onboarding';
 import Home from './Home';
 import CreateWelcomeAccount from './authentication/CreateWelcomeAccount';
-import BiggestChallenge from './authentication/BiggestChallenge';
 
 export function initApp( action ) {
 	switch ( action ) {
 	case 'start': {
 		Navigation.startSingleScreenApp( {
 			screen: {
-				screen: 'biggestChallenge',
+				screen: 'createWelcomeAccount',
 				navigatorStyle: {
 					navBarHidden: true
 				}
@@ -35,5 +34,4 @@ export function registerScreens() {
 	Navigation.registerComponent( 'onboarding', () => Onboarding );
 	Navigation.registerComponent( 'home', () => Home );
 	Navigation.registerComponent( 'createWelcomeAccount', () => CreateWelcomeAccount );
-	Navigation.registerComponent( 'biggestChallenge', () => BiggestChallenge );
 }
