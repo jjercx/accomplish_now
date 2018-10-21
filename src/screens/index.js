@@ -2,8 +2,8 @@ import { Navigation } from 'react-native-navigation';
 import Onboarding from './Onboarding';
 import Home from './Home';
 import CreateWelcomeAccount from './authentication/CreateWelcomeAccount';
-import TermsAndConditions from './policies/termsAndConditions';
-import PrivacyPolicy from './policies/privacyPolicy';
+import TermsAndConditions from './policies/TermsAndConditions';
+import PrivacyPolicy from './policies/PrivacyPolicy';
 
 export function initApp( action ) {
 	switch ( action ) {
