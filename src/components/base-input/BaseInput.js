@@ -23,13 +23,15 @@ class BaseInput extends Component {
 
   render() {
   	let {
-  		style, label, labelStyle, width, containerStyle, ...inputProps
+  		style, label, labelStyle, labelColor, width, containerStyle, ...inputProps
   	} = this.props;
 
-  	const color = this._animatedIsFocused.interpolate( {
-  		inputRange: [ 0, 1 ],
-  		outputRange: [ Colors.pinkishGrey, Colors.darkSkyBlue ]
-  	} );
+  	const color = ( typeof labelColor === 'string' )
+  		? labelColor
+  		: this._animatedIsFocused.interpolate( {
+  			inputRange: [ 0, 1 ],
+  			outputRange: [ labelColor.colorStart, labelColor.colorEnd ]
+  		} );
   	const borderBottom = this._animatedIsFocused.interpolate( {
   		inputRange: [ 0, 1 ],
   		outputRange: [ 1, 1.5 ]
@@ -72,6 +74,13 @@ class BaseInput extends Component {
 
 BaseInput.propTypes = {
 	label: PropTypes.string,
+	labelColor: PropTypes.oneOfType( [
+		PropTypes.string,
+		PropTypes.shape( {
+			colorStart: PropTypes.string,
+			colorEnd: PropTypes.string
+		} )
+	] ),
 	labelStyle: PropTypes.objectOf( PropTypes.array ),
 	width: PropTypes.string,
 	containerStyle: PropTypes.objectOf( PropTypes.array )
@@ -81,6 +90,10 @@ BaseInput.defaultProps = {
 	width: '100%',
 	containerStyle: {},
 	label: '',
+	labelColor: {
+		colorStart: Colors.pinkishGrey,
+		colorEnd: Colors.darkSkyBlue
+	},
 	labelStyle: {}
 };
 
