@@ -31,7 +31,7 @@ const localStyles = StyleSheet.create( {
 	}
 } );
 
-export default class BiggestChallenge extends Component {
+export default class CurrentlyWorkingOn extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = { enabled: false };
@@ -48,12 +48,12 @@ export default class BiggestChallenge extends Component {
 
 		return (
 			<View style={styles.container}>
-				<Header title="Biggest challenge" />
+				<Header title="Currently working on" />
 				<View style={localStyles.inputContainer}>
 					<BaseInput
 						label="Add your text"
 						labelColor={Colors.charcoalGrey}
-						placeholder="Add your biggest challenge"
+						placeholder="Add your text here"
 						onChangeText={this.onChangeText}
 						style={localStyles.input}
 						labelStyle={localStyles.label}
