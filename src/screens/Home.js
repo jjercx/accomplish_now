@@ -29,6 +29,25 @@ const styles = StyleSheet.create( {
 		alignItems: 'center',
 		width: '100%',
 		justifyContent: 'flex-end'
+	},
+	wrapperSearch: {
+		position: 'absolute',
+		marginTop: hpd( HTP( 170 ) ),
+		alignItems: 'center',
+		width: '100%'
+	},
+	inputSearch: {
+		width: wpd( '90%' ),
+		backgroundColor: colors.graySearchBar,
+		height: hpd( HTP( 64 ) ),
+		borderRadius: 10,
+		shadowColor: colors.shadowGray,
+		shadowOffset: {
+			width: 2,
+			height: 2
+		},
+		shadowOpacity: 0.8,
+		shadowRadius: 2
 	}
 } );
 
@@ -69,6 +88,9 @@ class Home extends Component {
 							style={{ transform: [ { scaleX: 0.8 }, { scaleY: 0.8 } ] }}
 						/>
 					</View>
+				</View>
+				<View style={styles.wrapperSearch}>
+					<View style={styles.inputSearch} />
 				</View>
 			</ImageBackground>
 		);
