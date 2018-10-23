@@ -2,6 +2,8 @@ import { Navigation } from 'react-native-navigation';
 import Onboarding from './Onboarding';
 import Home from './Home';
 import CreateWelcomeAccount from './authentication/CreateWelcomeAccount';
+import BiggestChallenge from './authentication/BiggestChallenge';
+import CurrentlyWorkingOn from './authentication/CurrentlyWorkingOn';
 import TermsAndConditions from './policies/TermsAndConditions';
 import PrivacyPolicy from './policies/PrivacyPolicy';
 
@@ -36,6 +38,8 @@ export function registerScreens() {
 	Navigation.registerComponent( 'onboarding', () => Onboarding );
 	Navigation.registerComponent( 'home', () => Home );
 	Navigation.registerComponent( 'createWelcomeAccount', () => CreateWelcomeAccount );
+	Navigation.registerComponent( 'biggestChallenge', () => BiggestChallenge );
+	Navigation.registerComponent( 'currentlyWorkingOn', () => CurrentlyWorkingOn );
 	Navigation.registerComponent( 'termsAndConditions', () => TermsAndConditions );
 	Navigation.registerComponent( 'privacyPolicy', () => PrivacyPolicy );
 }
