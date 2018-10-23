@@ -8,5 +8,7 @@ export default {
 	macaroneAndCheese: '#F2A133',
 	coolGrey: '#a9b2ba',
 	disabled: '#D6D9DF',
-	pinkishGrey: '#bebebe'
+	pinkishGrey: '#bebebe',
+	switchTintColor: '#ffffff51',
+	switchThumbTintColor: '#ececec'
 };
