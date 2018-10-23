@@ -23,7 +23,7 @@ class BaseInput extends Component {
 
   render() {
   	let {
-  		style, label, labelStyle, labelColor, width, containerStyle, ...inputProps
+  		style, label, labelStyle = {}, labelColor, width, containerStyle = {}, ...inputProps
   	} = this.props;
 
   	const color = ( typeof labelColor === 'string' )
@@ -81,20 +81,16 @@ BaseInput.propTypes = {
 			colorEnd: PropTypes.string
 		} )
 	] ),
-	labelStyle: PropTypes.objectOf( PropTypes.array ),
-	width: PropTypes.string,
-	containerStyle: PropTypes.objectOf( PropTypes.array )
+	width: PropTypes.string
 };
 
 BaseInput.defaultProps = {
 	width: '100%',
-	containerStyle: {},
 	label: '',
 	labelColor: {
 		colorStart: Colors.pinkishGrey,
 		colorEnd: Colors.darkSkyBlue
-	},
-	labelStyle: {}
+	}
 };
 
 export default BaseInput;
