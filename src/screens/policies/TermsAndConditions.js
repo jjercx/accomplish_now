@@ -21,7 +21,7 @@ const styles = {
 		marginRight: wp( WTP( 33 ) )
 	},
 	scrollView: {
-		paddingBottom: hp( WTP( 20 ) )
+		paddingBottom: hp( HTP( 20 ) )
 	}
 };
 

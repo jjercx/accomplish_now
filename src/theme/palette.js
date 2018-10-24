@@ -13,5 +13,8 @@ export default {
 	switchThumbTintColor: '#ececec',
 	graySearchBar: '#f6f7f9',
 	shadowGray: '#7070702b',
-	placeholder: '#adadbb'
+	placeholder: '#adadbb',
+	whiteTwo: '#f9f9f9',
+	veryLightPink: '#e4e4e4',
+	resendButtonColorOnAndroid: '#00000007'
 };
