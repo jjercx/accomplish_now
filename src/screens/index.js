@@ -6,6 +6,7 @@ import BiggestChallenge from './authentication/BiggestChallenge';
 import CurrentlyWorkingOn from './authentication/CurrentlyWorkingOn';
 import TermsAndConditions from './policies/TermsAndConditions';
 import PrivacyPolicy from './policies/PrivacyPolicy';
+import CodeReceiveRegister from './authentication/CodeReceiveRegister';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -42,4 +43,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'currentlyWorkingOn', () => CurrentlyWorkingOn );
 	Navigation.registerComponent( 'termsAndConditions', () => TermsAndConditions );
 	Navigation.registerComponent( 'privacyPolicy', () => PrivacyPolicy );
+	Navigation.registerComponent( 'codeReceiveRegister', () => CodeReceiveRegister );
 }
