@@ -40,6 +40,12 @@ const smallBody = {
 	fontFamily: fonts.productSansRegular
 };
 
+
+const midBody = {
+	fontSize: 16,
+	fontFamily: fonts.productSansRegular
+};
+
 export default {
 	'userTitle': userTitle,
 	'userTitleRegular': userTitleRegular,
@@ -47,6 +53,7 @@ export default {
 	'midTitle': midTitle,
 	'smallTitle': smallTitle,
 	'smallBody': smallBody,
+	'midBody': midBody,
 	'semiLargeTitle': semiLargeTitle,
 	'smallTitleBold': smallTitleBold
 };

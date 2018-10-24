@@ -12,5 +12,6 @@ export default {
 	switchTintColor: '#ffffff51',
 	switchThumbTintColor: '#ececec',
 	graySearchBar: '#f6f7f9',
-	shadowGray: '#7070702b'
+	shadowGray: '#7070702b',
+	placeholder: '#adadbb'
 };

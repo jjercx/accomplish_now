@@ -11,8 +11,13 @@ import { HTP, WTP } from '../utils/dimensions';
 import Typography from '../components/typography/Typography';
 import Spacing from '../components/spacing/Spacing';
 import colors from '../theme/palette';
+import HomeSearch from '../components/home/search/HomeSearch';
 
 const styles = StyleSheet.create( {
+	container: {
+		backgroundColor: colors.graySearchBar,
+		flex: 1
+	},
 	imageBackground: {
 		height: hpd( HTP( 193 ) ),
 		width: '100%'
@@ -29,25 +34,6 @@ const styles = StyleSheet.create( {
 		alignItems: 'center',
 		width: '100%',
 		justifyContent: 'flex-end'
-	},
-	wrapperSearch: {
-		position: 'absolute',
-		marginTop: hpd( HTP( 170 ) ),
-		alignItems: 'center',
-		width: '100%'
-	},
-	inputSearch: {
-		width: wpd( '90%' ),
-		backgroundColor: colors.graySearchBar,
-		height: hpd( HTP( 64 ) ),
-		borderRadius: 10,
-		shadowColor: colors.shadowGray,
-		shadowOffset: {
-			width: 2,
-			height: 2
-		},
-		shadowOpacity: 0.8,
-		shadowRadius: 2
 	}
 } );
 
@@ -70,29 +56,29 @@ class Home extends Component {
 	render() {
 		const { available } = this.state;
 		return (
-			<ImageBackground
-				source={require( '../assets/images/home/header.png' )}
-				style={styles.imageBackground}
-			>
-				<UserSection userFirstName="Javier" meetings={12} />
-				<View style={styles.wrapperContainerAvailable}>
-					<View style={styles.wrapperAvailable}>
-						<Typography variant="midTitle" color="white">{IM_AVAILABLE_TEXT}</Typography>
-						<Spacing size="small" horizontal />
-						<Switch
-							onValueChange={value => this._onValueChange( value )}
-							value={available}
-							onTintColor={colors.orange}
-							thumbTintColor={colors.switchThumbTintColor}
-							tintColor={colors.switchTintColor}
-							style={{ transform: [ { scaleX: 0.8 }, { scaleY: 0.8 } ] }}
-						/>
+			<View style={styles.container}>
+				<ImageBackground
+					source={require( '../assets/images/home/header.png' )}
+					style={styles.imageBackground}
+				>
+					<UserSection userFirstName="Javier" meetings={12} />
+					<View style={styles.wrapperContainerAvailable}>
+						<View style={styles.wrapperAvailable}>
+							<Typography variant="midTitle" color="white">{IM_AVAILABLE_TEXT}</Typography>
+							<Spacing size="small" horizontal />
+							<Switch
+								onValueChange={value => this._onValueChange( value )}
+								value={available}
+								onTintColor={colors.orange}
+								thumbTintColor={colors.switchThumbTintColor}
+								tintColor={colors.switchTintColor}
+								style={{ transform: [ { scaleX: 0.8 }, { scaleY: 0.8 } ] }}
+							/>
+						</View>
 					</View>
-				</View>
-				<View style={styles.wrapperSearch}>
-					<View style={styles.inputSearch} />
-				</View>
-			</ImageBackground>
+					<HomeSearch />
+				</ImageBackground>
+			</View>
 		);
 	}
 }
