@@ -7,7 +7,6 @@ import {
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Typography from '../../components/typography/Typography';
 import Button from '../../components/button/Button';
-import ButtonForward from '../../components/button-icon/ButtonForward';
 import Header from '../../components/register/Header';
 import Spacing from '../../components/spacing/Spacing';
 import colors from '../../theme/palette';
@@ -40,13 +39,13 @@ const localStyles = {
 	},
 	buttonLoginContainer: {
 		paddingTop: hp( HTP( 20 ) ),
-		paddingBottom: Platform.OS === 'ios' ? hp( HTP( 15 ) ) : hp( HTP( 40 ) ),
+		paddingBottom: Platform.OS === 'ios' ? hp( HTP( 15 ) ) : hp( HTP( 50 ) ),
 		paddingLeft: wp( WTP( 24 ) ),
 		paddingRight: wp( WTP( 24 ) )
 	}
 };
 
-class CodeReceiveRegister extends Component {
+class Login extends Component {
 	state = { code: '' }
 
 	componentDidMount() {
@@ -59,14 +58,15 @@ class CodeReceiveRegister extends Component {
 	}
 	/* eslint-enable class-methods-use-this */
 
-	_onRegister() {
-		alert('register with: ' + this.state.code); // eslint-disable-line
+	_onLogin() {
+		alert('login with: ' + this.state.code); // eslint-disable-line
 	}
 
 	_onCodeChange( newCode ) {
 		this.setState( { code: newCode } );
 		if ( newCode.length === 6 ) Keyboard.dismiss();
 	}
+
 
 	render() {
 		const title = 'What\'s the code?';
@@ -97,7 +97,12 @@ class CodeReceiveRegister extends Component {
 					/>
 				</View>
 				<View style={localStyles.buttonLoginContainer}>
-					<ButtonForward enabled={code.length === 6} onPress={() => this._onRegister()} />
+					<Button
+						text="Login"
+						textColor={colors.white}
+						buttonColor={code.length === 6 ? colors.orange : colors.disabled}
+						onPress={() => this._onLogin()}
+					/>
 				</View>
 				<TextInput
 					ref={( ref ) => { this.textInput = ref; }}
@@ -112,4 +117,4 @@ class CodeReceiveRegister extends Component {
 	}
 }
 
-export default CodeReceiveRegister;
+export default Login;
