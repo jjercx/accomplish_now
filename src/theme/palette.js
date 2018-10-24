@@ -10,5 +10,8 @@ export default {
 	disabled: '#D6D9DF',
 	pinkishGrey: '#bebebe',
 	switchTintColor: '#ffffff51',
-	switchThumbTintColor: '#ececec'
+	switchThumbTintColor: '#ececec',
+	graySearchBar: '#f6f7f9',
+	shadowGray: '#7070702b',
+	placeholder: '#adadbb'
 };
