@@ -2,16 +2,57 @@
 
 import React, { Component } from 'react';
 import {
-	View, Text, Image
+	View, Text, Image, StyleSheet, Platform
 } from 'react-native';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Typography from '../../components/typography/Typography';
 import BaseInput from '../../components/base-input/BaseInput';
 import ButtonForward from '../../components/button-icon/ButtonForward';
-import { HTP } from '../../utils/dimensions';
 import Header from '../../components/register/Header';
+import Colors from '../../theme/palette';
+import { HTP, WTP } from '../../utils/dimensions';
 import fonts from '../../theme/fonts';
 import styles from './styles';
+
+const localStyles = StyleSheet.create( {
+	infoWrapper: {
+		marginLeft: wp( WTP( 24 ) ),
+		marginTop: hp( HTP( 20 ) ),
+		marginRight: wp( WTP( 33 ) )
+	},
+	inputWrapper: {
+		height: hp( HTP( 52 ) ),
+		borderWidth: 1,
+		marginTop: hp( HTP( 25 ) ),
+		marginBottom: hp( HTP( 40 ) ),
+		alignItems: 'center',
+		flexDirection: 'row',
+		marginHorizontal: hp( HTP( 24 ) ),
+		borderRadius: 3,
+		borderColor: Colors.coolGrey
+	},
+	inputLeftContainer: {
+		width: wp( WTP( 62 ) ),
+		borderRightWidth: 1,
+		height: hp( HTP( 52 ) ),
+		justifyContent: 'center',
+		borderColor: Colors.coolGrey
+	},
+	inputRightContainer: {
+		flex: 1,
+		flexDirection: 'row',
+		alignItems: 'center'
+	},
+	inputTextHint: {
+		marginRight: wp( WTP( 15 ) ),
+		marginLeft: wp( WTP( 10 ) )
+	},
+	inputText: {
+		fontSize: hp( HTP( 17 ) ),
+		flex: 1,
+		top: Platform === 'ios' ? 0 : hp( HTP( 1 ) )
+	}
+} );
 
 export default class CreateWelcomeAccount extends Component {
 	constructor( props ) {
@@ -36,21 +77,21 @@ export default class CreateWelcomeAccount extends Component {
 		return (
 			<View style={styles.container}>
 				<Header title={title} />
-				<View style={styles.infoWrapper}>
+				<View style={localStyles.infoWrapper}>
 					<Typography variant="smallTitle" color="charcoalGrey" textAlign="left">Enter your mobile number to setup an account. You will receive a verification code via text message and data rates may apply.</Typography>
 				</View>
-				<View style={styles.inputWrapper}>
-					<View style={styles.inputLeftContainer}>
+				<View style={localStyles.inputWrapper}>
+					<View style={localStyles.inputLeftContainer}>
 						<Image source={require( '../../assets/images/icons/flag.png' )} style={{ alignSelf: 'center' }} />
 					</View>
-					<View style={styles.inputRightContainer}>
-						<View style={styles.inputTextHint}>
+					<View style={localStyles.inputRightContainer}>
+						<View style={localStyles.inputTextHint}>
 							<Typography variant="midTitle" color="charcoalGrey" textAlign="center"> +1 </Typography>
 						</View>
-						<BaseInput style={styles.inputText} placeholder="(000) 000-0000" keyboardType="numeric" onChangeText={this.onChangeText} maxLength={9} />
+						<BaseInput style={localStyles.inputText} placeholder="(000) 000-0000" keyboardType="numeric" onChangeText={this.onChangeText} maxLength={9} />
 					</View>
 				</View>
-				<View style={[ styles.infoWrapper,
+				<View style={[ localStyles.infoWrapper,
 					{ marginBottom: createAccount ? 0 : hp( HTP( 33 ) ) } ]}
 				>
 					{ createAccount ? (
