@@ -1,32 +1,38 @@
 import fonts from '../../theme/fonts';
+import { normalize } from '../../utils/dimensions';
 
 const largeTitle = {
-	fontSize: 36,
+	fontSize: normalize( 36 ),
 	fontFamily: fonts.productSansBold
 };
 
 const userTitle = {
-	fontSize: 30,
+	fontSize: normalize( 30 ),
 	fontFamily: fonts.productSansBold
 };
 
 const userTitleRegular = {
-	fontSize: 30,
+	fontSize: normalize( 30 ),
 	fontFamily: fonts.productSansRegular
 };
 
 const semiLargeTitle = {
-	fontSize: 29,
+	fontSize: normalize( 29 ),
+	fontFamily: fonts.productSansBold
+};
+
+const midPlusTitle = {
+	fontSize: normalize( 23 ),
 	fontFamily: fonts.productSansBold
 };
 
 const midTitle = {
-	fontSize: 17,
+	fontSize: normalize( 17 ),
 	fontFamily: fonts.productSansRegular
 };
 
 const smallTitle = {
-	fontSize: 16,
+	fontSize: normalize( 16 ),
 	fontFamily: fonts.productSansRegular
 };
 
@@ -55,5 +61,6 @@ export default {
 	'smallBody': smallBody,
 	'midBody': midBody,
 	'semiLargeTitle': semiLargeTitle,
-	'smallTitleBold': smallTitleBold
+	'smallTitleBold': smallTitleBold,
+	'midPlusTitle': midPlusTitle
 };

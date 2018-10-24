@@ -5,7 +5,7 @@ import colors from '../../../theme/palette';
 export default {
 	wrapperSearch: {
 		position: 'absolute',
-		marginTop: hpd( HTP( 170 ) ),
+		marginTop: hpd( HTP( 160 ) ),
 		alignItems: 'center',
 		width: '100%'
 	},
