@@ -3,15 +3,14 @@ import {
 	heightPercentageToDP as hp,
 	widthPercentageToDP as wp
 } from 'react-native-responsive-screen';
-import { HTP, WTP } from '../../utils/dimensions';
-import Colors from '../../theme/palette';
+import { HTP, WTP } from '../../../utils/dimensions';
+import Colors from '../../../theme/palette';
 
 export default {
 	card: {
 		backgroundColor: Platform.OS === 'ios' ? Colors.paleGrey : Colors.paleGreyAndroid,
 		marginBottom: hp( HTP( 14 ) ),
-		marginLeft: wp( WTP( 13 ) ),
-		marginRight: wp( WTP( 5 ) ),
+		marginRight: wp( WTP( 8 ) ),
 		paddingTop: hp( HTP( 4 ) ),
 		paddingBottom: hp( HTP( 4 ) ),
 		paddingLeft: wp( WTP( 4 ) ),

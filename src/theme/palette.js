@@ -3,6 +3,7 @@ export default {
 	sliderCircles: '#eff1f5',
 	blackLabels: '#3e3e43',
 	paleGrey: '#f4f6fa',
+	paleGreyTwo: '#f5f5f7',
 	paleGreyAndroid: '#bebebe30',
 	orange: '#fba104',
 	skyBlue: '#68b8f7',
@@ -21,5 +22,6 @@ export default {
 	whiteTwo: '#f9f9f9',
 	veryLightPink: '#e4e4e4',
 	resendButtonColorOnAndroid: '#00000007',
-	lightGreyBlue: '#aeaebc'
+	lightGreyBlue: '#aeaebc',
+	pinkishGreyTwo: '#bebcbb'
 };

@@ -10,7 +10,7 @@ class BaseInput extends Component {
 
 	componentWillMount() { this._animatedIsFocused = new Animated.Value( 0 ); }
 
-	componentDidMount() { this.props.onRef(this.textInput); } //eslint-disable-line
+	componentDidMount() { if ( this.props.onRef ) this.props.onRef(this.textInput); } //eslint-disable-line
 	// use onRef instead of ref for BaseInput events
 
 	componentDidUpdate() {
@@ -21,9 +21,17 @@ class BaseInput extends Component {
   	} ).start();
 	}
 
-  handleFocus = () => this.setState( { isFocused: true } );
+  handleFocus = () => {
+	 this.setState( { isFocused: true } );
+	 const { handleFocus } = this.props;
+	 if ( handleFocus ) handleFocus();
+	 }
 
-  handleBlur = () => this.setState( { isFocused: false } );
+  handleBlur = () => {
+	 this.setState( { isFocused: false } );
+	 const { handleBlur } = this.props;
+	 if ( handleBlur ) handleBlur();
+	 }
 
   render() {
   	let {
