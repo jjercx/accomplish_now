@@ -5,14 +5,14 @@ import colors from '../../../theme/palette';
 export default {
 	wrapperSearch: {
 		position: 'absolute',
-		marginTop: hpd( HTP( 160 ) ),
+		marginTop: hpd( HTP( 145 ) ),
 		alignItems: 'center',
 		width: '100%'
 	},
 	inputSearch: {
 		width: wpd( '90%' ),
 		backgroundColor: colors.graySearchBar,
-		height: hpd( HTP( 64 ) ),
+		height: hpd( HTP( 55 ) ),
 		borderRadius: 10,
 		shadowColor: colors.shadowGray,
 		shadowOffset: {
