@@ -8,6 +8,7 @@ import TermsAndConditions from './policies/TermsAndConditions';
 import PrivacyPolicy from './policies/PrivacyPolicy';
 import CodeReceiveRegister from './authentication/CodeReceiveRegister';
 import Login from './authentication/Login';
+import AddSkills from './authentication/AddSkills';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -46,4 +47,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'privacyPolicy', () => PrivacyPolicy );
 	Navigation.registerComponent( 'codeReceiveRegister', () => CodeReceiveRegister );
 	Navigation.registerComponent( 'login', () => Login );
+	Navigation.registerComponent( 'addSkills', () => AddSkills );
 }

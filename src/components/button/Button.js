@@ -8,10 +8,11 @@ const Button = ( {
 	text,
 	textColor,
 	buttonColor,
-	onPress
+	onPress,
+	style
 } ) => (
 	<TouchableOpacity
-		style={[ styles.button, { backgroundColor: buttonColor } ]}
+		style={[ styles.button, { backgroundColor: buttonColor }, style ]}
 		activeOpacity={0.9}
 		onPress={onPress}
 	>
@@ -25,11 +26,16 @@ Button.propTypes = {
 	textColor: PropTypes.string.isRequired,
 	buttonColor: PropTypes.string.isRequired,
 	onPress: PropTypes.func,
-	text: PropTypes.string.isRequired
+	text: PropTypes.string.isRequired,
+	style: PropTypes.objectOf( PropTypes.oneOfType( [
+		PropTypes.string,
+		PropTypes.number
+	] ) )
 };
 
 Button.defaultProps = {
-	onPress: () => {}
+	onPress: () => {},
+	style: {}
 };
 
 

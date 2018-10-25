@@ -14,5 +14,13 @@ export default {
 	label: {
 		fontSize: hp( HTP( 16 ) ),
 		fontFamily: fonts.productSansRegular
+	},
+	icon: {
+		fontSize: hp( HTP( 25 ) ),
+		color: 'black',
+		margin: hp( HTP( 5 ) )
+	},
+	textInputContainer: {
+		flexDirection: 'row'
 	}
 };
