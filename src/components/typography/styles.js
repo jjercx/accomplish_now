@@ -32,7 +32,7 @@ const midTitle = {
 };
 
 const smallTitle = {
-	fontSize: normalize( 16 ),
+	fontSize: normalize( 15 ),
 	fontFamily: fonts.productSansRegular
 };
 

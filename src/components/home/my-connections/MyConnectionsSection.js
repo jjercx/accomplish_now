@@ -3,21 +3,14 @@ import { View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 
 import styles from './styles';
-import Typography from '../../typography/Typography';
 import Person from '../../../entities/Person';
 import ConnectionBox from '../../connection/connection-box/ConnectionBox';
 import Spacing from '../../spacing/Spacing';
+import TitleSection from '../title-section/TitleSection';
 
 const MyConnectionsSection = ( { connections } ) => (
 	<View style={styles.container}>
-		<View style={styles.wrapperTitle}>
-			<View style={styles.wrapperMyConnections}>
-				<Typography variant="midPlusTitle" color="blackLabels">My connections</Typography>
-			</View>
-			<View style={styles.wrapperSeeAll}>
-				<Typography variant="smallTitle" color="darkSkyBlue">See all</Typography>
-			</View>
-		</View>
+		<TitleSection title="My Connections" />
 		<ScrollView horizontal style={styles.wrapperConnections} showsHorizontalScrollIndicator={false}>
 			{
 				connections.map( person => (

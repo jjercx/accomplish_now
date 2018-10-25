@@ -13,7 +13,9 @@ import Spacing from '../components/spacing/Spacing';
 import colors from '../theme/palette';
 import HomeSearch from '../components/home/search/HomeSearch';
 import MyConnectionsSection from '../components/home/my-connections/MyConnectionsSection';
+import PlacesSection from '../components/home/places/PlacesSection';
 import Person from '../entities/Person';
+import Place from '../entities/Place';
 
 const styles = StyleSheet.create( {
 	container: {
@@ -21,7 +23,7 @@ const styles = StyleSheet.create( {
 		flex: 1
 	},
 	imageBackground: {
-		height: hpd( HTP( 193 ) ),
+		height: hpd( HTP( 180 ) ),
 		width: '100%'
 	},
 	wrapperContainerAvailable: {
@@ -70,6 +72,19 @@ class Home extends Component {
 	}
 	/* eslint-enable class-methods-use-this */
 
+	/* eslint-disable class-methods-use-this */
+	renderPlacesSection() {
+		const Place1 = new Place( 1, 'Office 305', require( '../assets/images/places/office305.png' ) );
+		const Place2 = new Place( 2, 'Corner SC', require( '../assets/images/places/cornersc.png' ) );
+		const places = [ Place1, Place2 ];
+		return (
+			<PlacesSection
+				places={places}
+			/>
+		);
+	}
+	/* eslint-enable class-methods-use-this */
+
 	render() {
 		const { available } = this.state;
 		return (
@@ -81,7 +96,7 @@ class Home extends Component {
 					<UserSection userFirstName="Javier" meetings={12} />
 					<View style={styles.wrapperContainerAvailable}>
 						<View style={styles.wrapperAvailable}>
-							<Typography variant="midTitle" color="white">{IM_AVAILABLE_TEXT}</Typography>
+							<Typography variant="smallTitle" color="white">{IM_AVAILABLE_TEXT}</Typography>
 							<Spacing size="small" horizontal />
 							<Switch
 								onValueChange={value => this._onValueChange( value )}
@@ -96,6 +111,8 @@ class Home extends Component {
 					<HomeSearch />
 				</ImageBackground>
 				{this.renderMyConnectionsSection()}
+				<Spacing size="large" />
+				{this.renderPlacesSection()}
 			</View>
 		);
 	}
