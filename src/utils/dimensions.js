@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform, PixelRatio } from 'react-native';
 
 let { height, width } = Dimensions.get( 'window' );
 
@@ -21,4 +21,16 @@ export function HTP( value ) {
 export function WTP( value ) {
 	const percentWidth = ( value / W ) * 100;
 	return percentWidth;
+}
+
+// based on iphone 5s's scale
+const scale = width / 320;
+
+export function normalize( size ) {
+	const newSize = size * scale;
+	if ( Platform.OS === 'ios' ) {
+		return Math.round( PixelRatio.roundToNearestPixel( newSize ) );
+	}
+
+	return Math.round( PixelRatio.roundToNearestPixel( newSize ) ) - 2;
 }

@@ -12,6 +12,8 @@ import Typography from '../components/typography/Typography';
 import Spacing from '../components/spacing/Spacing';
 import colors from '../theme/palette';
 import HomeSearch from '../components/home/search/HomeSearch';
+import MyConnectionsSection from '../components/home/my-connections/MyConnectionsSection';
+import Person from '../entities/Person';
 
 const styles = StyleSheet.create( {
 	container: {
@@ -53,6 +55,21 @@ class Home extends Component {
 		this.setState( { available: value } );
 	}
 
+	/* eslint-disable class-methods-use-this */
+	renderMyConnectionsSection() {
+		const JD = new Person( 1, 'Jhon', 'D.', require( '../assets/images/connections/jd.png' ) );
+		const C = new Person( 2, 'Claire', 'T.', require( '../assets/images/connections/c.png' ) );
+		const MD = new Person( 3, 'Michae', 'D.', require( '../assets/images/connections/md.png' ) );
+		const SW = new Person( 4, 'Stephanie', 'W.', require( '../assets/images/connections/sd.png' ) );
+		const connections = [ JD, C, MD, SW ];
+		return (
+			<MyConnectionsSection
+				connections={connections}
+			/>
+		);
+	}
+	/* eslint-enable class-methods-use-this */
+
 	render() {
 		const { available } = this.state;
 		return (
@@ -78,6 +95,7 @@ class Home extends Component {
 					</View>
 					<HomeSearch />
 				</ImageBackground>
+				{this.renderMyConnectionsSection()}
 			</View>
 		);
 	}
