@@ -12,27 +12,27 @@ import AddSkills from './authentication/AddSkills';
 
 export function initApp( action ) {
 	switch ( action ) {
-	case 'start': {
-		Navigation.startSingleScreenApp( {
-			screen: {
-				screen: 'home',
-				navigatorStyle: {
-					navBarHidden: true
+		case 'start': {
+			Navigation.startSingleScreenApp( {
+				screen: {
+					screen: 'home',
+					navigatorStyle: {
+						navBarHidden: true
+					}
 				}
-			}
-		} );
-		break;
-	}
-	default:
-		Navigation.startSingleScreenApp( {
-			screen: {
-				screen: 'onboarding',
-				navigatorStyle: {
-					navBarHidden: true
+			} );
+			break;
+		}
+		default:
+			Navigation.startSingleScreenApp( {
+				screen: {
+					screen: 'onboarding',
+					navigatorStyle: {
+						navBarHidden: true
+					}
 				}
-			}
-		} );
-		break;
+			} );
+			break;
 	}
 }
 

@@ -2,15 +2,15 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import ButtonIcon from '../button-icon/ButtonIcon';
+import ButtonIcon from '../../button-icon/ButtonIcon';
 
 const getImageSource = ( skillText ) => {
 	let source = '';
 	switch ( skillText ) {
-		case 'Designer': source = require( '../../assets/images/skills-icons/designer.png' ); break;
-		case 'Coaching': source = require( '../../assets/images/skills-icons/coaching.png' ); break;
-		case 'User Experience': source = require( '../../assets/images/skills-icons/ux.png' ); break;
-		default: source = require( '../../assets/images/skills-icons/designer.png' );
+		case 'Designer': source = require( '../../../assets/images/skills-icons/designer.png' ); break;
+		case 'Coaching': source = require( '../../../assets/images/skills-icons/coaching.png' ); break;
+		case 'User Experience': source = require( '../../../assets/images/skills-icons/ux.png' ); break;
+		default: source = require( '../../../assets/images/skills-icons/designer.png' );
 	}
 	return source;
 };
