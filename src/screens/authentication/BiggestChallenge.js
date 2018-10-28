@@ -13,6 +13,7 @@ import BaseInput from '../../components/base-input/BaseInput';
 import ButtonForward from '../../components/button-icon/ButtonForward';
 import Colors from '../../theme/palette';
 import styles from './styles';
+import NavigatorPropType from '../../types/navigator';
 
 const localStyles = StyleSheet.create( {
 	inputContainer: {
@@ -31,7 +32,11 @@ const localStyles = StyleSheet.create( {
 	}
 } );
 
-export default class BiggestChallenge extends Component {
+class BiggestChallenge extends Component {
+	static navigatorStyle = {
+		navBarHidden: true
+	};
+
 	constructor( props ) {
 		super( props );
 		this.state = { enabled: false };
@@ -41,6 +46,11 @@ export default class BiggestChallenge extends Component {
 	onChangeText( text ) {
 		const isEnabled = ( text.length > 3 );
 		this.setState( { enabled: isEnabled } );
+	}
+
+	_onPressButtonFoward() {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'currentlyWorkingOn' } );
 	}
 
 	render() {
@@ -62,8 +72,15 @@ export default class BiggestChallenge extends Component {
 				<ButtonForward
 					style={localStyles.buttonForward}
 					enabled={enabled}
+					onPress={enabled ? () => this._onPressButtonFoward() : null}
 				/>
 			</View>
 		);
 	}
 }
+
+BiggestChallenge.propTypes = {
+	navigator: NavigatorPropType.isRequired
+};
+
+export default BiggestChallenge;

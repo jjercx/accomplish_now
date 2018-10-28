@@ -3,7 +3,7 @@ import { HTP, WTP } from '../../../utils/dimensions';
 
 export default {
 	imgPlace: {
-		width: wpd( WTP( 261 ) ),
-		height: hpd( HTP( 256 ) )
+		width: wpd( WTP( 230 ) ),
+		height: hpd( HTP( 230 ) )
 	}
 };

@@ -13,6 +13,7 @@ import Spacing from '../../components/spacing/Spacing';
 import colors from '../../theme/palette';
 import { HTP, WTP } from '../../utils/dimensions';
 import OneNumberInput from '../../components/one-number-input/OneNumberInput';
+import NavigatorPropType from '../../types/navigator';
 
 const localStyles = {
 	container: {
@@ -47,6 +48,10 @@ const localStyles = {
 };
 
 class CodeReceiveRegister extends Component {
+	static navigatorStyle = {
+		navBarHidden: true
+	};
+
 	state = { code: '' }
 
 	componentDidMount() {
@@ -60,7 +65,9 @@ class CodeReceiveRegister extends Component {
 	/* eslint-enable class-methods-use-this */
 
 	_onRegister() {
-		alert('register with: ' + this.state.code); // eslint-disable-line
+		// console.log('register with: ' + this.state.code);
+		const { navigator } = this.props;
+		navigator.push( { screen: 'setProfile' } );
 	}
 
 	_onCodeChange( newCode ) {
@@ -97,7 +104,10 @@ class CodeReceiveRegister extends Component {
 					/>
 				</View>
 				<View style={localStyles.buttonLoginContainer}>
-					<ButtonForward enabled={code.length === 6} onPress={() => this._onRegister()} />
+					<ButtonForward
+						enabled={code.length === 6}
+						onPress={code.length === 6 ? () => this._onRegister() : null}
+					/>
 				</View>
 				<TextInput
 					ref={( ref ) => { this.textInput = ref; }}
@@ -111,5 +121,9 @@ class CodeReceiveRegister extends Component {
 		);
 	}
 }
+
+CodeReceiveRegister.propTypes = {
+	navigator: NavigatorPropType.isRequired
+};
 
 export default CodeReceiveRegister;

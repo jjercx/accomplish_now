@@ -3,7 +3,7 @@ import { HTP, WTP } from '../../../utils/dimensions';
 
 export default {
 	imgPerson: {
-		width: wpd( WTP( 75 ) ),
-		height: hpd( HTP( 75 ) )
+		width: wpd( WTP( 70 ) ),
+		height: hpd( HTP( 70 ) )
 	}
 };

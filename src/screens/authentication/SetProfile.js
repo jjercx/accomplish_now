@@ -13,6 +13,7 @@ import BaseInput from '../../components/base-input/BaseInput';
 import ButtonForward from '../../components/button-icon/ButtonForward';
 import { HTP, WTP } from '../../utils/dimensions';
 import styles from './styles';
+import NavigatorPropType from '../../types/navigator';
 
 const localStyles = StyleSheet.create( {
 	SPInputSpace: {
@@ -39,9 +40,18 @@ const localStyles = StyleSheet.create( {
 	}
 } );
 
-export default class SetProfile extends Component {
+class SetProfile extends Component {
+	static navigatorStyle = {
+		navBarHidden: true
+	};
+
   state={
   	enabled: true
+  }
+
+  _onPressButtonFoward() {
+  	const { navigator } = this.props;
+  	navigator.push( { screen: 'biggestChallenge' } );
   }
 
   render() {
@@ -61,7 +71,11 @@ export default class SetProfile extends Component {
   					<BaseInput placeholder="Doe" label="Last name" width="46%" />
   				</View>
   				<BaseInput placeholder="your@email.com" label="Email" />
-  				<ButtonForward style={localStyles.SPButtonForward} enabled={enabled} />
+  				<ButtonForward
+						style={localStyles.SPButtonForward}
+						enabled={enabled}
+						onPress={() => this._onPressButtonFoward()}
+  				/>
   			</View>
   		</View>
   	);
@@ -70,3 +84,9 @@ export default class SetProfile extends Component {
   	/* eslint-enable react/jsx-indent-props */
   }
 }
+
+SetProfile.propTypes = {
+	navigator: NavigatorPropType.isRequired
+};
+
+export default SetProfile;

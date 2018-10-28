@@ -13,6 +13,7 @@ import Colors from '../../theme/palette';
 import { HTP, WTP } from '../../utils/dimensions';
 import fonts from '../../theme/fonts';
 import styles from './styles';
+import NavigatorPropType from '../../types/navigator';
 
 const localStyles = StyleSheet.create( {
 	infoWrapper: {
@@ -54,7 +55,11 @@ const localStyles = StyleSheet.create( {
 	}
 } );
 
-export default class CreateWelcomeAccount extends Component {
+class CreateWelcomeAccount extends Component {
+	static navigatorStyle = {
+		navBarHidden: true
+	};
+
 	constructor( props ) {
 		super( props );
 		this.state = { enabled: false, createAccount: true };
@@ -67,6 +72,11 @@ export default class CreateWelcomeAccount extends Component {
 		} else {
 			this.setState( { enabled: false } );
 		}
+	}
+
+	_onPressButtonFoward() {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'codeReceiveRegister' } );
 	}
 
 	render() {
@@ -103,9 +113,18 @@ export default class CreateWelcomeAccount extends Component {
 						</Typography>
 					) : null }
 				</View>
-				<ButtonForward enabled={enabled} />
+				<ButtonForward
+					enabled={enabled}
+					onPress={enabled ? () => this._onPressButtonFoward() : null}
+				/>
 			</View>
 		);
 		/* eslint-enable react/jsx-one-expression-per-line */
 	}
 }
+
+CreateWelcomeAccount.propTypes = {
+	navigator: NavigatorPropType.isRequired
+};
+
+export default CreateWelcomeAccount;

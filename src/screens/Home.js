@@ -111,7 +111,7 @@ class Home extends Component {
 					<HomeSearch />
 				</ImageBackground>
 				{this.renderMyConnectionsSection()}
-				<Spacing size="large" />
+				<Spacing size="xLarge" />
 				{this.renderPlacesSection()}
 			</View>
 		);

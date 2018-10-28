@@ -13,7 +13,7 @@ const ConnectionBox = ( { person } ) => (
 			source={person.image}
 		/>
 		<Spacing size="smallPlus" />
-		<Typography variant="midBody" color="blackLabels">{`${person.firstName} ${person.lastName}`}</Typography>
+		<Typography variant="smallBody" color="blackLabels">{`${person.firstName} ${person.lastName}`}</Typography>
 	</View>
 );
 

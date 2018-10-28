@@ -5,8 +5,8 @@ export default {
 	container: {
 		alignItems: 'center'
 	},
-	wrapperConnections: {
+	wrapperPlaces: {
 		marginLeft: hpd( HTP( 32 ) ),
-		top: hpd( HTP( 52 ) )
+		top: hpd( HTP( 50 ) )
 	}
 };

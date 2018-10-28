@@ -9,6 +9,7 @@ import PrivacyPolicy from './policies/PrivacyPolicy';
 import CodeReceiveRegister from './authentication/CodeReceiveRegister';
 import Login from './authentication/Login';
 import AddSkills from './authentication/AddSkills';
+import SetProfile from './authentication/SetProfile';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -48,4 +49,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'codeReceiveRegister', () => CodeReceiveRegister );
 	Navigation.registerComponent( 'login', () => Login );
 	Navigation.registerComponent( 'addSkills', () => AddSkills );
+	Navigation.registerComponent( 'setProfile', () => SetProfile );
 }

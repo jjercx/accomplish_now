@@ -10,8 +10,8 @@ import TitleSection from '../title-section/TitleSection';
 
 const PlacesSection = ( { places } ) => (
 	<View style={styles.container}>
-		<TitleSection title="Places" />
-		<ScrollView horizontal style={styles.wrapperConnections} showsHorizontalScrollIndicator={false}>
+		<TitleSection title="Places to work" />
+		<ScrollView horizontal style={styles.wrapperPlaces} showsHorizontalScrollIndicator={false}>
 			{
 				places.map( place => (
 					<View key={place.id} style={{ flexDirection: 'row' }}>

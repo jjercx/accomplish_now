@@ -26,18 +26,15 @@ const TEXT_SUBTITLE3 = 'Find your neighborhood’s most productive places to get
 const IMG_ONBOARDING3 = require( '../assets/images/onboardings/workspaces.png' );
 
 class Onboarding extends Component {
-	/* eslint-disable class-methods-use-this */
 	_onPressNewAccount() {
-		// goToNewAccount
+		const { navigator } = this.props;
+		navigator.push( { screen: 'createWelcomeAccount' } );
 	}
-	/* eslint-enable class-methods-use-this */
 
-	/* eslint-disable class-methods-use-this */
 	_onPressSignIn() {
 		const { navigator } = this.props;
 		navigator.push( { screen: 'home' } );
 	}
-	/* eslint-enable class-methods-use-this */
 
 	render() {
 		return (
