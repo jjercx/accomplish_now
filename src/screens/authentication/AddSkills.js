@@ -17,6 +17,7 @@ import SkillCard from '../../components/skills/skill-card/SkillCard';
 import SuggestedSkillCard from '../../components/skills/suggested-skill-card/SuggestedSkillCard';
 import colors from '../../theme/palette';
 import styles from './styles';
+import NavigatorPropType from '../../types/navigator';
 
 const arrayRemove = ( array, toRemove ) => {
 	array = array.slice();
@@ -80,6 +81,10 @@ const localStyles = {
 };
 
 class AddSkills extends Component {
+	static navigatorStyle = {
+		navBarHidden: true
+	};
+
 	state = {
 		baseInputFocused: false,
 		text: '',
@@ -116,11 +121,11 @@ class AddSkills extends Component {
 		 } );
 	}
 
-	/* eslint-disable class-methods-use-this */
 	_onSaveAndStart() {
-		alert('on save and start - skill enter: ' + this.state.text); //eslint-disable-line
+		// alert('on save and start - skill enter: ' + this.state.text);
+		const { navigator } = this.props;
+		navigator.push( { screen: 'home' } );
 	}
-	/* eslint-enable class-methods-use-this */
 
 	render() {
 		const {
@@ -184,5 +189,9 @@ class AddSkills extends Component {
 		);
 	}
 }
+
+AddSkills.propTypes = {
+	navigator: NavigatorPropType.isRequired
+};
 
 export default AddSkills;
