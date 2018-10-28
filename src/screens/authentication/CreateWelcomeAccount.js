@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {
 	View, Text, Image, StyleSheet, Platform
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Typography from '../../components/typography/Typography';
 import BaseInput from '../../components/base-input/BaseInput';
@@ -62,7 +63,7 @@ class CreateWelcomeAccount extends Component {
 
 	constructor( props ) {
 		super( props );
-		this.state = { enabled: false, createAccount: true };
+		this.state = { enabled: false };
 		this.onChangeText = this.onChangeText.bind( this );
 	}
 
@@ -75,18 +76,30 @@ class CreateWelcomeAccount extends Component {
 	}
 
 	_onPressButtonFoward() {
+		const { createAccount } = this.props;
 		const { navigator } = this.props;
-		navigator.push( { screen: 'codeReceiveRegister' } );
+		navigator.push( { screen: createAccount ? 'codeReceiveRegister' : 'codeReceiveLogin' } );
+	}
+
+	_onPressBack() {
+		const { navigator } = this.props;
+		navigator.pop();
+	}
+
+	_onPressTerms() {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'termsAndConditions' } );
 	}
 
 	render() {
-		let { enabled, createAccount } = this.state;
+		let { enabled } = this.state;
+		const { createAccount } = this.props;
 		let title = createAccount ? 'Create Account' : 'Welcome back';
 
 		/* eslint-disable react/jsx-one-expression-per-line */
 		return (
 			<View style={styles.container}>
-				<Header title={title} />
+				<Header title={title} onPressBack={() => this._onPressBack()} />
 				<View style={localStyles.infoWrapper}>
 					<Typography variant="smallTitle" color="charcoalGrey" textAlign="left">Enter your mobile number to setup an account. You will receive a verification code via text message and data rates may apply.</Typography>
 				</View>
@@ -108,7 +121,8 @@ class CreateWelcomeAccount extends Component {
 						<Typography variant="smallBody" color="charcoalGrey" textAlign="left">
               By continuing you are agreeing with our {' '}
 							<Text style={{ fontFamily: fonts.productSansBold }}>
-                terms of service and privacy policy.
+                terms of service
+								and privacy policy.
 							</Text>
 						</Typography>
 					) : null }
@@ -124,7 +138,13 @@ class CreateWelcomeAccount extends Component {
 }
 
 CreateWelcomeAccount.propTypes = {
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	createAccount: PropTypes.bool
 };
+
+CreateWelcomeAccount.defaultProps = {
+	createAccount: true
+};
+
 
 export default CreateWelcomeAccount;

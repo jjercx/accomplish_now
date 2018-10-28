@@ -53,12 +53,17 @@ class BiggestChallenge extends Component {
 		navigator.push( { screen: 'currentlyWorkingOn' } );
 	}
 
+	_onPressBack() {
+		const { navigator } = this.props;
+		navigator.pop();
+	}
+
 	render() {
 		let { enabled } = this.state;
 
 		return (
 			<View style={styles.container}>
-				<Header title="Biggest challenge" />
+				<Header title="Biggest challenge" onPressBack={() => this._onPressBack()} />
 				<View style={localStyles.inputContainer}>
 					<BaseInput
 						label="Add your text"

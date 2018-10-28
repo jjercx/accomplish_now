@@ -127,6 +127,11 @@ class AddSkills extends Component {
 		navigator.push( { screen: 'home' } );
 	}
 
+	_onPressBack() {
+		const { navigator } = this.props;
+		navigator.pop();
+	}
+
 	render() {
 		const {
 			text, skills, skillsAdded, baseInputFocused
@@ -134,7 +139,7 @@ class AddSkills extends Component {
 
 		return (
 			<KeyboardAvoidingView style={styles.container} behavior="padding">
-				<Header title="Add your skills" />
+				<Header title="Add your skills" onPressBack={() => this._onPressBack()} />
 				<View style={localStyles.inputContainer}>
 					<BaseInput
 						onRef={( ref ) => { this.textInput = ref; }}

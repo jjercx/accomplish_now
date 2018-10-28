@@ -53,12 +53,17 @@ class CurrentlyWorkingOn extends Component {
 		navigator.push( { screen: 'addSkills' } );
 	}
 
+	_onPressBack() {
+		const { navigator } = this.props;
+		navigator.pop();
+	}
+
 	render() {
 		let { enabled } = this.state;
 
 		return (
 			<View style={styles.container}>
-				<Header title="Currently working on" />
+				<Header title="Currently working on" onPressBack={() => this._onPressBack()} />
 				<View style={localStyles.inputContainer}>
 					<BaseInput
 						label="Add your text"

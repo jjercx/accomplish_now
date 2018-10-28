@@ -54,6 +54,11 @@ class SetProfile extends Component {
   	navigator.push( { screen: 'biggestChallenge' } );
   }
 
+  _onPressBack() {
+  	const { navigator } = this.props;
+  	navigator.pop();
+  }
+
   render() {
   	let { enabled } = this.state;
   	/* eslint-disable react/jsx-indent */
@@ -61,7 +66,7 @@ class SetProfile extends Component {
     /* eslint-disable react/jsx-indent-props */
   	return (
   		<View style={styles.container}>
-  			<Header title="Set Profile" />
+  			<Header title="Set Profile" onPressBack={() => this._onPressBack()} />
   			<TouchableOpacity style={localStyles.addPhotoButton}>
   				<Image source={require( '../../assets/images/icons/addPhoto.png' )} />
   			</TouchableOpacity>

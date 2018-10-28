@@ -28,12 +28,18 @@ const IMG_ONBOARDING3 = require( '../assets/images/onboardings/workspaces.png' )
 class Onboarding extends Component {
 	_onPressNewAccount() {
 		const { navigator } = this.props;
-		navigator.push( { screen: 'createWelcomeAccount' } );
+		navigator.push( {
+			screen: 'createWelcomeAccount',
+			passProps: { createAccount: true }
+		} );
 	}
 
 	_onPressSignIn() {
 		const { navigator } = this.props;
-		navigator.push( { screen: 'home' } );
+		navigator.push( {
+			screen: 'createWelcomeAccount',
+			passProps: { createAccount: false }
+		} );
 	}
 
 	render() {

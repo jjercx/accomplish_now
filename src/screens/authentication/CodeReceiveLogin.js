@@ -12,6 +12,7 @@ import Spacing from '../../components/spacing/Spacing';
 import colors from '../../theme/palette';
 import { HTP, WTP } from '../../utils/dimensions';
 import OneNumberInput from '../../components/one-number-input/OneNumberInput';
+import NavigatorPropType from '../../types/navigator';
 
 const localStyles = {
 	container: {
@@ -45,7 +46,11 @@ const localStyles = {
 	}
 };
 
-class Login extends Component {
+class CodeReceiveLogin extends Component {
+	static navigatorStyle = {
+		navBarHidden: true
+	};
+
 	state = { code: '' }
 
 	componentDidMount() {
@@ -59,12 +64,19 @@ class Login extends Component {
 	/* eslint-enable class-methods-use-this */
 
 	_onLogin() {
-		alert('login with: ' + this.state.code); // eslint-disable-line
+		// alert('login with: ' + this.state.code); // eslint-disable-line
+		const { navigator } = this.props;
+		navigator.push( { screen: 'home' } );
 	}
 
 	_onCodeChange( newCode ) {
 		this.setState( { code: newCode } );
 		if ( newCode.length === 6 ) Keyboard.dismiss();
+	}
+
+	_onPressBack() {
+		const { navigator } = this.props;
+		navigator.pop();
 	}
 
 
@@ -76,7 +88,7 @@ class Login extends Component {
 
 		return (
 			<KeyboardAvoidingView style={localStyles.container} behavior="padding" enabled>
-				<Header title={title} />
+				<Header title={title} onPressBack={() => this._onPressBack()} />
 				<Spacing size="small" />
 				<View style={localStyles.infoWrapper}>
 					<Typography variant="smallTitle" color="charcoalGrey" textAlign="left">{subtitle}</Typography>
@@ -117,4 +129,8 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+CodeReceiveLogin.propTypes = {
+	navigator: NavigatorPropType.isRequired
+};
+
+export default CodeReceiveLogin;

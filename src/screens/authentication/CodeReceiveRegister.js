@@ -75,6 +75,11 @@ class CodeReceiveRegister extends Component {
 		if ( newCode.length === 6 ) Keyboard.dismiss();
 	}
 
+	_onPressBack() {
+		const { navigator } = this.props;
+		navigator.pop();
+	}
+
 	render() {
 		const title = 'What\'s the code?';
 		const subtitle = 'Enter the code sent to ';
@@ -83,7 +88,7 @@ class CodeReceiveRegister extends Component {
 
 		return (
 			<KeyboardAvoidingView style={localStyles.container} behavior="padding" enabled>
-				<Header title={title} />
+				<Header title={title} onPressBack={() => this._onPressBack()} />
 				<Spacing size="small" />
 				<View style={localStyles.infoWrapper}>
 					<Typography variant="smallTitle" color="charcoalGrey" textAlign="left">{subtitle}</Typography>
