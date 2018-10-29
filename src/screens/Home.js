@@ -16,6 +16,7 @@ import MyConnectionsSection from '../components/home/my-connections/MyConnection
 import PlacesSection from '../components/home/places/PlacesSection';
 import Person from '../entities/Person';
 import Place from '../entities/Place';
+import NavBar from '../components/navbar/NavBar';
 
 const styles = StyleSheet.create( {
 	container: {
@@ -113,6 +114,7 @@ class Home extends Component {
 				{this.renderMyConnectionsSection()}
 				<Spacing size="xLarge" />
 				{this.renderPlacesSection()}
+				<NavBar />
 			</View>
 		);
 	}
