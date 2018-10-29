@@ -34,3 +34,5 @@ export function normalize( size ) {
 
 	return Math.round( PixelRatio.roundToNearestPixel( newSize ) ) - 2;
 }
+
+export const iPhoneSE = () => height < 570;

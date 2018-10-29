@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import {
-	View, Text, Image, StyleSheet, Platform
+	View, Text, Image, StyleSheet, Platform, KeyboardAvoidingView
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -11,9 +11,9 @@ import BaseInput from '../../components/base-input/BaseInput';
 import ButtonForward from '../../components/button-icon/ButtonForward';
 import Header from '../../components/register/Header';
 import Colors from '../../theme/palette';
-import { HTP, WTP } from '../../utils/dimensions';
+import { HTP, WTP, iPhoneSE } from '../../utils/dimensions';
 import fonts from '../../theme/fonts';
-import styles from './styles';
+import s from './styles';
 import NavigatorPropType from '../../types/navigator';
 
 const localStyles = StyleSheet.create( {
@@ -26,7 +26,6 @@ const localStyles = StyleSheet.create( {
 		height: hp( HTP( 52 ) ),
 		borderWidth: 1,
 		marginTop: hp( HTP( 25 ) ),
-		marginBottom: hp( HTP( 40 ) ),
 		alignItems: 'center',
 		flexDirection: 'row',
 		marginHorizontal: hp( HTP( 24 ) ),
@@ -53,6 +52,9 @@ const localStyles = StyleSheet.create( {
 		fontSize: hp( HTP( 17 ) ),
 		flex: 1,
 		top: Platform === 'ios' ? 0 : hp( HTP( 1 ) )
+	},
+	buttonStyle: {
+		marginBottom: Platform.OS === 'android' ? hp( HTP( 35 ) ) : 0
 	}
 } );
 
@@ -67,12 +69,16 @@ class CreateWelcomeAccount extends Component {
 		this.onChangeText = this.onChangeText.bind( this );
 	}
 
+	componentDidMount() {
+		this.baseInput.blur();
+		setTimeout( () => {
+			this.baseInput.focus();
+		}, 500 );
+	}
+
 	onChangeText( text ) {
-		if ( text.length === 9 ) {
-			this.setState( { enabled: true } );
-		} else {
-			this.setState( { enabled: false } );
-		}
+		this.setState( { enabled: text.length === 9 } );
+		if ( text.length === 9 ) this.baseInput.blur();
 	}
 
 	_onPressButtonFoward() {
@@ -98,7 +104,7 @@ class CreateWelcomeAccount extends Component {
 
 		/* eslint-disable react/jsx-one-expression-per-line */
 		return (
-			<View style={styles.container}>
+			<KeyboardAvoidingView enabled={!iPhoneSE()} style={[ s.container, localStyles.keyboardAvoidingView ]} behavior="padding">
 				<Header title={title} onPressBack={() => this._onPressBack()} />
 				<View style={localStyles.infoWrapper}>
 					<Typography variant="smallTitle" color="charcoalGrey" textAlign="left">Enter your mobile number to setup an account. You will receive a verification code via text message and data rates may apply.</Typography>
@@ -111,27 +117,41 @@ class CreateWelcomeAccount extends Component {
 						<View style={localStyles.inputTextHint}>
 							<Typography variant="midTitle" color="charcoalGrey" textAlign="center"> +1 </Typography>
 						</View>
-						<BaseInput style={localStyles.inputText} placeholder="(000) 000-0000" keyboardType="numeric" onChangeText={this.onChangeText} maxLength={9} />
+						<BaseInput
+							onRef={( ref ) => { this.baseInput = ref; }}
+							style={localStyles.inputText}
+							placeholder="(000) 000-0000"
+							keyboardType="numeric"
+							onChangeText={this.onChangeText}
+							maxLength={9}
+						/>
 					</View>
 				</View>
-				<View style={[ localStyles.infoWrapper,
-					{ marginBottom: createAccount ? 0 : hp( HTP( 33 ) ) } ]}
-				>
-					{ createAccount ? (
-						<Typography variant="smallBody" color="charcoalGrey" textAlign="left">
-              By continuing you are agreeing with our {' '}
-							<Text style={{ fontFamily: fonts.productSansBold }}>
-                terms of service
-								and privacy policy.
-							</Text>
-						</Typography>
-					) : null }
+				<View style={[ s.flex1, s.space_b ]}>
+					<View style={[ iPhoneSE() ? ( s.flex1, s.center ) : null ]}>
+						<View style={[ localStyles.infoWrapper, s.center,
+							{ marginBottom: createAccount ? 0 : hp( HTP( 33 ) ) } ]}
+						>
+							{ createAccount ? (
+								<Typography variant="smallBody" color="charcoalGrey" textAlign="left">
+									By continuing you are agreeing with our {' '}
+									<Text style={{ fontFamily: fonts.productSansBold }}>
+										terms of service
+										and privacy policy.
+									</Text>
+								</Typography>
+							) : null }
+						</View>
+					</View>
+					<View style={[ s.flex1, s.center ]}>
+						<ButtonForward
+							enabled={enabled}
+							onPress={enabled ? () => this._onPressButtonFoward() : null}
+							style={[ s.buttonForward, localStyles.buttonStyle ]}
+						/>
+					</View>
 				</View>
-				<ButtonForward
-					enabled={enabled}
-					onPress={enabled ? () => this._onPressButtonFoward() : null}
-				/>
-			</View>
+			</KeyboardAvoidingView>
 		);
 		/* eslint-enable react/jsx-one-expression-per-line */
 	}
