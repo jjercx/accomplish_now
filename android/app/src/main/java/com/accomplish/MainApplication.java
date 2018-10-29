@@ -15,10 +15,11 @@ import com.reactnativenavigation.NavigationApplication;
 import java.util.Arrays;
 import java.util.List;
 
+import com.imagepicker.ImagePickerPackage;
 
 
 
-public class MainApplication extends NavigationApplication {
+public class MainApplication extends NavigationApplication implements ReactApplication {
 
 
 
@@ -34,7 +35,8 @@ public class MainApplication extends NavigationApplication {
     return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
             new BlurViewPackage(),
-            new VectorIconsPackage()
+            new VectorIconsPackage(),
+            new ImagePickerPackage()
     );
   }
 
