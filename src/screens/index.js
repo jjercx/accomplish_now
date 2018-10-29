@@ -27,7 +27,7 @@ export function initApp( action ) {
 		default:
 			Navigation.startSingleScreenApp( {
 				screen: {
-					screen: 'onboarding',
+					screen: 'setProfile',
 					navigatorStyle: {
 						navBarHidden: true
 					}

@@ -4600,6 +4600,10 @@ react-native-blur@^3.2.2:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-image-picker@^0.27.1:
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.27.1.tgz#32877c667e8c2713466fe178a6c7dd648e6cb5d3"
+
 react-native-navigation@1.x.x:
   version "1.1.489"
   resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.489.tgz#66cd58358314682b8d717bf7d243a242dd507078"

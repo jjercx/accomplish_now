@@ -1,5 +1,3 @@
-/* @flow */
-
 import React, { Component } from 'react';
 import {
 	View,
@@ -8,6 +6,7 @@ import {
 	StyleSheet
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import ImagePicker from 'react-native-image-picker';
 import Header from '../../components/register/Header';
 import BaseInput from '../../components/base-input/BaseInput';
 import ButtonForward from '../../components/button-icon/ButtonForward';
@@ -37,8 +36,24 @@ const localStyles = StyleSheet.create( {
 		flexDirection: 'row',
 		alignItems: 'center',
 		marginBottom: hp( HTP( 36 ) )
+	},
+	imageProfile: {
+		width: wp( WTP( 87 ) ),
+		height: hp( HTP( 87 ) ),
+		borderRadius: hp( HTP( 87 ) ) / 2
 	}
 } );
+
+const options = {
+	title: 'Select Avatar',
+	quality: 1.0,
+	maxWidth: 500,
+	maxHeight: 500,
+	  torageOptions: {
+		skipBackup: true
+	}
+};
+
 
 class SetProfile extends Component {
 	static navigatorStyle = {
@@ -46,7 +61,9 @@ class SetProfile extends Component {
 	};
 
   state={
-  	enabled: true
+  	enabled: true,
+  	avatarSource: null,
+  	selectAvatar: false
   }
 
   _onPressButtonFoward() {
@@ -59,16 +76,47 @@ class SetProfile extends Component {
   	navigator.pop();
   }
 
+  /* eslint-disable no-console */
+  _onPressProfilePicture() {
+  	ImagePicker.showImagePicker( options, ( response ) => {
+  	  console.log( 'Response = ', response );
+
+		  if ( response.didCancel ) {
+		    console.log( 'User cancelled image picker' );
+		  } else if ( response.error ) {
+		    console.log( 'ImagePicker Error: ', response.error );
+		  } else if ( response.customButton ) {
+		    console.log( 'User tapped custom button: ', response.customButton );
+		  } else {
+		    // const source = { uri: response.uri };
+
+		    // You can also display the image using data:
+		    const source = { uri: `data:image/jpeg;base64,${response.data}` };
+
+  			console.log( source );
+
+		    this.setState( {
+		      avatarSource: source,
+  				selectAvatar: true
+		    } );
+		  }
+  	} );
+  }
+  /* eslint-enable no-console */
+
   render() {
-  	let { enabled } = this.state;
+  	let { enabled, avatarSource, selectAvatar } = this.state;
   	/* eslint-disable react/jsx-indent */
-  	/* eslint-disable indent */
+  		/* eslint-disable indent */
     /* eslint-disable react/jsx-indent-props */
   	return (
   		<View style={styles.container}>
   			<Header title="Set Profile" onPressBack={() => this._onPressBack()} />
-  			<TouchableOpacity style={localStyles.addPhotoButton}>
-  				<Image source={require( '../../assets/images/icons/addPhoto.png' )} />
+  			<TouchableOpacity
+					style={localStyles.addPhotoButton}
+					onPress={() => this._onPressProfilePicture()}
+  			>
+  				<Image style={localStyles.imageProfile} source={!selectAvatar ? require( '../../assets/images/icons/addPhoto.png' ) : avatarSource} />
   			</TouchableOpacity>
   			<View style={localStyles.inputsContainer}>
   				<View style={localStyles.inputRow}>
