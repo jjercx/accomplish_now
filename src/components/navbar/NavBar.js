@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import { BlurView } from 'react-native-blur';
 import styles from './styles';
 import NavBarClosed from './nav-bar-closed/NavBarClosed';
 import NavBarOpen from './nav-bar-open/NavBarOpen';
@@ -23,7 +24,16 @@ class NavBar extends Component {
 				style={[ styles.container, open ? null : styles.containerClose ]}
 				activeOpacity={1}
 			>
-				{ open ? <View style={styles.overlay} /> : null }
+				{ open
+					? (
+						<BlurView
+							style={styles.blur}
+							blurType="dark"
+							blurAmount={3}
+							blurRadius={5}
+						/>
+					)
+					: null }
 				{ open ? <NavBarOpen /> : <NavBarClosed /> }
 			</TouchableOpacity>
 		);
