@@ -54,7 +54,7 @@ const localStyles = StyleSheet.create( {
 		top: Platform === 'ios' ? 0 : hp( HTP( 1 ) )
 	},
 	buttonStyle: {
-		marginBottom: Platform.OS === 'android' ? hp( HTP( 35 ) ) : 0
+		marginBottom: Platform.OS === 'android' ? hp( HTP( 35 ) ) : hp( HTP( 15 ) )
 	}
 } );
 

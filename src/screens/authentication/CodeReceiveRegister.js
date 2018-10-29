@@ -11,7 +11,8 @@ import ButtonForward from '../../components/button-icon/ButtonForward';
 import Header from '../../components/register/Header';
 import Spacing from '../../components/spacing/Spacing';
 import colors from '../../theme/palette';
-import { HTP, WTP } from '../../utils/dimensions';
+import s from './styles';
+import { HTP, WTP, iPhoneSE } from '../../utils/dimensions';
 import OneNumberInput from '../../components/one-number-input/OneNumberInput';
 import NavigatorPropType from '../../types/navigator';
 
@@ -34,16 +35,13 @@ const localStyles = {
 		flex: 1,
 		display: 'flex',
 		justifyContent: 'center',
-		paddingTop: hp( HTP( 20 ) ),
+		paddingTop: hp( HTP( iPhoneSE() ? 5 : 20 ) ),
 		paddingBottom: hp( HTP( 20 ) ),
 		paddingLeft: wp( WTP( 53 ) ),
 		paddingRight: wp( WTP( 53 ) )
 	},
-	buttonLoginContainer: {
-		paddingTop: hp( HTP( 20 ) ),
-		paddingBottom: Platform.OS === 'ios' ? hp( HTP( 15 ) ) : hp( HTP( 40 ) ),
-		paddingLeft: wp( WTP( 24 ) ),
-		paddingRight: wp( WTP( 24 ) )
+	buttonStyle: {
+		marginBottom: Platform.OS === 'android' ? hp( HTP( 35 ) ) : hp( HTP( 15 ) )
 	}
 };
 
@@ -55,7 +53,10 @@ class CodeReceiveRegister extends Component {
 	state = { code: '' }
 
 	componentDidMount() {
-		this.textInput.focus();
+		this.textInput.blur();
+		setTimeout( () => {
+			this.textInput.focus();
+		}, 500 );
 	}
 
 	/* eslint-disable class-methods-use-this */
@@ -87,7 +88,7 @@ class CodeReceiveRegister extends Component {
 		const { code } = this.state;
 
 		return (
-			<KeyboardAvoidingView style={localStyles.container} behavior="padding" enabled>
+			<KeyboardAvoidingView enabled={!iPhoneSE()} style={localStyles.container} behavior="padding" enabled>
 				<Header title={title} onPressBack={() => this._onPressBack()} />
 				<Spacing size="small" />
 				<View style={localStyles.infoWrapper}>
@@ -101,6 +102,7 @@ class CodeReceiveRegister extends Component {
 								<OneNumberInput key={number} number={code[ number ]} /> ) )}
 						</View>
 					</TouchableWithoutFeedback>
+					<Spacing size="smallPlus" />
 					<Button
 						text="Resend Code"
 						textColor={colors.blackLabels}
@@ -108,8 +110,9 @@ class CodeReceiveRegister extends Component {
 						onPress={() => this._onPressResendCode()}
 					/>
 				</View>
-				<View style={localStyles.buttonLoginContainer}>
+				<View style={[ s.flex1, s.center ]}>
 					<ButtonForward
+						style={[ s.buttonForward, localStyles.buttonStyle ]}
 						enabled={code.length === 6}
 						onPress={code.length === 6 ? () => this._onRegister() : null}
 					/>
