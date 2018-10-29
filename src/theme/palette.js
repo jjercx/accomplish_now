@@ -23,5 +23,6 @@ export default {
 	veryLightPink: '#e4e4e4',
 	resendButtonColorOnAndroid: '#00000007',
 	lightGreyBlue: '#aeaebc',
-	pinkishGreyTwo: '#bebcbb'
+	pinkishGreyTwo: '#bebcbb',
+	black: '#000000'
 };
