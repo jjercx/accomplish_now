@@ -1,5 +1,3 @@
-import colors from '../../theme/palette';
-
 export default {
 	container: {
 		alignItems: 'center',
@@ -8,14 +6,13 @@ export default {
 		position: 'absolute',
 		bottom: 0
 	},
-	overlay: {
+	blur: {
 		width: '100%',
 		height: '100%',
 		position: 'absolute',
-		elevation: 1,
-		zIndex: 1,
-		backgroundColor: colors.black,
-		opacity: 0.5
+		elevation: 2,
+		zIndex: 2,
+		opacity: 0.98
 	},
 	containerClose: {
 		alignItems: 'center',

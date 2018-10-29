@@ -19,7 +19,9 @@ export default {
 			height: -3
 		},
 		shadowOpacity: 0.25,
-		shadowRadius: 2
+		shadowRadius: 2,
+		elevation: 2,
+		zIndex: 2
 	},
 	imgArrowUp: {
 		width: wpd( WTP( 13.3 ) ),

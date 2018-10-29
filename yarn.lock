@@ -4594,6 +4594,12 @@ react-is@^16.4.1:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.5.2.tgz#e2a7b7c3f5d48062eb769fcb123505eb928722e3"
 
+react-native-blur@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-blur/-/react-native-blur-3.2.2.tgz#5bfb50638d148982c9560436554ed01d77d6d07d"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-navigation@1.x.x:
   version "1.1.489"
   resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.489.tgz#66cd58358314682b8d717bf7d243a242dd507078"
