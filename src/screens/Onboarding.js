@@ -58,6 +58,26 @@ const styles = {
 	},
 	wrapperButton: {
 		flex: 0.5
+	},
+	paginationStyle: {
+		bottom: hd( '25%' ),
+		marginRight: wd( WTP( 5 ) )
+	},
+	circleOff: {
+		backgroundColor: colors.sliderCircles,
+		borderRadius: 360,
+		width: 7,
+		height: 7,
+		opacity: 0.5,
+		marginLeft: 5
+	},
+	circleOn: {
+		backgroundColor: colors.sliderCircles,
+		borderRadius: 360,
+		width: 7,
+		height: 7,
+		opacity: 1,
+		marginLeft: 5
 	}
 };
 
@@ -96,14 +116,17 @@ class Onboarding extends Component {
 
 		return (
 			<View style={styles.container}>
-				<Swiper style={styles.wrapper} showsPagination={false}>
+				<Swiper
+					paginationStyle={styles.paginationStyle}
+					dot={<View style={styles.circleOff} />}
+					activeDot={<View style={styles.circleOn} />}
+				>
 					{screenData.slides.map( ( screenText, i ) => (
 						<View style={styles.slide} key={screenText}>
 							<OnboardingSlide
 								title={screenText}
 								subTitle={screenData[ `TEXT_SUBTITLE${i + 1}` ]}
 								image={screenData[ `IMG_ONBOARDING${i + 1}` ]}
-								numSlide={( i + 1 )}
 							/>
 						</View>
 					) )}
@@ -116,7 +139,7 @@ class Onboarding extends Component {
 					/>
 				</View>
 				<View style={styles.wrapperOnboarding}>
-					<Spacing size="small" />
+					<Spacing size="smallPlus" />
 					<View style={styles.wrapperButtons}>
 						<View style={styles.wrapperButton}>
 							<Button
