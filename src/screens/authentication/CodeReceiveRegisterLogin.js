@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {
 	View, TextInput, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Typography from '../../components/typography/Typography';
 import Button from '../../components/button/Button';
@@ -17,35 +18,33 @@ import OneNumberInput from '../../components/one-number-input/OneNumberInput';
 import NavigatorPropType from '../../types/navigator';
 
 const localStyles = {
-	container: {
-		flex: 1
-	},
 	infoWrapper: {
 		marginLeft: wp( WTP( 25 ) ),
-		marginTop: hp( HTP( 10 ) ),
-		flexDirection: 'row'
+		marginTop: hp( HTP( 10 ) )
 	},
 	codeContainer: {
 		flexDirection: 'row',
-		paddingTop: hp( HTP( 30 ) ),
-		paddingBottom: hp( HTP( 10 ) ),
-		justifyContent: 'center'
+		paddingTop: hp( HTP( 20 ) ),
+		paddingBottom: hp( HTP( 10 ) )
 	},
 	codeViewContainer: {
-		flex: 1,
-		display: 'flex',
-		justifyContent: 'center',
 		paddingTop: hp( HTP( iPhoneSE() ? 5 : 20 ) ),
 		paddingBottom: hp( HTP( 20 ) ),
-		paddingLeft: wp( WTP( 53 ) ),
-		paddingRight: wp( WTP( 53 ) )
+		paddingLeft: wp( WTP( 30 ) ),
+		paddingRight: wp( WTP( 30 ) )
 	},
 	buttonStyle: {
-		marginBottom: Platform.OS === 'android' ? hp( HTP( 35 ) ) : hp( HTP( 15 ) )
+		marginBottom: Platform.OS === 'android' ? hp( HTP( 55 ) ) : hp( HTP( 15 ) )
+	},
+	buttonLoginContainer: {
+		paddingTop: hp( HTP( 20 ) ),
+		paddingBottom: Platform.OS === 'ios' ? hp( HTP( 15 ) ) : hp( HTP( 50 ) ),
+		paddingLeft: wp( WTP( 24 ) ),
+		paddingRight: wp( WTP( 24 ) )
 	}
 };
 
-class CodeReceiveRegister extends Component {
+class CodeReceiveRegisterLogin extends Component {
 	static navigatorStyle = {
 		navBarHidden: true
 	};
@@ -65,10 +64,10 @@ class CodeReceiveRegister extends Component {
 	}
 	/* eslint-enable class-methods-use-this */
 
-	_onRegister() {
-		// console.log('register with: ' + this.state.code);
+	_onRegisterLogin() {
+		const { codeRegister } = this.props;
 		const { navigator } = this.props;
-		navigator.push( { screen: 'setProfile' } );
+		navigator.push( { screen: codeRegister ? 'setProfile' : 'home' } );
 	}
 
 	_onCodeChange( newCode ) {
@@ -86,36 +85,49 @@ class CodeReceiveRegister extends Component {
 		const subtitle = 'Enter the code sent to ';
 		const phoneNumber = '+1 (123) 456-7890';
 		const { code } = this.state;
+		const { codeRegister } = this.props;
 
 		return (
-			<KeyboardAvoidingView enabled={!iPhoneSE()} style={localStyles.container} behavior="padding" enabled>
+			<KeyboardAvoidingView enabled={!iPhoneSE()} style={s.flex1} behavior="padding">
 				<Header title={title} onPressBack={() => this._onPressBack()} />
 				<Spacing size="small" />
 				<View style={localStyles.infoWrapper}>
 					<Typography variant="smallTitle" color="charcoalGrey" textAlign="left">{subtitle}</Typography>
+					<Spacing size="small" />
 					<Typography variant="smallTitle" color="darkSkyBlue" textAlign="left">{phoneNumber}</Typography>
 				</View>
-				<View style={localStyles.codeViewContainer}>
-					<TouchableWithoutFeedback onPress={() => this.textInput.focus()}>
-						<View style={localStyles.codeContainer}>
-							{[ 0, 1, 2, 3, 4, 5 ].map( number => (
-								<OneNumberInput key={number} number={code[ number ]} /> ) )}
-						</View>
-					</TouchableWithoutFeedback>
-					<Spacing size="smallPlus" />
-					<Button
-						text="Resend Code"
-						textColor={colors.blackLabels}
-						buttonColor={Platform.OS === 'ios' ? colors.whiteTwo : colors.resendButtonColorOnAndroid}
-						onPress={() => this._onPressResendCode()}
-					/>
-				</View>
-				<View style={[ s.flex1, s.center ]}>
-					<ButtonForward
-						style={[ s.buttonForward, localStyles.buttonStyle ]}
-						enabled={code.length === 6}
-						onPress={code.length === 6 ? () => this._onRegister() : null}
-					/>
+				<View style={[ s.flex1, s.space_a ]}>
+					<View style={[ localStyles.codeViewContainer ]}>
+						<TouchableWithoutFeedback onPress={() => this.textInput.focus()}>
+							<View style={[ localStyles.codeContainer, s.center ]}>
+								{[ 0, 1, 2, 3, 4, 5 ].map( number => (
+									<OneNumberInput key={number} number={code[ number ]} /> ) )}
+							</View>
+						</TouchableWithoutFeedback>
+						<Spacing size="smallPlus" />
+						<Button
+							text="Resend Code"
+							textColor={colors.blackLabels}
+							buttonColor={Platform.OS === 'ios' ? colors.whiteTwo : colors.resendButtonColorOnAndroid}
+							onPress={() => this._onPressResendCode()}
+						/>
+					</View>
+					<View style={[ codeRegister ? s.center : localStyles.buttonLoginContainer ]}>
+						{codeRegister ? (
+							<ButtonForward
+								style={[ s.buttonForward, localStyles.buttonStyle ]}
+								enabled={code.length === 6}
+								onPress={() => this._onRegisterLogin()}
+							/>
+						) : (
+							<Button
+								text="Login"
+								textColor={colors.white}
+								buttonColor={code.length === 6 ? colors.orange : colors.disabled}
+								onPress={() => this._onRegisterLogin()}
+							/>
+						)}
+					</View>
 				</View>
 				<TextInput
 					ref={( ref ) => { this.textInput = ref; }}
@@ -130,8 +142,13 @@ class CodeReceiveRegister extends Component {
 	}
 }
 
-CodeReceiveRegister.propTypes = {
-	navigator: NavigatorPropType.isRequired
+CodeReceiveRegisterLogin.propTypes = {
+	navigator: NavigatorPropType.isRequired,
+	codeRegister: PropTypes.bool
 };
 
-export default CodeReceiveRegister;
+CodeReceiveRegisterLogin.defaultProps = {
+	codeRegister: true
+};
+
+export default CodeReceiveRegisterLogin;

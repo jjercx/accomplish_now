@@ -6,10 +6,9 @@ import BiggestChallenge from './authentication/BiggestChallenge';
 import CurrentlyWorkingOn from './authentication/CurrentlyWorkingOn';
 import TermsAndConditions from './policies/TermsAndConditions';
 import PrivacyPolicy from './policies/PrivacyPolicy';
-import CodeReceiveRegister from './authentication/CodeReceiveRegister';
-import CodeReceiveLogin from './authentication/CodeReceiveLogin';
 import AddSkills from './authentication/AddSkills';
 import SetProfile from './authentication/SetProfile';
+import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -46,8 +45,7 @@ export function registerScreens() {
 	Navigation.registerComponent( 'currentlyWorkingOn', () => CurrentlyWorkingOn );
 	Navigation.registerComponent( 'termsAndConditions', () => TermsAndConditions );
 	Navigation.registerComponent( 'privacyPolicy', () => PrivacyPolicy );
-	Navigation.registerComponent( 'codeReceiveRegister', () => CodeReceiveRegister );
-	Navigation.registerComponent( 'codeReceiveLogin', () => CodeReceiveLogin );
 	Navigation.registerComponent( 'addSkills', () => AddSkills );
 	Navigation.registerComponent( 'setProfile', () => SetProfile );
+	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin );
 }
