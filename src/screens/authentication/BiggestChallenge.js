@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import {
 	heightPercentageToDP as hp,
 	widthPercentageToDP as wp
@@ -12,7 +12,7 @@ import Header from '../../components/register/Header';
 import BaseInput from '../../components/base-input/BaseInput';
 import ButtonForward from '../../components/button-icon/ButtonForward';
 import Colors from '../../theme/palette';
-import styles from './styles';
+import s from './styles';
 import NavigatorPropType from '../../types/navigator';
 
 const localStyles = StyleSheet.create( {
@@ -26,9 +26,6 @@ const localStyles = StyleSheet.create( {
 	},
 	label: {
 		marginBottom: hp( HTP( 11 ) )
-	},
-	buttonForward: {
-		marginTop: hp( HTP( 210 ) )
 	}
 } );
 
@@ -41,6 +38,13 @@ class BiggestChallenge extends Component {
 		super( props );
 		this.state = { enabled: false };
 		this.onChangeText = this.onChangeText.bind( this );
+	}
+
+	componentDidMount() {
+		this.baseInput.blur();
+		setTimeout( () => {
+			this.baseInput.focus();
+		}, 500 );
 	}
 
 	onChangeText( text ) {
@@ -62,10 +66,11 @@ class BiggestChallenge extends Component {
 		let { enabled } = this.state;
 
 		return (
-			<View style={styles.container}>
+			<KeyboardAvoidingView style={s.container} behavior="padding">
 				<Header title="Biggest challenge" onPressBack={() => this._onPressBack()} />
 				<View style={localStyles.inputContainer}>
 					<BaseInput
+						onRef={( ref ) => { this.baseInput = ref; }}
 						label="Add your text"
 						labelColor={Colors.charcoalGrey}
 						placeholder="Add your biggest challenge"
@@ -74,12 +79,14 @@ class BiggestChallenge extends Component {
 						labelStyle={localStyles.label}
 					/>
 				</View>
-				<ButtonForward
-					style={localStyles.buttonForward}
-					enabled={enabled}
-					onPress={enabled ? () => this._onPressButtonFoward() : null}
-				/>
-			</View>
+				<View style={[ s.flex1, s.space_a ]}>
+					<ButtonForward
+						style={s.buttonForward}
+						enabled={enabled}
+						onPress={enabled ? () => this._onPressButtonFoward() : null}
+					/>
+				</View>
+			</KeyboardAvoidingView>
 		);
 	}
 }
