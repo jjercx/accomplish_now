@@ -10,20 +10,12 @@ export default {
 	line: {
 		height: hp( HTP( 1 ) ),
 		width: wp( WTP( iPhoneSE() ? 30 : 45 ) ),
-		borderRadius: 5,
-		marginTop: hp( HTP( 7 ) ),
-		marginRight: wp( WTP( 4 ) )
+		borderRadius: 5
 	},
 	lineWithNumber: {
 		backgroundColor: colors.charcoalGrey
 	},
 	lineWithoutNumber: {
 		backgroundColor: colors.veryLightPink
-	},
-	numberContainer: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		marginRight: wp( WTP( iPhoneSE() ? 10 : 4 ) )
 	}
 };

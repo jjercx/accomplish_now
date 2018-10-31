@@ -84,7 +84,11 @@ class CreateWelcomeAccount extends Component {
 	_onPressButtonFoward() {
 		const { createAccount } = this.props;
 		const { navigator } = this.props;
-		navigator.push( { screen: createAccount ? 'codeReceiveRegister' : 'codeReceiveLogin' } );
+
+		navigator.push( {
+			screen: 'codeReceiveRegisterLogin',
+			passProps: { codeRegister: createAccount }
+		} );
 	}
 
 	_onPressBack() {

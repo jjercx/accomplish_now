@@ -8,7 +8,7 @@ export default {
 		alignItems: 'center'
 	},
 	wrapperOnboarding: {
-		bottom: hpd( '25%' ),
+		bottom: hpd( '27%' ),
 		position: 'absolute',
 		alignItems: 'center',
 		marginHorizontal: wpd( WTP( spacings.medium ) )
