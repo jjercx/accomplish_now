@@ -10,6 +10,7 @@ import AddSkills from './authentication/AddSkills';
 import SetProfile from './authentication/SetProfile';
 import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin';
 import UserProfile from './UserProfile';
+import Messages from './Messages';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -50,4 +51,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'setProfile', () => SetProfile );
 	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin );
 	Navigation.registerComponent( 'userProfile', () => UserProfile );
+	Navigation.registerComponent( 'messages', () => Messages );
 }

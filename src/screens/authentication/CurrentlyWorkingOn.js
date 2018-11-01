@@ -26,6 +26,12 @@ const localStyles = StyleSheet.create( {
 	},
 	label: {
 		marginBottom: hp( HTP( 11 ) )
+	},
+	buttonContainer: {
+		flex: 1,
+		display: 'flex',
+		alignContent: 'space-around',
+		justifyContent: 'space-around'
 	}
 } );
 
@@ -79,7 +85,7 @@ class CurrentlyWorkingOn extends Component {
 						labelStyle={localStyles.label}
 					/>
 				</View>
-				<View style={[ s.flex1, s.space_a ]}>
+				<View style={localStyles.buttonContainer}>
 					<ButtonForward
 						style={s.buttonForward}
 						enabled={enabled}

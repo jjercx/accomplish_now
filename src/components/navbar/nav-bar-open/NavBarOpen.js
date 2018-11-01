@@ -5,8 +5,14 @@ import styles from './styles';
 import TabButton from '../tab-button/TabButton';
 import Spacing from '../../spacing/Spacing';
 import { HTP, WTP } from '../../../utils/dimensions';
+import NavigatorPropType from '../../../types/navigator';
 
 class NavBarOpen extends Component {
+	_onPressMessages = () => {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'messages' } );
+	}
+
 	render() {
 		const percentSmaller = 0.10;
 		return (
@@ -44,7 +50,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/messageson.png' )}
 							imageWidth={wpd( WTP( 32 - ( 32 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 24.7 - ( 24.7 * percentSmaller ) ) )}
-							onPress={() => this._onPressDashbaord()}
+							onPress={() => this._onPressMessages()}
 						/>
 						<Spacing size="base" horizontal />
 						<TabButton
@@ -69,5 +75,8 @@ class NavBarOpen extends Component {
 	}
 }
 
+NavBarOpen.propTypes = {
+	navigator: NavigatorPropType.isRequired
+};
 
 export default NavBarOpen;

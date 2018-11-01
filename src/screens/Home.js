@@ -90,6 +90,7 @@ class Home extends Component {
 	render() {
 		const { available } = this.state;
 		const { navigator: _navigator } = this.props;
+
 		return (
 			<View style={styles.container}>
 				<ImageBackground

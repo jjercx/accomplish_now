@@ -7,7 +7,7 @@ export default {
 		width: '100%',
 		height: '100%',
 		zIndex: 2,
-		backgroundColor: Platform.OS === 'android' ? '#00000099' : null
+		backgroundColor: Platform.OS === 'android' ? '#00000050' : null
 	},
 	navBarOpen: {
 		width: '99%',
