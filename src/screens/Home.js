@@ -3,7 +3,8 @@ import {
 	ImageBackground,
 	View,
 	Switch,
-	StyleSheet
+	StyleSheet,
+	findNodeHandle
 } from 'react-native';
 import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import UserSection from '../components/home/header/UserSection';
@@ -51,7 +52,14 @@ class Home extends Component {
 	};
 
 	state = {
-		available: false
+		available: false,
+		blurViewRef: null
+	}
+
+	componentDidMount() {
+		this.setState( {
+			blurViewRef: findNodeHandle( this.viewRef )
+		} );
 	}
 
 	_onValueChange( value ) {
@@ -87,34 +95,36 @@ class Home extends Component {
 	/* eslint-enable class-methods-use-this */
 
 	render() {
-		const { available } = this.state;
+		const { available, blurViewRef } = this.state;
 		return (
 			<View style={styles.container}>
-				<ImageBackground
-					source={require( '../assets/images/home/header.png' )}
-					style={styles.imageBackground}
-				>
-					<UserSection userFirstName="Javier" meetings={12} />
-					<View style={styles.wrapperContainerAvailable}>
-						<View style={styles.wrapperAvailable}>
-							<Typography variant="smallTitle" color="white">{IM_AVAILABLE_TEXT}</Typography>
-							<Spacing size="small" horizontal />
-							<Switch
-								onValueChange={value => this._onValueChange( value )}
-								value={available}
-								onTintColor={colors.orange}
-								thumbTintColor={colors.switchThumbTintColor}
-								tintColor={colors.switchTintColor}
-								style={{ transform: [ { scaleX: 0.8 }, { scaleY: 0.8 } ] }}
-							/>
+				<View ref={( ref ) => { this.viewRef = ref; }}>
+					<ImageBackground
+						source={require( '../assets/images/home/header.png' )}
+						style={styles.imageBackground}
+					>
+						<UserSection userFirstName="Javier" meetings={12} />
+						<View style={styles.wrapperContainerAvailable}>
+							<View style={styles.wrapperAvailable}>
+								<Typography variant="smallTitle" color="white">{IM_AVAILABLE_TEXT}</Typography>
+								<Spacing size="small" horizontal />
+								<Switch
+									onValueChange={value => this._onValueChange( value )}
+									value={available}
+									onTintColor={colors.orange}
+									thumbTintColor={colors.switchThumbTintColor}
+									tintColor={colors.switchTintColor}
+									style={{ transform: [ { scaleX: 0.8 }, { scaleY: 0.8 } ] }}
+								/>
+							</View>
 						</View>
-					</View>
-					<HomeSearch />
-				</ImageBackground>
-				{this.renderMyConnectionsSection()}
-				<Spacing size="xLarge" />
-				{this.renderPlacesSection()}
-				<NavBar />
+						<HomeSearch />
+					</ImageBackground>
+					{this.renderMyConnectionsSection()}
+					<Spacing size="xLarge" />
+					{this.renderPlacesSection()}
+				</View>
+				<NavBar viewRef={blurViewRef} />
 			</View>
 		);
 	}

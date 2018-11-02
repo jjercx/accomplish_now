@@ -1,7 +1,14 @@
+import { Platform } from 'react-native';
 import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import colors from '../../../theme/palette';
 
 export default {
+	navBarOpenContainer: {
+		width: '100%',
+		height: '100%',
+		zIndex: 2,
+		backgroundColor: Platform.OS === 'android' ? '#00000099' : null
+	},
 	navBarOpen: {
 		width: '99%',
 		height: hpd( '33%' ),
