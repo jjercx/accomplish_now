@@ -27,5 +27,8 @@ export default {
 		textAlign: 'center',
 		fontSize: hp( HTP( 15 ) ),
 		fontWeight: '400'
+	},
+	buttonBack: {
+		top: '5%'
 	}
 };
