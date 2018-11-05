@@ -9,7 +9,7 @@ import PrivacyPolicy from './policies/PrivacyPolicy';
 import AddSkills from './authentication/AddSkills';
 import SetProfile from './authentication/SetProfile';
 import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin';
-import ProfileUser from './ProfileUser';
+import UserProfile from './UserProfile';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -49,5 +49,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'addSkills', () => AddSkills );
 	Navigation.registerComponent( 'setProfile', () => SetProfile );
 	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin );
-	Navigation.registerComponent( 'profileUser', () => ProfileUser );
+	Navigation.registerComponent( 'userProfile', () => UserProfile );
 }

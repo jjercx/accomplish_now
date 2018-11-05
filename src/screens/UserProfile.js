@@ -45,7 +45,7 @@ const styles = StyleSheet.create( {
 } );
 
 /* eslint-disable react/prefer-stateless-function */
-class ProfileUser extends Component {
+class UserProfile extends Component {
 	static navigatorStyle = {
 		navBarHidden: true
 	};
@@ -98,15 +98,15 @@ class ProfileUser extends Component {
 		return (
 			<View style={styles.container}>
 				<View ref={( ref ) => { this.viewRef = ref; }} style={styles.scrollerWrapper}>
-					<Header onPressBack={() => this._onPressBack()} />
-					<UserCard person={person} />
-					<Spacing size="smallPlus" />
 					<ScrollView
 						vertical
 						showsVerticalScrollIndicator
 						style={styles.scroller}
 						contentContainerStyle={styles.scrollerContainer}
 					>
+						<Header onPressBack={() => this._onPressBack()} />
+						<UserCard person={person} />
+						<Spacing size="smallPlus" />
 						<ActionsCard />
 						<Spacing size="smallPlus" />
 						<SkillsCard skills={person.skills} />
@@ -128,8 +128,8 @@ class ProfileUser extends Component {
 }
 /* eslint-enable react/prefer-stateless-function */
 
-ProfileUser.propTypes = {
+UserProfile.propTypes = {
 	navigator: NavigatorPropType.isRequired
 };
 
-export default ProfileUser;
+export default UserProfile;
