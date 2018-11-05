@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { BlurView } from 'react-native-blur';
-import PropTypes from 'prop-types';
 import styles from './styles';
 import NavBarClosed from './nav-bar-closed/NavBarClosed';
 import NavBarOpen from './nav-bar-open/NavBarOpen';
+import NavigatorPropType from '../../types/navigator';
 
 class NavBar extends Component {
 	state={
@@ -18,7 +18,7 @@ class NavBar extends Component {
 
 	render() {
 		const { open } = this.state;
-		const { viewRef } = this.props;
+		const { navigator: _navigator } = this.props;
 
 		return (
 			<TouchableOpacity
@@ -30,25 +30,20 @@ class NavBar extends Component {
 					? (
 						<BlurView
 							style={styles.blur}
-							viewRef={viewRef}
 							blurType="dark"
 							blurAmount={3}
 							blurRadius={5}
 						/>
 					)
 					: null }
-				{ open ? <NavBarOpen /> : <NavBarClosed /> }
+				{ open ? <NavBarOpen navigator={_navigator} /> : <NavBarClosed navigator={_navigator} /> }
 			</TouchableOpacity>
 		);
 	}
 }
 
 NavBar.propTypes = {
-	viewRef: PropTypes.any
-};
-
-NavBar.defaultProps = {
-	viewRef: null
+	navigator: NavigatorPropType.isRequired
 };
 
 export default NavBar;
