@@ -1,4 +1,4 @@
-# Accomplish - React Native - Mobile App
+# NowAccomplish
 With the ACCOMPLISH app, find the professional advice your start-up needs from your neighborhood's brightest minds. 
 And as one of them, share your expertise to get paid for your time! 
 
@@ -28,6 +28,9 @@ $ pod install
   -  [React Native Firebase](https://github.com/invertase/react-native-firebase)  
 
 ###### Style guidelines
-  -  https://eslint.org/
+  - https://eslint.org/
+  - https://github.com/airbnb/javascript
+  - https://github.com/airbnb/javascript/tree/master/react
+  
 
 :v: **Enjoy!**
