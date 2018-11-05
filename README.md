@@ -18,16 +18,16 @@ $ pod install
 
 ## Libreries used
 
-### Flux architecture
+######  Flux architecture
   -  [Redux](https://redux.js.org/introduction)
 
-### Routing and navigation**
+######  Routing and navigation**
   -  [React Native Navigtation from Wix](https://github.com/wix/react-native-navigation)   
 
-### Firebase
+######  Firebase
   -  [React Native Firebase](https://github.com/invertase/react-native-firebase)  
 
-###### Style guidelines
+## Style guidelines
   - https://eslint.org/
   - https://github.com/airbnb/javascript
   - https://github.com/airbnb/javascript/tree/master/react
