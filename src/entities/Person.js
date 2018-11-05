@@ -31,3 +31,12 @@ export default Person;
 export const PersonState = Object.freeze( {
 	AVAILABLE: 1
 } );
+
+export function getStateName( state ) {
+	switch ( state ) {
+		case PersonState.AVAILABLE:
+			return 'Available';
+		default:
+			return '';
+	}
+}
