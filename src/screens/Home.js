@@ -61,10 +61,10 @@ class Home extends Component {
 
 	/* eslint-disable class-methods-use-this */
 	renderMyConnectionsSection() {
-		const JD = new Person( 1, 'Jhon', 'D.', require( '../assets/images/connections/jd.png' ) );
-		const C = new Person( 2, 'Claire', 'T.', require( '../assets/images/connections/c.png' ) );
-		const MD = new Person( 3, 'Michae', 'D.', require( '../assets/images/connections/md.png' ) );
-		const SW = new Person( 4, 'Stephanie', 'W.', require( '../assets/images/connections/sd.png' ) );
+		const JD = new Person( 1, 'Jhon', 'D.', 'Designer', require( '../assets/images/connections/jd.png' ) );
+		const C = new Person( 2, 'Claire', 'T.', 'Designer', require( '../assets/images/connections/c.png' ) );
+		const MD = new Person( 3, 'Michae', 'D.', 'Designer', require( '../assets/images/connections/md.png' ) );
+		const SW = new Person( 4, 'Stephanie', 'W.', 'Designer', require( '../assets/images/connections/sd.png' ) );
 		const connections = [ JD, C, MD, SW ];
 		return (
 			<MyConnectionsSection
