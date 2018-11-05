@@ -16,15 +16,15 @@ $ pod install
 ## launch Android
 ``$ react-native run-android``
 
-###### Libreries used
+## Libreries used
 
-- **Flux architecture**
+### Flux architecture
   -  [Redux](https://redux.js.org/introduction)
 
-- **Routing and navigation**
+### Routing and navigation**
   -  [React Native Navigtation from Wix](https://github.com/wix/react-native-navigation)   
 
-- **Firebase**
+### Firebase
   -  [React Native Firebase](https://github.com/invertase/react-native-firebase)  
 
 ###### Style guidelines
