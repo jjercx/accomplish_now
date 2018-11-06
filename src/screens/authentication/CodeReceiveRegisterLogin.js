@@ -18,6 +18,9 @@ import OneNumberInput from '../../components/one-number-input/OneNumberInput';
 import NavigatorPropType from '../../types/navigator';
 
 const localStyles = {
+	container: {
+		flex: 1
+	},
 	infoWrapper: {
 		marginLeft: wp( WTP( 25 ) ),
 		marginTop: hp( HTP( 10 ) )
@@ -41,6 +44,17 @@ const localStyles = {
 		paddingBottom: Platform.OS === 'ios' ? hp( HTP( 15 ) ) : hp( HTP( 50 ) ),
 		paddingLeft: wp( WTP( 24 ) ),
 		paddingRight: wp( WTP( 24 ) )
+	},
+	buttonLoginContainer_codeRegister: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	contentContainer: {
+		flex: 1,
+		display: 'flex',
+		alignContent: 'space-around',
+		justifyContent: 'space-around'
 	}
 };
 
@@ -88,7 +102,7 @@ class CodeReceiveRegisterLogin extends Component {
 		const { codeRegister } = this.props;
 
 		return (
-			<KeyboardAvoidingView enabled={!iPhoneSE()} style={s.flex1} behavior="padding">
+			<KeyboardAvoidingView enabled={!iPhoneSE()} style={localStyles.container} behavior="padding">
 				<Header title={title} onPressBack={() => this._onPressBack()} />
 				<Spacing size="small" />
 				<View style={localStyles.infoWrapper}>
@@ -96,8 +110,8 @@ class CodeReceiveRegisterLogin extends Component {
 					<Spacing size="small" />
 					<Typography variant="smallTitle" color="darkSkyBlue" textAlign="left">{phoneNumber}</Typography>
 				</View>
-				<View style={[ s.flex1, s.space_a ]}>
-					<View style={[ localStyles.codeViewContainer ]}>
+				<View style={localStyles.contentContainer}>
+					<View style={localStyles.codeViewContainer}>
 						<TouchableWithoutFeedback onPress={() => this.textInput.focus()}>
 							<View style={[ localStyles.codeContainer, s.center ]}>
 								{[ 0, 1, 2, 3, 4, 5 ].map( number => (
@@ -112,7 +126,12 @@ class CodeReceiveRegisterLogin extends Component {
 							onPress={() => this._onPressResendCode()}
 						/>
 					</View>
-					<View style={[ codeRegister ? s.center : localStyles.buttonLoginContainer ]}>
+					<View style={[
+						codeRegister
+							? localStyles.buttonLoginContainer_codeRegister
+							: localStyles.buttonLoginContainer
+					]}
+					>
 						{codeRegister ? (
 							<ButtonForward
 								style={[ s.buttonForward, localStyles.buttonStyle ]}

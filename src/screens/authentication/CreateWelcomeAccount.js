@@ -55,6 +55,24 @@ const localStyles = StyleSheet.create( {
 	},
 	buttonStyle: {
 		marginBottom: Platform.OS === 'android' ? hp( HTP( 35 ) ) : hp( HTP( 15 ) )
+	},
+	contentContainer: {
+		flex: 1,
+		display: 'flex',
+		alignContent: 'space-between',
+		justifyContent: 'space-between'
+	},
+	iPhoneSE: {
+		flex: 1,
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	buttonContainer: {
+		flex: 1,
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center'
 	}
 } );
 
@@ -131,9 +149,9 @@ class CreateWelcomeAccount extends Component {
 						/>
 					</View>
 				</View>
-				<View style={[ s.flex1, s.space_b ]}>
-					<View style={[ iPhoneSE() ? ( s.flex1, s.center ) : null ]}>
-						<View style={[ localStyles.infoWrapper, s.center,
+				<View style={localStyles.contentContainer}>
+					<View style={[ iPhoneSE() ? localStyles.iPhoneSE : null ]}>
+						<View style={[ localStyles.infoWrapper,
 							{ marginBottom: createAccount ? 0 : hp( HTP( 33 ) ) } ]}
 						>
 							{ createAccount ? (
@@ -147,7 +165,7 @@ class CreateWelcomeAccount extends Component {
 							) : null }
 						</View>
 					</View>
-					<View style={[ s.flex1, s.center ]}>
+					<View style={localStyles.buttonContainer}>
 						<ButtonForward
 							enabled={enabled}
 							onPress={enabled ? () => this._onPressButtonFoward() : null}
