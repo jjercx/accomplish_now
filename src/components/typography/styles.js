@@ -46,6 +46,11 @@ const smallTitleBold = {
 	fontFamily: fonts.productSansBold
 };
 
+const xxsmallBody = {
+	fontSize: 10,
+	fontFamily: fonts.productSansRegular
+};
+
 const xsmallBody = {
 	fontSize: 11,
 	fontFamily: fonts.productSansRegular
@@ -55,7 +60,6 @@ const smallBody = {
 	fontSize: 14,
 	fontFamily: fonts.productSansRegular
 };
-
 
 const midBody = {
 	fontSize: 16,
@@ -74,5 +78,6 @@ export default {
 	'semiLargeTitle': semiLargeTitle,
 	'smallTitleBold': smallTitleBold,
 	'midPlusTitle': midPlusTitle,
-	'xsmallBody': xsmallBody
+	'xsmallBody': xsmallBody,
+	'xxsmallBody': xxsmallBody
 };
