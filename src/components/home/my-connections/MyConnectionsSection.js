@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
-
 import styles from './styles';
 import Person from '../../../entities/Person';
 import ConnectionBox from '../../connection/connection-box/ConnectionBox';
@@ -21,10 +20,10 @@ const MyConnectionsSection = ( { connections } ) => (
 				)
 				)
 			}
-
 		</ScrollView>
 	</View>
 );
+
 
 MyConnectionsSection.propTypes = {
 	connections: PropTypes.arrayOf( PropTypes.instanceOf( Person ) )
@@ -33,5 +32,6 @@ MyConnectionsSection.propTypes = {
 MyConnectionsSection.defaultProps = {
 	connections: []
 };
+
 
 export default MyConnectionsSection;

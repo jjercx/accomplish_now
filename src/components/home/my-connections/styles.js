@@ -3,7 +3,8 @@ import { HTP } from '../../../utils/dimensions';
 
 export default {
 	container: {
-		alignItems: 'center'
+		alignItems: 'center',
+		justifyContent: 'center'
 	},
 	wrapperConnections: {
 		marginLeft: hpd( HTP( 32 ) ),
