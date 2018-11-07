@@ -1,21 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, View, ViewPropTypes } from 'react-native';
-import Typography from '../typography/Typography';
-import Person from '../../entities/Person';
+import { Image, View } from 'react-native';
+import Typography from '../../typography/Typography';
+import Person from '../../../entities/Person';
 import styles from './styles';
-import Spacing from '../spacing/Spacing';
+import Spacing from '../../spacing/Spacing';
 
 const PersonCard = ( {
 	person, rating, meetingsCount, distance
 } ) => (
 	<View style={styles.cardContainer}>
-		{ ( distance > 0 ) && (
+		{ ( ( distance > 0 ) && (
 			<View style={styles.distanceWrapper}>
-				<Image style={styles.icon} source={require( '../../assets/images/icons/location.png' )} />
+				<Image style={styles.icon} source={require( '../../../assets/images/icons/location.png' )} />
 				<Typography variant="xsmallBody" color="greyishBrown">{ `${distance} miles` }</Typography>
 			</View>
-		) }
+		) ) || (
+			<View>
+				<Spacing size="base" />
+				<Spacing size="tiny" />
+			</View>
+		)}
 		<View style={styles.avatarWrapper}>
 			<Image style={styles.avatar} source={person.image} />
 		</View>
@@ -32,13 +37,13 @@ const PersonCard = ( {
 			<View style={styles.statsWrapper}>
 				{ ( rating > 0 ) && (
 					<View style={styles.ratingWrapper}>
-						<Image style={styles.icon} source={require( '../../assets/images/icons/rating.png' )} />
+						<Image style={styles.icon} source={require( '../../../assets/images/icons/rating.png' )} />
 						<Typography variant="xsmallBody" color="greyishBrown">{ rating }</Typography>
 					</View>
 				) }
 				{ ( meetingsCount > 0 ) && (
 					<View style={styles.meetingsCountWrapper}>
-						<Image style={styles.icon} source={require( '../../assets/images/icons/meeting.png' )} />
+						<Image style={styles.icon} source={require( '../../../assets/images/icons/meeting.png' )} />
 						<Typography variant="xsmallBody" color="greyishBrown">
 							{ `${meetingsCount} meeting${meetingsCount === 1 ? 's' : ''}` }
 						</Typography>
@@ -49,8 +54,13 @@ const PersonCard = ( {
 		{ ( person.skills.length > 0 ) && (
 			<View style={styles.skillsWrapper}>
 				<View style={styles.skill}>
-					<Typography variant="xsmallBody" color="greyishBrown">{person.skills[ 0 ].skill.name}</Typography>
+					<Typography variant="xxsmallBody" color="greyishBrown">{person.skills[ 0 ].skill.name}</Typography>
 				</View>
+				{ ( person.skills.length > 1 ) && (
+					<View style={styles.skill}>
+						<Typography variant="xxsmallBody" color="greyishBrown">{person.skills[ 1 ].skill.name}</Typography>
+					</View>
+				) }
 			</View>
 		) }
 	</View>

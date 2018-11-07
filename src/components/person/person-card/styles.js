@@ -10,8 +10,8 @@ import colors from '../../../theme/palette';
 
 const styles = StyleSheet.create( {
 	cardContainer: {
-		width: wpd( WTP( 190 ) ),
 		marginHorizontal: wpd( WTP( 5 ) ),
+		marginVertical: wpd( WTP( 5 ) ),
 		paddingVertical: hpd( HTP( 10 ) ),
 		paddingHorizontal: wpd( WTP( 10 ) ),
 		backgroundColor: colors.white,
@@ -20,9 +20,11 @@ const styles = StyleSheet.create( {
 	distanceWrapper: {
 		flexDirection: 'row',
 		justifyContent: 'flex-end',
-		alignItems: 'center'
+		alignItems: 'center',
+		height: hpd( HTP( 20 ) )
 	},
 	avatarWrapper: {
+		marginTop: hpd( HTP( 20 ) ),
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: colors.white,
@@ -35,36 +37,34 @@ const styles = StyleSheet.create( {
 		flex: 1,
 		flexDirection: 'row',
 		justifyContent: 'center',
-		width: wpd( WTP( 170 ) )
+		minWidth: wpd( WTP( 150 ) )
 	},
 	ratingWrapper: {
-		flex: 1,
+		flex: 40,
 		flexDirection: 'row',
 		justifyContent: 'center',
-		alignItems: 'center',
-		paddingRight: wpd( WTP( 20 ) )
+		alignItems: 'center'
 	},
 	meetingsCountWrapper: {
-		flex: 1,
+		flex: 60,
 		flexDirection: 'row',
 		justifyContent: 'center',
-		alignItems: 'center',
-		paddingRight: wpd( WTP( 10 ) )
+		alignItems: 'center'
 	},
 	skillsWrapper: {
-		marginTop: hpd( HTP( 20 ) ),
-		marginBottom: hpd( HTP( 10 ) ),
-		paddingHorizontal: wpd( WTP( 10 ) ),
 		flex: 1,
 		flexDirection: 'row',
-		flexWrap: 'wrap'
+		flexWrap: 'wrap',
+		marginTop: hpd( HTP( 20 ) ),
+		marginBottom: hpd( HTP( 10 ) )
 	},
 	skill: {
+		flex: -1,
 		backgroundColor: colors.sliderCircles,
 		borderRadius: 100,
+		marginHorizontal: wpd( WTP( 5 ) ),
 		paddingVertical: hpd( HTP( 5 ) ),
-		paddingHorizontal: wpd( WTP( 10 ) ),
-		flex: -1
+		paddingHorizontal: wpd( WTP( 8 ) )
 	},
 	avatar: {
 		width: wpd( WTP( 100 ) ),
