@@ -2,10 +2,13 @@
 
 import React, { Component } from 'react';
 import {
-	View, Text, Image, StyleSheet, Platform, KeyboardAvoidingView
+	View, Text, Image, StyleSheet, Platform, KeyboardAvoidingView, Alert
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { actCreateAccount } from '../../actions/authentication';
 import Typography from '../../components/typography/Typography';
 import BaseInput from '../../components/base-input/BaseInput';
 import ButtonForward from '../../components/button-icon/ButtonForward';
@@ -83,8 +86,10 @@ class CreateWelcomeAccount extends Component {
 
 	constructor( props ) {
 		super( props );
-		this.state = { enabled: false };
+		this.state = { enabled: false, phone: null };
 		this.onChangeText = this.onChangeText.bind( this );
+		this._onPressButtonFoward = this._onPressButtonFoward.bind( this );
+		this._callback = this._callback.bind( this );
 	}
 
 	componentDidMount() {
@@ -95,18 +100,23 @@ class CreateWelcomeAccount extends Component {
 	}
 
 	onChangeText( text ) {
-		this.setState( { enabled: text.length === 9 } );
-		if ( text.length === 9 ) this.baseInput.blur();
+		this.setState( { enabled: text.length === 10, phone: text } );
+		if ( text.length === 10 ) this.baseInput.blur();
 	}
 
-	_onPressButtonFoward() {
-		const { createAccount } = this.props;
-		const { navigator } = this.props;
-
+	_callback = () => {
+		const { createAccount, navigator } = this.props;
+		// CAMBIAR ALERT
 		navigator.push( {
 			screen: 'codeReceiveRegisterLogin',
 			passProps: { codeRegister: createAccount }
 		} );
+	}
+
+	_onPressButtonFoward() {
+		const { phone } = this.state;
+		const { actCreateAccount } = this.props;
+		actCreateAccount( phone, this._callback );
 	}
 
 	_onPressBack() {
@@ -123,7 +133,6 @@ class CreateWelcomeAccount extends Component {
 		let { enabled } = this.state;
 		const { createAccount } = this.props;
 		let title = createAccount ? 'Create Account' : 'Welcome back';
-
 		/* eslint-disable react/jsx-one-expression-per-line */
 		return (
 			<KeyboardAvoidingView enabled={!iPhoneSE()} style={[ s.container, localStyles.keyboardAvoidingView ]} behavior="padding">
@@ -145,7 +154,7 @@ class CreateWelcomeAccount extends Component {
 							placeholder="(000) 000-0000"
 							keyboardType="numeric"
 							onChangeText={this.onChangeText}
-							maxLength={9}
+							maxLength={10}
 						/>
 					</View>
 				</View>
@@ -188,5 +197,6 @@ CreateWelcomeAccount.defaultProps = {
 	createAccount: true
 };
 
+const mapDispatchToProps = dispatch => bindActionCreators( { actCreateAccount }, dispatch );
 
-export default CreateWelcomeAccount;
+export default ( connect( null, mapDispatchToProps )( CreateWelcomeAccount ) );

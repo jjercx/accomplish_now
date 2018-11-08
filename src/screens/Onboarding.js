@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
 	View, Image
 } from 'react-native';
-
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper';
 
 import {
@@ -10,7 +11,7 @@ import {
 	heightPercentageToDP as hd
 } from 'react-native-responsive-screen';
 import { HTP, WTP } from '../utils/dimensions';
-
+import { actVerifyLogin } from '../actions/authentication';
 import OnboardingSlide from '../components/onboarding/onboarding-slide/OnboardingSlide';
 import NavigatorPropType from '../types/navigator';
 import Spacing from '../components/spacing/Spacing';
@@ -82,6 +83,20 @@ const styles = {
 };
 
 class Onboarding extends Component {
+	componentWillMount() {
+		const { actVerifyLogin } = this.props;
+		actVerifyLogin( this._callback.bind( this ) );
+	}
+
+	_callback = ( res ) => {
+		if ( res === 'ok' ) {
+			const { navigator } = this.props;
+			navigator.push( {
+				screen: 'home'
+			} );
+		}
+	}
+
 	_onPressNewAccount() {
 		const { navigator } = this.props;
 		navigator.push( {
@@ -171,4 +186,10 @@ Onboarding.propTypes = {
 	navigator: NavigatorPropType.isRequired
 };
 
-export default Onboarding;
+const mapStateToProps = store => ( {
+	user: store.authentication.user
+} );
+
+const mapDispatchToProps = dispatch => bindActionCreators( { actVerifyLogin }, dispatch );
+
+export default ( connect( mapStateToProps, mapDispatchToProps )( Onboarding ) );

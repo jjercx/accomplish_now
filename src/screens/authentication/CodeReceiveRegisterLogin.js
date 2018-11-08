@@ -4,8 +4,11 @@ import React, { Component } from 'react';
 import {
 	View, TextInput, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard
 } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { actVerifyAndSignIn } from '../../actions/authentication';
 import Typography from '../../components/typography/Typography';
 import Button from '../../components/button/Button';
 import ButtonForward from '../../components/button-icon/ButtonForward';
@@ -72,16 +75,23 @@ class CodeReceiveRegisterLogin extends Component {
 		}, 500 );
 	}
 
+	_callback = () => {
+		const { codeRegister } = this.props;
+		const { navigator } = this.props;
+		navigator.push( { screen: codeRegister ? 'setProfile' : 'home' } );
+	}
+
 	/* eslint-disable class-methods-use-this */
 	_onPressResendCode() {
 		alert('resendCode'); // eslint-disable-line
 	}
+
 	/* eslint-enable class-methods-use-this */
 
 	_onRegisterLogin() {
-		const { codeRegister } = this.props;
-		const { navigator } = this.props;
-		navigator.push( { screen: codeRegister ? 'setProfile' : 'home' } );
+		const { code } = this.state;
+		const { actVerifyAndSignIn, user } = this.props;
+		actVerifyAndSignIn( user.uid, code, this._callback.bind( this ) );
 	}
 
 	_onCodeChange( newCode ) {
@@ -170,4 +180,10 @@ CodeReceiveRegisterLogin.defaultProps = {
 	codeRegister: true
 };
 
-export default CodeReceiveRegisterLogin;
+const mapStateToProps = store => ( {
+	user: store.authentication.user
+} );
+
+const mapDispatchToProps = dispatch => bindActionCreators( { actVerifyAndSignIn }, dispatch );
+
+export default ( connect( mapStateToProps, mapDispatchToProps )( CodeReceiveRegisterLogin ) );
