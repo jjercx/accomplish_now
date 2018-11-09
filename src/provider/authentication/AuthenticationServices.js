@@ -5,7 +5,7 @@ export default class AuthenticationServices {
 		return new Promise( async ( resolve, reject ) => {
 			try {
 				let response = await fetch(
-					`https://us-central1-accomplishtest-66926.cloudfunctions.net/createUser?phone=${phone}`,
+					AuthenticationConfig.endpointCreateUser + phone,
 					{
 						method: 'GET',
 						headers: {
@@ -14,7 +14,14 @@ export default class AuthenticationServices {
 						}
 					}
 				);
-				resolve( JSON.parse( response._bodyInit ) );
+				if ( response ) {
+					let body = JSON.parse( response._bodyInit );
+					if ( body.code !== 500 ) {
+						resolve( body );
+					} else {
+						reject( body );
+					}
+				}
 			} catch ( error ) {
 				reject( error );
 			}
@@ -25,7 +32,7 @@ export default class AuthenticationServices {
 		return new Promise( async ( resolve, reject ) => {
 			try {
 				let response = await fetch(
-					'https://us-central1-accomplishtest-66926.cloudfunctions.net/verifyCode',
+					AuthenticationConfig.endpointVerifyCode,
 					{
 						method: 'POST',
 						body: JSON.stringify( {
@@ -38,7 +45,41 @@ export default class AuthenticationServices {
 						}
 					}
 				);
-				resolve( JSON.parse( response._bodyInit ) );
+				if ( response ) {
+					let body = JSON.parse( response._bodyInit );
+					if ( body.code !== 500 ) {
+						resolve( body );
+					} else {
+						reject( body );
+					}
+				}
+			} catch ( error ) {
+				reject( error );
+			}
+		} );
+	}
+
+	static loginUser( phone ) {
+		return new Promise( async ( resolve, reject ) => {
+			try {
+				let response = await fetch(
+					AuthenticationConfig.endpointLoginUser + phone,
+					{
+						method: 'GET',
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json'
+						}
+					}
+				);
+				if ( response ) {
+					let body = JSON.parse( response._bodyInit );
+					if ( body.code !== 500 ) {
+						resolve( body );
+					} else {
+						reject( body );
+					}
+				}
 			} catch ( error ) {
 				reject( error );
 			}
@@ -49,7 +90,7 @@ export default class AuthenticationServices {
 		return AuthenticationConfig.FirebaseConnector.signWithCustomToken( token );
 	}
 
-	static verifyLogin() {
+	static verifyLogin( ) {
 		return AuthenticationConfig.FirebaseConnector.verifyLogin( );
 	}
 }

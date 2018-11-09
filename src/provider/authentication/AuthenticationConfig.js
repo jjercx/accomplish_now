@@ -7,7 +7,15 @@ export default class AuthConfig {
 		return firebaseConnector;
 	}
 
-	static get endpointUsers() {
-		return '/users';
+	static get endpointCreateUser() {
+		return 'https://us-central1-accomplishtest-66926.cloudfunctions.net/createUser?phone=';
+	}
+
+	static get endpointVerifyCode() {
+		return 'https://us-central1-accomplishtest-66926.cloudfunctions.net/verifyCode';
+	}
+
+	static get endpointLoginUser() {
+		return 'https://us-central1-accomplishtest-66926.cloudfunctions.net/loginUser?phone=';
 	}
 }

@@ -10,6 +10,8 @@ import {
 	widthPercentageToDP as wd,
 	heightPercentageToDP as hd
 } from 'react-native-responsive-screen';
+// import Firebase from 'react-native-firebase';
+import AsyncStorage from '../utils/AsyncStorage';
 import { HTP, WTP } from '../utils/dimensions';
 import { actVerifyLogin } from '../actions/authentication';
 import OnboardingSlide from '../components/onboarding/onboarding-slide/OnboardingSlide';
@@ -83,18 +85,14 @@ const styles = {
 };
 
 class Onboarding extends Component {
-	componentWillMount() {
-		const { actVerifyLogin } = this.props;
-		actVerifyLogin( this._callback.bind( this ) );
-	}
-
-	_callback = ( res ) => {
-		if ( res === 'ok' ) {
-			const { navigator } = this.props;
-			navigator.push( {
-				screen: 'home'
-			} );
-		}
+	async componentWillMount() {
+		// Firebase.auth().signOut();
+		// AsyncStorage.removeSessionToken()
+		const { navigator, actVerifyLogin } = this.props;
+		actVerifyLogin();
+		await AsyncStorage.getSessionToken().then( ( token ) => {
+			if ( token ) navigator.push( { screen: 'home' } );
+		} );
 	}
 
 	_onPressNewAccount() {

@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import {
-	View, TextInput, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard
+	View, TextInput, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Alert, ActivityIndicator
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -66,7 +66,7 @@ class CodeReceiveRegisterLogin extends Component {
 		navBarHidden: true
 	};
 
-	state = { code: '' }
+	state = { code: '', isLoading: false }
 
 	componentDidMount() {
 		this.textInput.blur();
@@ -75,10 +75,22 @@ class CodeReceiveRegisterLogin extends Component {
 		}, 500 );
 	}
 
-	_callback = () => {
+	_callback = ( res ) => {
 		const { codeRegister } = this.props;
 		const { navigator } = this.props;
-		navigator.push( { screen: codeRegister ? 'setProfile' : 'home' } );
+		this.setState( { isLoading: false } );
+		if ( res.code === 500 ) {
+			Alert.alert(
+				'Ups!',
+				'Invalid code',
+				[
+					{ text: 'Try again' }
+				],
+				{ cancelable: false }
+			);
+		} else {
+			navigator.push( { screen: codeRegister ? 'setProfile' : 'home' } );
+		}
 	}
 
 	/* eslint-disable class-methods-use-this */
@@ -91,6 +103,7 @@ class CodeReceiveRegisterLogin extends Component {
 	_onRegisterLogin() {
 		const { code } = this.state;
 		const { actVerifyAndSignIn, user } = this.props;
+		this.setState( { isLoading: true } );
 		actVerifyAndSignIn( user.uid, code, this._callback.bind( this ) );
 	}
 
@@ -104,12 +117,43 @@ class CodeReceiveRegisterLogin extends Component {
 		navigator.pop();
 	}
 
+	_renderButtons() {
+		const { code, isLoading } = this.state;
+		const { codeRegister } = this.props;
+
+		if ( !isLoading ) {
+			return (
+				<View style={[
+					codeRegister
+						? localStyles.buttonLoginContainer_codeRegister
+						: localStyles.buttonLoginContainer
+				]}
+				>
+					{codeRegister ? (
+						<ButtonForward
+							style={[ s.buttonForward, localStyles.buttonStyle ]}
+							enabled={code.length === 6}
+							onPress={() => this._onRegisterLogin()}
+						/>
+					) : (
+						<Button
+							text="Login"
+							textColor={colors.white}
+							enabled={code.length === 6}
+							buttonColor={code.length === 6 ? colors.orange : colors.disabled}
+							onPress={() => this._onRegisterLogin()}
+						/>
+					)}
+				</View>
+			);
+		} return <ActivityIndicator size="large" color={colors.orange} />;
+	}
+
 	render() {
 		const title = 'What\'s the code?';
 		const subtitle = 'Enter the code sent to ';
 		const phoneNumber = '+1 (123) 456-7890';
 		const { code } = this.state;
-		const { codeRegister } = this.props;
 
 		return (
 			<KeyboardAvoidingView enabled={!iPhoneSE()} style={localStyles.container} behavior="padding">
@@ -136,27 +180,7 @@ class CodeReceiveRegisterLogin extends Component {
 							onPress={() => this._onPressResendCode()}
 						/>
 					</View>
-					<View style={[
-						codeRegister
-							? localStyles.buttonLoginContainer_codeRegister
-							: localStyles.buttonLoginContainer
-					]}
-					>
-						{codeRegister ? (
-							<ButtonForward
-								style={[ s.buttonForward, localStyles.buttonStyle ]}
-								enabled={code.length === 6}
-								onPress={() => this._onRegisterLogin()}
-							/>
-						) : (
-							<Button
-								text="Login"
-								textColor={colors.white}
-								buttonColor={code.length === 6 ? colors.orange : colors.disabled}
-								onPress={() => this._onRegisterLogin()}
-							/>
-						)}
-					</View>
+					{this._renderButtons()}
 				</View>
 				<TextInput
 					ref={( ref ) => { this.textInput = ref; }}

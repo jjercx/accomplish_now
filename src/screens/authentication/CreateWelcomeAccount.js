@@ -2,13 +2,13 @@
 
 import React, { Component } from 'react';
 import {
-	View, Text, Image, StyleSheet, Platform, KeyboardAvoidingView, Alert
+	View, Text, Image, StyleSheet, Platform, KeyboardAvoidingView, Alert, ActivityIndicator
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actCreateAccount } from '../../actions/authentication';
+import { actCreateAccount, actLoginUser } from '../../actions/authentication';
 import Typography from '../../components/typography/Typography';
 import BaseInput from '../../components/base-input/BaseInput';
 import ButtonForward from '../../components/button-icon/ButtonForward';
@@ -86,7 +86,7 @@ class CreateWelcomeAccount extends Component {
 
 	constructor( props ) {
 		super( props );
-		this.state = { enabled: false, phone: null };
+		this.state = { enabled: false, phone: null, isLoading: false };
 		this.onChangeText = this.onChangeText.bind( this );
 		this._onPressButtonFoward = this._onPressButtonFoward.bind( this );
 		this._callback = this._callback.bind( this );
@@ -104,19 +104,35 @@ class CreateWelcomeAccount extends Component {
 		if ( text.length === 10 ) this.baseInput.blur();
 	}
 
-	_callback = () => {
-		const { createAccount, navigator } = this.props;
+	_callback = ( res, origin ) => {
+		const { navigator, createAccount } = this.props;
 		// CAMBIAR ALERT
-		navigator.push( {
-			screen: 'codeReceiveRegisterLogin',
-			passProps: { codeRegister: createAccount }
-		} );
+		this.setState( { isLoading: false } );
+		if ( res.code === 500 ) {
+			let isErrorLogin = res.error.code === 'auth/user-not-found';
+			Alert.alert(
+				'Ups!',
+				res.error.message,
+				[
+					{ text: isErrorLogin ? 'Create Account' : 'Cancel', onPress: () => ( createAccount ? null : this._onPressButtonFoward( isErrorLogin ) ) },
+					{ text: 'OK' }
+				],
+				{ cancelable: false }
+			);
+		} else {
+			navigator.push( {
+				screen: 'codeReceiveRegisterLogin',
+				passProps: { codeRegister: origin === 'createAccount' }
+			} );
+		}
 	}
 
-	_onPressButtonFoward() {
+	_onPressButtonFoward( isErrorLogin ) {
 		const { phone } = this.state;
-		const { actCreateAccount } = this.props;
-		actCreateAccount( phone, this._callback );
+		const { actCreateAccount, createAccount, actLoginUser } = this.props;
+		this.setState( { isLoading: true } );
+		if ( createAccount || isErrorLogin ) actCreateAccount( phone, res => this._callback( res, 'createAccount' ) );
+		else actLoginUser( phone, res => this._callback( res, 'login' ) );
 	}
 
 	_onPressBack() {
@@ -130,7 +146,7 @@ class CreateWelcomeAccount extends Component {
 	}
 
 	render() {
-		let { enabled } = this.state;
+		let { enabled, isLoading } = this.state;
 		const { createAccount } = this.props;
 		let title = createAccount ? 'Create Account' : 'Welcome back';
 		/* eslint-disable react/jsx-one-expression-per-line */
@@ -175,11 +191,13 @@ class CreateWelcomeAccount extends Component {
 						</View>
 					</View>
 					<View style={localStyles.buttonContainer}>
-						<ButtonForward
-							enabled={enabled}
-							onPress={enabled ? () => this._onPressButtonFoward() : null}
-							style={[ s.buttonForward, localStyles.buttonStyle ]}
-						/>
+						{isLoading ? <ActivityIndicator size="large" color={Colors.orange} /> : (
+							<ButtonForward
+								enabled={enabled}
+								onPress={enabled ? () => this._onPressButtonFoward() : null}
+								style={[ s.buttonForward, localStyles.buttonStyle ]}
+							/>
+						)}
 					</View>
 				</View>
 			</KeyboardAvoidingView>
@@ -197,6 +215,6 @@ CreateWelcomeAccount.defaultProps = {
 	createAccount: true
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators( { actCreateAccount }, dispatch );
+const mapDispatchToProps = dispatch => bindActionCreators( { actCreateAccount, actLoginUser }, dispatch );
 
 export default ( connect( null, mapDispatchToProps )( CreateWelcomeAccount ) );
