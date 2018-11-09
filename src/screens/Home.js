@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { Component } from 'react';
 import {
 	ImageBackground,
@@ -13,9 +14,10 @@ import Spacing from '../components/spacing/Spacing';
 import colors from '../theme/palette';
 import HomeSearch from '../components/home/search/HomeSearch';
 import MyConnectionsSection from '../components/home/my-connections/MyConnectionsSection';
+import WithoutConnections from '../components/home/my-connections/without-connections/WhithoutConnections';
 import PlacesSection from '../components/home/places/PlacesSection';
-import Person from '../entities/Person';
 import Place from '../entities/Place';
+import Person from '../entities/Person';
 import NavBar from '../components/navbar/NavBar';
 import NavigatorPropType from '../types/navigator';
 
@@ -44,6 +46,16 @@ const styles = StyleSheet.create( {
 } );
 
 const IM_AVAILABLE_TEXT = "I'm Available";
+const Place1 = new Place( 1, 'Office 305', require( '../assets/images/places/office305.png' ) );
+const Place2 = new Place( 2, 'Corner SC', require( '../assets/images/places/cornersc.png' ) );
+
+const places = [ Place1, Place2 ];
+const JD = new Person( 1, 'Jhon', 'D.', 'Designer', require( '../assets/images/connections/jd.png' ) );
+const C = new Person( 2, 'Claire', 'T.', 'Designer', require( '../assets/images/connections/c.png' ) );
+const MD = new Person( 3, 'Michae', 'D.', 'Designer', require( '../assets/images/connections/md.png' ) );
+const SW = new Person( 4, 'Stephanie', 'W.', 'Designer', require( '../assets/images/connections/sd.png' ) );
+
+let connections = [ ];
 
 /* eslint-disable react/prefer-stateless-function */
 class Home extends Component {
@@ -61,11 +73,6 @@ class Home extends Component {
 
 	/* eslint-disable class-methods-use-this */
 	renderMyConnectionsSection() {
-		const JD = new Person( 1, 'Jhon', 'D.', 'Designer', require( '../assets/images/connections/jd.png' ) );
-		const C = new Person( 2, 'Claire', 'T.', 'Designer', require( '../assets/images/connections/c.png' ) );
-		const MD = new Person( 3, 'Michae', 'D.', 'Designer', require( '../assets/images/connections/md.png' ) );
-		const SW = new Person( 4, 'Stephanie', 'W.', 'Designer', require( '../assets/images/connections/sd.png' ) );
-		const connections = [ JD, C, MD, SW ];
 		return (
 			<MyConnectionsSection
 				connections={connections}
@@ -76,13 +83,19 @@ class Home extends Component {
 
 	/* eslint-disable class-methods-use-this */
 	renderPlacesSection() {
-		const Place1 = new Place( 1, 'Office 305', require( '../assets/images/places/office305.png' ) );
-		const Place2 = new Place( 2, 'Corner SC', require( '../assets/images/places/cornersc.png' ) );
-		const places = [ Place1, Place2 ];
 		return (
 			<PlacesSection
 				places={places}
 			/>
+		);
+	}
+
+	renderWithOuthConnectionSection() {
+		return (
+			<WithoutConnections
+				onPress={() => {}}
+			/>
+
 		);
 	}
 	/* eslint-enable class-methods-use-this */
@@ -114,8 +127,8 @@ class Home extends Component {
 					</View>
 					<HomeSearch />
 				</ImageBackground>
-				{this.renderMyConnectionsSection()}
-				<Spacing size="xLarge" />
+				{ connections.length > 0 ? this.renderMyConnectionsSection() : this.renderWithOuthConnectionSection() }
+				{ connections.length > 0 ? <Spacing size="large" /> : <Spacing size="xtiny" /> }
 				{this.renderPlacesSection()}
 				<NavBar navigator={_navigator} />
 			</View>

@@ -27,5 +27,6 @@ export default {
 	black: '#000000',
 	lightGreyBlueTwo: '#adadbb',
 	lightGrey: '#d8d8de',
-	tangerine: '#fba104'
+	tangerine: '#fba104',
+	paleGreyThree: '#f6f7f9'
 };

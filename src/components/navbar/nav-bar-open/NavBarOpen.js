@@ -13,6 +13,11 @@ class NavBarOpen extends Component {
 		navigator.push( { screen: 'messages' } );
 	}
 
+	_onPressPeople = () => {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'peopleNearby' } );
+	}
+
 	render() {
 		const percentSmaller = 0.10;
 		return (
@@ -24,7 +29,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/dashboardon.png' )}
 							imageWidth={wpd( WTP( 29.7 - ( 29.7 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 30.3 - ( 30.3 * percentSmaller ) ) )}
-							onPress={() => this._onPressDashbaord()}
+							onPress={() => this._onPressMessages()}
 						/>
 						<Spacing size="base" horizontal />
 						<TabButton
@@ -32,7 +37,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/peopleon.png' )}
 							imageWidth={wpd( WTP( 33.7 - ( 33.7 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 33.7 - ( 33.7 * percentSmaller ) ) )}
-							onPress={() => this._onPressDashbaord()}
+							onPress={() => this._onPressPeople()}
 						/>
 						<Spacing size="base" horizontal />
 						<TabButton
@@ -40,7 +45,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/placeson.png' )}
 							imageWidth={wpd( WTP( 38.3 - ( 38.3 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 30.3 - ( 30.3 * percentSmaller ) ) )}
-							onPress={() => this._onPressDashbaord()}
+							onPress={() => this._onPressMessages()}
 						/>
 					</View>
 					<Spacing size="base" />
@@ -58,7 +63,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/meetingson.png' )}
 							imageWidth={wpd( WTP( 35.7 - ( 35.7 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 26.7 - ( 26.7 * percentSmaller ) ) )}
-							onPress={() => this._onPressDashbaord()}
+							onPress={() => this._onPressMessages()}
 						/>
 						<Spacing size="base" horizontal />
 						<TabButton
@@ -66,7 +71,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/profileon.png' )}
 							imageWidth={wpd( WTP( 34 - ( 34 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 34 - ( 34 * percentSmaller ) ) )}
-							onPress={() => this._onPressDashbaord()}
+							onPress={() => this._onPressMessages()}
 						/>
 					</View>
 				</View>
