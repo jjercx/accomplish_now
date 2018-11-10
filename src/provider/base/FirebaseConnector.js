@@ -12,7 +12,21 @@ export default class FirebaseConnector {
 get = ( uri, id ) => new Promise( ( resolve, reject ) => {
 	try {
 		if ( id ) { uri = `${uri}/${id}`; }
-		Firebase.ref( uri ).once( 'value', ( snapshot ) => {
+		Firebase.database().ref( uri ).once( 'value', ( snapshot ) => {
+			let snap = snapshot.val();
+			resolve( snap );
+		} );
+	} catch ( e ) {
+		reject( e );
+	}
+} );
+
+currentUserData = path => new Promise( ( resolve, reject ) => {
+	const { currentUser } = Firebase.auth();
+	const uid = currentUser._user.uid;
+	try {
+		if ( uid ) { path = `${path}/${uid}`; }
+		Firebase.database().ref( path ).once( 'value', ( snapshot ) => {
 			let snap = snapshot.val();
 			resolve( snap );
 		} );
@@ -22,23 +36,23 @@ get = ( uri, id ) => new Promise( ( resolve, reject ) => {
 } );
 
 remove = ( uri, id ) => {
-	Firebase.ref( `${uri}/${id}` ).remove();
+	Firebase.database().ref( `${uri}/${id}` ).remove();
 };
 
 set = ( uri, obj, id ) => {
-	Firebase.ref( `${uri}/${id}` ).set( obj );
+	Firebase.database().ref( `${uri}/${id}` ).set( obj );
 };
 
 setPush = ( uri, obj ) => {
-	Firebase.ref( uri ).push( obj );
+	Firebase.database().ref( uri ).push( obj );
 };
 
 update = ( uri, obj ) => {
-	Firebase.ref( `${uri}/${obj.ref}` ).update( obj );
+	Firebase.database().ref( `${uri}/${obj.ref}` ).update( obj );
 };
 
 listener = ( uri, callback ) => {
-	Firebase.ref( uri ).on( 'value', ( snapshot ) => {
+	Firebase.database().ref( uri ).on( 'value', ( snapshot ) => {
 		let snap = snapshot.val();
 		callback( snap );
 	} );
@@ -69,9 +83,8 @@ createUserWithEmailAndPassword = ( user, onSuccess, onError ) => {
 verifyLogin = () => new Promise( async ( resolve, reject ) => {
 	Firebase.auth().onAuthStateChanged( ( user ) => {
 		if ( user ) {
-			user.getIdToken( true ).then( ( token ) => {
-				let newToken = token;
-				resolve( newToken );
+			user.getIdToken( true ).then( ( ) => {
+				resolve( user );
 			} ).catch( ( error ) => {
 				reject( error );
 			} );

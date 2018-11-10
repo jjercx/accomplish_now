@@ -10,7 +10,7 @@ import {
 	widthPercentageToDP as wd,
 	heightPercentageToDP as hd
 } from 'react-native-responsive-screen';
-// import Firebase from 'react-native-firebase';
+import Firebase from 'react-native-firebase';
 import AsyncStorage from '../utils/AsyncStorage';
 import { HTP, WTP } from '../utils/dimensions';
 import { actVerifyLogin } from '../actions/authentication';
@@ -85,13 +85,17 @@ const styles = {
 };
 
 class Onboarding extends Component {
-	async componentWillMount() {
+	componentWillMount() {
 		// Firebase.auth().signOut();
-		// AsyncStorage.removeSessionToken()
-		const { navigator, actVerifyLogin } = this.props;
+		// AsyncStorage.removeUser()
+		const { actVerifyLogin } = this.props;
 		actVerifyLogin();
-		await AsyncStorage.getSessionToken().then( ( token ) => {
-			if ( token ) navigator.push( { screen: 'home' } );
+	}
+
+	async componentDidMount() {
+		const { navigator } = this.props;
+		await AsyncStorage.getUser().then( ( asyncUser ) => {
+			if ( asyncUser ) navigator.push( { screen: 'home' } );
 		} );
 	}
 
@@ -184,10 +188,6 @@ Onboarding.propTypes = {
 	navigator: NavigatorPropType.isRequired
 };
 
-const mapStateToProps = store => ( {
-	user: store.authentication.user
-} );
-
 const mapDispatchToProps = dispatch => bindActionCreators( { actVerifyLogin }, dispatch );
 
-export default ( connect( mapStateToProps, mapDispatchToProps )( Onboarding ) );
+export default ( connect( null, mapDispatchToProps )( Onboarding ) );

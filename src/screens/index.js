@@ -44,7 +44,7 @@ export function initApp( action ) {
 // register all screens of the app (including internal ones)
 export function registerScreens() {
 	Navigation.registerComponent( 'onboarding', () => Onboarding, store, Provider );
-	Navigation.registerComponent( 'home', () => Home );
+	Navigation.registerComponent( 'home', () => Home, store, Provider );
 	Navigation.registerComponent( 'createWelcomeAccount', () => CreateWelcomeAccount, store, Provider );
 	Navigation.registerComponent( 'biggestChallenge', () => BiggestChallenge );
 	Navigation.registerComponent( 'currentlyWorkingOn', () => CurrentlyWorkingOn );
@@ -53,7 +53,7 @@ export function registerScreens() {
 	Navigation.registerComponent( 'addSkills', () => AddSkills );
 	Navigation.registerComponent( 'setProfile', () => SetProfile );
 	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin, store, Provider );
-	Navigation.registerComponent( 'userProfile', () => UserProfile );
+	Navigation.registerComponent( 'userProfile', () => UserProfile, store, Provider );
 	Navigation.registerComponent( 'messages', () => Messages );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
 }
