@@ -9,8 +9,8 @@ import styles from './styles';
 const AboutCard = ( { title, aboutInfo } ) => (
 	<Card title={title} icon={CardIcon.ABOUT_ME}>
 		<View style={styles.contentWrapper}>
-			<AboutItem title="I am" description={aboutInfo.iAmText} />
-			<AboutItem title="I am looking to" description={aboutInfo.iAmLookingToText} />
+			<AboutItem title="I am" descriptions={aboutInfo.iAmText} />
+			<AboutItem title="I am looking to" descriptions={aboutInfo.iAmLookingToText} />
 		</View>
 	</Card>
 );

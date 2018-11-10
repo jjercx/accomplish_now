@@ -4,24 +4,26 @@ import { View } from 'react-native';
 import Typography from '../../typography/Typography';
 import styles from './styles';
 
-const AboutItem = ( { title, description } ) => (
+const AboutItem = ( { title, descriptions } ) => (
 	<View>
 		<View style={styles.titleWrapper}>
 			<Typography variant="midBody" color="darkSkyBlue" textAlign="left">
 				{title}
 			</Typography>
 		</View>
-		<View style={styles.textWrapper}>
-			<Typography variant="smallBody" color="charcoalGrey" textAlign="justify">
-				{description}
-			</Typography>
-		</View>
+		{descriptions.map( ( description, i ) => (
+			<View key={i.toString()} style={styles.textWrapper}>
+				<Typography variant="smallBody" color="charcoalGrey" textAlign="justify">
+					{description}
+				</Typography>
+			</View>
+		) )}
 	</View>
 );
 
 AboutItem.propTypes = {
 	title: PropTypes.string.isRequired,
-	description: PropTypes.string.isRequired
+	descriptions: PropTypes.arrayOf( PropTypes.string ).isRequired
 };
 
 export default AboutItem;

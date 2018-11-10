@@ -18,6 +18,11 @@ class NavBarOpen extends Component {
 		navigator.push( { screen: 'peopleNearby' } );
 	}
 
+	_onPressUserProfile = () => {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'userProfile' } );
+	}
+
 	render() {
 		const percentSmaller = 0.10;
 		return (
@@ -71,7 +76,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/profileon.png' )}
 							imageWidth={wpd( WTP( 34 - ( 34 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 34 - ( 34 * percentSmaller ) ) )}
-							onPress={() => this._onPressMessages()}
+							onPress={() => this._onPressUserProfile()}
 						/>
 					</View>
 				</View>

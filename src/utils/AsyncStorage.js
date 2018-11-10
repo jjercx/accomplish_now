@@ -1,18 +1,18 @@
 import { AsyncStorage } from 'react-native';
 
-let TOKEN = '@token:key';
+let USER = '@user:key';
 
 class AppAsyncStorage {
-	static setSessionToken( token ) {
-		return AsyncStorage.setItem( TOKEN, token );
+	static setUser( user ) {
+		return AsyncStorage.setItem( USER, user );
 	}
 
-	static getSessionToken() {
-		return AsyncStorage.getItem( TOKEN );
+	static getUser() {
+		return AsyncStorage.getItem( USER );
 	}
 
-	static removeSessionToken() {
-		return AsyncStorage.removeItem( TOKEN );
+	static removeUser() {
+		return AsyncStorage.removeItem( USER );
 	}
 }
 

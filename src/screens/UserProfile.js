@@ -7,8 +7,9 @@ import {
 } from 'react-native';
 
 import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { HTP } from '../utils/dimensions';
-
 import NavigatorPropType from '../types/navigator';
 import Spacing from '../components/spacing/Spacing';
 import NavBar from '../components/navbar/NavBar';
@@ -16,7 +17,6 @@ import colors from '../theme/palette';
 import Person, { PersonState } from '../entities/Person';
 import Skill, { ComputedSkill } from '../entities/Skill';
 import AboutInfo from '../entities/AboutInfo';
-
 import Header from '../components/profile-user/header/Header';
 import UserCard from '../components/profile-user/user-card/UserCard';
 import ActionsCard from '../components/profile-user/actions-card/ActionsCard';
@@ -63,6 +63,26 @@ class UserProfile extends Component {
 		} );
 	}
 
+	_skills = ( skills ) => {
+		let skillList = [];
+		skills.forEach( ( skill, i ) => {
+			skillList.push( new ComputedSkill( new Skill( i + 1, skill.description, require( '../assets/images/icons/designer.png' ) ), skill.endorsements ) );
+		} );
+		return skillList;
+	}
+
+	_expertise = expertises => expertises.map( experise => experise.desc )
+
+	_interest = interests => interests.map( interest => interest.desc )
+
+	_acomplishments = ( acomplishments ) => {
+		let objAcomplishments = Object.keys( acomplishments );
+		return objAcomplishments.map( ( eachKey ) => {
+			let itemKey = acomplishments[ eachKey ];
+			return itemKey.description;
+		} );
+	}
+
 	_onPressBack() {
 		const { navigator } = this.props;
 		navigator.pop();
@@ -70,31 +90,23 @@ class UserProfile extends Component {
 
 	render() {
 		const { blurViewRef } = this.state;
-
+		const { user } = this.props;
 		const person = new Person(
 			2,
-			'Stephanie',
-			'Doe',
+			user.basicInfo.firstName,
+			user.basicInfo.lastName,
 			'Product Designer',
 			require( '../assets/images/connections/sd.png' ),
-			[
-				new ComputedSkill( new Skill( 1, 'Designer', require( '../assets/images/icons/designer.png' ) ), 0 ),
-				new ComputedSkill( new Skill( 2, 'Coaching', require( '../assets/images/icons/coaching.png' ) ), 0 ),
-				new ComputedSkill( new Skill( 3, 'User Experience', require( '../assets/images/icons/ux.png' ) ), 0 )
-			],
+			this._skills( user.skills ),
 			new AboutInfo(
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+				this._expertise( user.aboutMe.expertise ),
+				this._interest( user.aboutMe.interests )
 			),
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dignissim sapien vel turpis finibus dignissim. Etiam aliquam massa euismod dolor vehicula malesuada. Sed vulputate lacus.',
-			'I am working on 10 hour profitability improvement project for a NYC small business.',
-			[
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-			],
+			user.biggestChallenge,
+			user.workingOn,
+			this._acomplishments( user.accomplishments ),
 			PersonState.AVAILABLE
 		);
-
 		return (
 			<View style={styles.container}>
 				<View ref={( ref ) => { this.viewRef = ref; }} style={styles.scrollerWrapper}>
@@ -109,15 +121,20 @@ class UserProfile extends Component {
 						<Spacing size="smallPlus" />
 						<ActionsCard />
 						<Spacing size="smallPlus" />
-						<SkillsCard skills={person.skills} />
+						{person.skills ? <SkillsCard skills={person.skills} /> : null}
 						<Spacing size="smallPlus" />
-						<AboutCard aboutInfo={person.aboutMe} />
+						{person.aboutMe ? <AboutCard aboutInfo={person.aboutMe} /> : null}
 						<Spacing size="smallPlus" />
-						<ChallengeCard text={person.biggestChallenge} />
+						{person.biggestChallenge ? <ChallengeCard text={person.biggestChallenge} /> : null}
 						<Spacing size="smallPlus" />
-						<WorkingOnCard text={person.currentlyWorkingOn} />
+						{person.currentlyWorkingOn ? <WorkingOnCard text={person.currentlyWorkingOn} /> : null}
 						<Spacing size="smallPlus" />
-						<AccomplishmentsCard accomplishments={person.accomplishments} />
+						{person.accomplishments ? (
+							<AccomplishmentsCard
+								accomplishments={person.accomplishments}
+							/>
+						)
+							: null}
 						<Spacing size="smallPlus" />
 					</ScrollView>
 				</View>
@@ -132,4 +149,10 @@ UserProfile.propTypes = {
 	navigator: NavigatorPropType.isRequired
 };
 
-export default UserProfile;
+const mapStateToProps = store => ( {
+	user: store.authentication.user
+} );
+
+const mapDispatchToProps = dispatch => bindActionCreators( { }, dispatch );
+
+export default ( connect( mapStateToProps, mapDispatchToProps )( UserProfile ) );

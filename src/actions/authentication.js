@@ -37,13 +37,15 @@ export const actVerifyAndSignIn = ( uid, code, callback ) => ( dispatch ) => {
 				type: SET_USER_TOKEN,
 				payload: token.token
 			} );
-			AuthenticationServices.signWithToken( token.token ).then( ( payload ) => {
-				dispatch( {
-					type: SET_USER,
-					payload: payload.user
+			AuthenticationServices.signWithToken( token.token ).then( ( ) => {
+				AuthenticationServices.getUserData().then( ( user ) => {
+					dispatch( {
+						type: SET_USER,
+						payload: user
+					} );
+					AsyncStorage.setUser( token.token );
+					callback( 'ok' );
 				} );
-				AsyncStorage.setSessionToken( token.token );
-				callback( 'ok' );
 			} );
 		} )
 		.catch( ( e ) => {
@@ -51,6 +53,13 @@ export const actVerifyAndSignIn = ( uid, code, callback ) => ( dispatch ) => {
 		} );
 };
 
-export const actVerifyLogin = () => ( ) => {
-	AuthenticationServices.verifyLogin( );
+export const actVerifyLogin = () => ( dispatch ) => {
+	AuthenticationServices.verifyLogin().then( () => {
+		AuthenticationServices.getUserData().then( ( user ) => {
+			dispatch( {
+				type: SET_USER,
+				payload: user
+			} );
+		} );
+	} );
 };
