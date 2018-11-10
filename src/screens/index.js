@@ -1,4 +1,6 @@
 import { Navigation } from 'react-native-navigation';
+import { Provider } from 'react-redux';
+import store from '../store';
 import Onboarding from './Onboarding';
 import Home from './Home';
 import CreateWelcomeAccount from './authentication/CreateWelcomeAccount';
@@ -41,16 +43,16 @@ export function initApp( action ) {
 
 // register all screens of the app (including internal ones)
 export function registerScreens() {
-	Navigation.registerComponent( 'onboarding', () => Onboarding );
+	Navigation.registerComponent( 'onboarding', () => Onboarding, store, Provider );
 	Navigation.registerComponent( 'home', () => Home );
-	Navigation.registerComponent( 'createWelcomeAccount', () => CreateWelcomeAccount );
+	Navigation.registerComponent( 'createWelcomeAccount', () => CreateWelcomeAccount, store, Provider );
 	Navigation.registerComponent( 'biggestChallenge', () => BiggestChallenge );
 	Navigation.registerComponent( 'currentlyWorkingOn', () => CurrentlyWorkingOn );
 	Navigation.registerComponent( 'termsAndConditions', () => TermsAndConditions );
 	Navigation.registerComponent( 'privacyPolicy', () => PrivacyPolicy );
 	Navigation.registerComponent( 'addSkills', () => AddSkills );
 	Navigation.registerComponent( 'setProfile', () => SetProfile );
-	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin );
+	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin, store, Provider );
 	Navigation.registerComponent( 'userProfile', () => UserProfile );
 	Navigation.registerComponent( 'messages', () => Messages );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
