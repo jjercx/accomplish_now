@@ -91,12 +91,13 @@ class UserProfile extends Component {
 	render() {
 		const { blurViewRef } = this.state;
 		const { user } = this.props;
+		let image = user.basicInfo.profilePhotoUrl ? { uri: user.basicInfo.profilePhotoUrl } : require( '../assets/images/icons/addPhoto.png' );
 		const person = new Person(
 			2,
 			user.basicInfo.firstName,
 			user.basicInfo.lastName,
-			'Product Designer',
-			require( '../assets/images/connections/sd.png' ),
+			'Product Designer', // Preguntar de donde va a salir
+			image,
 			this._skills( user.skills ),
 			new AboutInfo(
 				this._expertise( user.aboutMe.expertise ),
@@ -105,7 +106,7 @@ class UserProfile extends Component {
 			user.biggestChallenge,
 			user.workingOn,
 			this._acomplishments( user.accomplishments ),
-			PersonState.AVAILABLE
+			user.basicInfo.availableStatus ? PersonState.AVAILABLE : null
 		);
 		return (
 			<View style={styles.container}>
