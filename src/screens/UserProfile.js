@@ -10,6 +10,7 @@ import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { HTP } from '../utils/dimensions';
+import { actLogOut } from '../actions/authentication';
 import NavigatorPropType from '../types/navigator';
 import Spacing from '../components/spacing/Spacing';
 import NavBar from '../components/navbar/NavBar';
@@ -55,6 +56,8 @@ class UserProfile extends Component {
 		this.state = {
 			blurViewRef: null
 		};
+		this._logOut = this._logOut.bind( this );
+		this._callback = this._callback.bind( this );
 	}
 
 	componentDidMount() {
@@ -81,6 +84,21 @@ class UserProfile extends Component {
 			let itemKey = acomplishments[ eachKey ];
 			return itemKey.description;
 		} );
+	}
+
+	_callback() {
+		const { navigator } = this.props;
+		navigator.resetTo( {
+			screen: 'onboarding',
+			navigatorStyle: {
+				navBarHidden: true
+			}
+		} );
+	}
+
+	_logOut() {
+		const { actLogOut } = this.props;
+		actLogOut( this._callback );
 	}
 
 	_onPressBack() {
@@ -118,7 +136,7 @@ class UserProfile extends Component {
 						contentContainerStyle={styles.scrollerContainer}
 					>
 						<Header onPressBack={() => this._onPressBack()} />
-						<UserCard person={person} />
+						<UserCard person={person} onPress={this._logOut} />
 						<Spacing size="smallPlus" />
 						<ActionsCard />
 						<Spacing size="smallPlus" />
@@ -154,6 +172,6 @@ const mapStateToProps = store => ( {
 	user: store.authentication.user
 } );
 
-const mapDispatchToProps = dispatch => bindActionCreators( { }, dispatch );
+const mapDispatchToProps = dispatch => bindActionCreators( { actLogOut }, dispatch );
 
 export default ( connect( mapStateToProps, mapDispatchToProps )( UserProfile ) );
