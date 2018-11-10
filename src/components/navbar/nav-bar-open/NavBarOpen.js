@@ -8,14 +8,19 @@ import { HTP, WTP } from '../../../utils/dimensions';
 import NavigatorPropType from '../../../types/navigator';
 
 class NavBarOpen extends Component {
+	_onPressDashboard = () => {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'home', animationType: 'fade' } );
+	}
+
 	_onPressMessages = () => {
 		const { navigator } = this.props;
-		navigator.push( { screen: 'messages' } );
+		navigator.push( { screen: 'messages', animationType: 'fade' } );
 	}
 
 	_onPressPeople = () => {
 		const { navigator } = this.props;
-		navigator.push( { screen: 'peopleNearby' } );
+		navigator.push( { screen: 'peopleNearby', animationType: 'fade' } );
 	}
 
 	render() {
@@ -29,7 +34,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/dashboardon.png' )}
 							imageWidth={wpd( WTP( 29.7 - ( 29.7 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 30.3 - ( 30.3 * percentSmaller ) ) )}
-							onPress={() => this._onPressMessages()}
+							onPress={() => this._onPressDashboard()}
 						/>
 						<Spacing size="base" horizontal />
 						<TabButton
