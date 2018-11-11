@@ -109,6 +109,8 @@ class UserProfile extends Component {
 	render() {
 		const { blurViewRef } = this.state;
 		const { user } = this.props;
+		const { navigator: _navigator } = this.props;
+
 		let image = user.basicInfo.profilePhotoUrl ? { uri: user.basicInfo.profilePhotoUrl } : require( '../assets/images/icons/addPhoto.png' );
 		const person = new Person(
 			2,
@@ -157,7 +159,7 @@ class UserProfile extends Component {
 						<Spacing size="smallPlus" />
 					</ScrollView>
 				</View>
-				<NavBar viewRef={blurViewRef} />
+				<NavBar viewRef={blurViewRef} navigator={_navigator} />
 			</View>
 		);
 	}
