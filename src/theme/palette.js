@@ -28,5 +28,6 @@ export default {
 	lightGreyBlueTwo: '#adadbb',
 	lightGrey: '#d8d8de',
 	tangerine: '#fba104',
-	paleGreyThree: '#f6f7f9'
+	paleGreyThree: '#f6f7f9',
+	nextGray: '#A7A7A7'
 };

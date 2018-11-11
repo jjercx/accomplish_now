@@ -13,6 +13,7 @@ import SetProfile from './authentication/SetProfile';
 import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin';
 import UserProfile from './UserProfile';
 import Messages from './Messages';
+import Meetings from './Meetings';
 import PeopleNearby from './PeopleNearby';
 
 export function initApp( action ) {
@@ -55,5 +56,6 @@ export function registerScreens() {
 	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin, store, Provider );
 	Navigation.registerComponent( 'userProfile', () => UserProfile, store, Provider );
 	Navigation.registerComponent( 'messages', () => Messages );
+	Navigation.registerComponent( 'meetings', () => Meetings );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
 }
