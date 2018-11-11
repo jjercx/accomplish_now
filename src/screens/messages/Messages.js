@@ -81,10 +81,9 @@ class Messages extends Component {
 	}
 
 	_goToNotifications = () => {
-		alert('go to notifications screen'); //eslint-disable-line
+		const { navigator } = this.props;
+		navigator.push( { screen: 'notifications' } );
 	}
-
-	_keyExtractor = item => item.messageId;
 
 	_messages = () => [
 		new Message( new Person( '1', 'Frank', 'Doe', '', imageProfileDefault, '', '', '', '', '', '' ), '1', 'Fri, Oct 19, 08:07 PM', 'Lorem ipsum dolor sit amet.' ),
@@ -150,7 +149,7 @@ class Messages extends Component {
 					<FlatList
 						style={s.flatList}
 						data={this._messages()}
-						keyExtractor={this._keyExtractor}
+						keyExtractor={item => item.messageId}
 						renderItem={( { item } ) => (
 							<MessagePreview onMessagePress={this._openMessageDetail} {...item} />
 						)}

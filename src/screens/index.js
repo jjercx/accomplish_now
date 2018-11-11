@@ -15,6 +15,7 @@ import UserProfile from './UserProfile';
 import Messages from './messages/Messages';
 import PeopleNearby from './PeopleNearby';
 import MessagesDetails from './messages/MessagesDetails';
+import Notifications from './messages/Notifications';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -58,4 +59,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'messages', () => Messages );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
 	Navigation.registerComponent( 'messagesDetails', () => MessagesDetails );
+	Navigation.registerComponent( 'notifications', () => Notifications );
 }
