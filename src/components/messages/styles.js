@@ -107,5 +107,25 @@ export default {
 	msTimeAgo: {
 		marginTop: 8,
 		paddingRight: 15
+	},
+
+	// notifications ─────────────────────────────────────────────────────────────────────────────
+
+	npContainer: {
+		flex: 1,
+		flexDirection: 'row',
+		borderBottomWidth: 0.8,
+		borderBottomColor: Colors.whiteThree
+	},
+	npImageContainer: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		padding: 15
+	},
+	npTextNotificationContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		padding: 10,
+		marginRight: 20
 	}
 };
