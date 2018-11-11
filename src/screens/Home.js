@@ -50,12 +50,13 @@ const Place1 = new Place( 1, 'Office 305', require( '../assets/images/places/off
 const Place2 = new Place( 2, 'Corner SC', require( '../assets/images/places/cornersc.png' ) );
 
 const places = [ Place1, Place2 ];
+
 const JD = new Person( 1, 'Jhon', 'D.', 'Designer', require( '../assets/images/connections/jd.png' ) );
 const C = new Person( 2, 'Claire', 'T.', 'Designer', require( '../assets/images/connections/c.png' ) );
 const MD = new Person( 3, 'Michae', 'D.', 'Designer', require( '../assets/images/connections/md.png' ) );
 const SW = new Person( 4, 'Stephanie', 'W.', 'Designer', require( '../assets/images/connections/sd.png' ) );
 
-let connections = [ ];
+let connections = [ JD, C, MD, SW ];
 
 /* eslint-disable react/prefer-stateless-function */
 class Home extends Component {
