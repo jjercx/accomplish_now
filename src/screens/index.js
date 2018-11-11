@@ -12,8 +12,9 @@ import AddSkills from './authentication/AddSkills';
 import SetProfile from './authentication/SetProfile';
 import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin';
 import UserProfile from './UserProfile';
-import Messages from './Messages';
+import Messages from './messages/Messages';
 import PeopleNearby from './PeopleNearby';
+import MessagesDetails from './messages/MessagesDetails';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -56,4 +57,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'userProfile', () => UserProfile, store, Provider );
 	Navigation.registerComponent( 'messages', () => Messages );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
+	Navigation.registerComponent( 'messagesDetails', () => MessagesDetails );
 }
