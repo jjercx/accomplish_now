@@ -31,7 +31,9 @@ const localStyles = {
 	codeContainer: {
 		flexDirection: 'row',
 		paddingTop: hp( HTP( 20 ) ),
-		paddingBottom: hp( HTP( 10 ) )
+		paddingBottom: hp( HTP( 10 ) ),
+		alignItems: 'center',
+		justifyContent: 'center'
 	},
 	codeViewContainer: {
 		paddingTop: hp( HTP( iPhoneSE() ? 5 : 20 ) ),
@@ -167,7 +169,7 @@ class CodeReceiveRegisterLogin extends Component {
 				<View style={localStyles.contentContainer}>
 					<View style={localStyles.codeViewContainer}>
 						<TouchableWithoutFeedback onPress={() => this.textInput.focus()}>
-							<View style={[ localStyles.codeContainer, s.center ]}>
+							<View style={[ localStyles.codeContainer ]}>
 								{[ 0, 1, 2, 3, 4, 5 ].map( number => (
 									<OneNumberInput key={number} number={code[ number ]} /> ) )}
 							</View>

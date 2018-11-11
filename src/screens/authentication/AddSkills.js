@@ -138,7 +138,7 @@ class AddSkills extends Component {
 		} = this.state;
 
 		return (
-			<KeyboardAvoidingView style={styles.container} behavior="padding">
+			<KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : null}>
 				<Header title="Add your skills" onPressBack={() => this._onPressBack()} />
 				<View style={localStyles.inputContainer}>
 					<BaseInput

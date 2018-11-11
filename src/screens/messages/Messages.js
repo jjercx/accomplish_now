@@ -8,18 +8,18 @@ import {
 	heightPercentageToDP as hp,
 	widthPercentageToDP as wp
 } from 'react-native-responsive-screen';
-import { HTP, WTP } from '../utils/dimensions';
-import Colors from '../theme/palette';
-import NavigatorPropType from '../types/navigator';
-import ButtonIcon from '../components/button-icon/ButtonIcon';
-import Typography from '../components/typography/Typography';
-import MessagePreview from '../components/messages/MessagePreview';
-import NavBar from '../components/navbar/NavBar';
-import Message from '../entities/Message';
-import Person from '../entities/Person';
+import { HTP, WTP } from '../../utils/dimensions';
+import Colors from '../../theme/palette';
+import NavigatorPropType from '../../types/navigator';
+import ButtonIcon from '../../components/button-icon/ButtonIcon';
+import Typography from '../../components/typography/Typography';
+import MessagePreview from '../../components/messages/MessagePreview';
+import NavBar from '../../components/navbar/NavBar';
+import Message from '../../entities/Message';
+import Person from '../../entities/Person';
 
-const logoAccomplish = require( '../assets/images/messages/isoGray.png' );
-const imageProfileDefault = require( '../assets/images/messages/phProfile.png' );
+const logoAccomplish = require( '../../assets/images/messages/isoGray.png' );
+const imageProfileDefault = require( '../../assets/images/messages/phProfile.png' );
 
 const s = StyleSheet.create( {
 	container: {
@@ -94,6 +94,14 @@ class Messages extends Component {
 		new Message( new Person( '5', 'Frank', 'Doe', '', imageProfileDefault, '', '', '', '', '', '' ), '5', 'Fri, Oct 19, 08:07 PM', 'Lorem ipsum dolor sit amet.' )
 	];
 
+	_openMessageDetail = ( messageId ) => {
+		console.log(`open conversation id: ${messageId}`); //eslint-disable-line
+		// TODO: save the messageId in redux
+
+		const { navigator } = this.props;
+		navigator.push( { screen: 'messagesDetails' } );
+	}
+
 	_onPressBack() {
 		const { navigator } = this.props;
 		navigator.pop();
@@ -143,7 +151,9 @@ class Messages extends Component {
 						style={s.flatList}
 						data={this._messages()}
 						keyExtractor={this._keyExtractor}
-						renderItem={( { item } ) => <MessagePreview {...item} />}
+						renderItem={( { item } ) => (
+							<MessagePreview onMessagePress={this._openMessageDetail} {...item} />
+						)}
 					/>
 
 				</View>
