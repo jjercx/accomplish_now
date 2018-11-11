@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
 	View,
 	Image,
 	TouchableOpacity,
 	StyleSheet
 } from 'react-native';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+import {
+	widthPercentageToDP as wp,
+	heightPercentageToDP as hp
+} from 'react-native-responsive-screen';
+
 import ImagePicker from 'react-native-image-picker';
 import Header from '../../components/register/Header';
 import BaseInput from '../../components/base-input/BaseInput';
@@ -60,24 +66,31 @@ class SetProfile extends Component {
 		navBarHidden: true
 	};
 
-  state={
-  	enabled: true,
-  	avatarSource: null,
-  	selectAvatar: false
-  }
+	constructor( props ) {
+		super( props );
+		this.state = {
+			enabled: true,
+			avatarSource: null,
+			selectAvatar: false
+		};
 
-  _onPressButtonFoward() {
+		this._onPressBack = this._onPressBack.bind( this );
+		this._onPressButtonFoward = this._onPressButtonFoward.bind( this );
+		this._onPressProfilePicture = this._onPressProfilePicture.bind( this );
+	}
+
+	_onPressButtonFoward() {
   	const { navigator } = this.props;
   	navigator.push( { screen: 'biggestChallenge' } );
-  }
+	}
 
-  _onPressBack() {
+	_onPressBack() {
   	const { navigator } = this.props;
   	navigator.pop();
-  }
+	}
 
-  /* eslint-disable no-console */
-  _onPressProfilePicture() {
+	/* eslint-disable no-console */
+	_onPressProfilePicture() {
   	ImagePicker.showImagePicker( options, ( response ) => {
   	  console.log( 'Response = ', response );
 
@@ -101,20 +114,28 @@ class SetProfile extends Component {
 		    } );
 		  }
   	} );
-  }
-  /* eslint-enable no-console */
+	}
+	/* eslint-enable no-console */
 
-  render() {
-  	let { enabled, avatarSource, selectAvatar } = this.state;
+	render() {
+		let { enabled, avatarSource, selectAvatar } = this.state;
+		const { editing } = this.props;
+
+		const isEnabled = enabled || editing;
+
+		const handlerOnPress = editing
+			? this._onPressBack
+			: this._onPressButtonFoward;
+
   	/* eslint-disable react/jsx-indent */
   		/* eslint-disable indent */
     /* eslint-disable react/jsx-indent-props */
   	return (
   		<View style={styles.container}>
-  			<Header title="Set Profile" onPressBack={() => this._onPressBack()} />
+  			<Header title="Set Profile" onPressBack={this._onPressBack} />
   			<TouchableOpacity
 					style={localStyles.addPhotoButton}
-					onPress={() => this._onPressProfilePicture()}
+					onPress={this._onPressProfilePicture}
   			>
   				<Image style={localStyles.imageProfile} source={!selectAvatar ? require( '../../assets/images/icons/addPhoto.png' ) : avatarSource} />
   			</TouchableOpacity>
@@ -125,9 +146,10 @@ class SetProfile extends Component {
   				</View>
   				<BaseInput placeholder="your@email.com" label="Email" />
   				<ButtonForward
-						style={localStyles.SPButtonForward}
-						enabled={enabled}
-						onPress={() => this._onPressButtonFoward()}
+					style={localStyles.SPButtonForward}
+					enabled={isEnabled}
+					editing={editing}
+					onPress={isEnabled ? handlerOnPress : null}
   				/>
   			</View>
   		</View>
@@ -135,11 +157,16 @@ class SetProfile extends Component {
     /* eslint-enable react/jsx-indent */
     /* eslint-enable indent */
   	/* eslint-enable react/jsx-indent-props */
-  }
+	}
 }
 
 SetProfile.propTypes = {
+	editing: PropTypes.bool,
 	navigator: NavigatorPropType.isRequired
+};
+
+SetProfile.defaultProps = {
+	editing: false
 };
 
 export default SetProfile;

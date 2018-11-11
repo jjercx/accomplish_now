@@ -50,6 +50,7 @@ class UserProfile extends Component {
 		super();
 		this._logOut = this._logOut.bind( this );
 		this._callback = this._callback.bind( this );
+		this._onPressBack = this._onPressBack.bind( this );
 	}
 
 	_skills = ( skills ) => {
@@ -95,7 +96,12 @@ class UserProfile extends Component {
 	_navigateTo( screen ) {
 		return () => {
 			const { navigator } = this.props;
-			navigator.push( { screen } );
+			navigator.push( {
+				screen,
+				passProps: {
+					editing: true
+			  }
+			} );
 		};
 	}
 
@@ -128,7 +134,7 @@ class UserProfile extends Component {
 						style={styles.scroller}
 						contentContainerStyle={styles.scrollerContainer}
 					>
-						<Header onPressBack={() => this._onPressBack()} />
+						<Header onPressBack={this._onPressBack} />
 						<UserCard
 							person={person}
 							onPress={this._logOut}
@@ -181,7 +187,7 @@ class UserProfile extends Component {
 						{person.accomplishments ? (
 							<AccomplishmentsCard
 								accomplishments={person.accomplishments}
-								onPressAdd={this._navigateTo( 'accomplishment' )}
+								onPressAdd={this._navigateTo( 'addAccomplishment' )}
 								editable={editable}
 							/>
 						)
