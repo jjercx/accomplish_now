@@ -1,6 +1,9 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable no-trailing-spaces */
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import Typography from '../../typography/Typography';
+import Spacing from '../../spacing/Spacing';
 import s from './styles';
 
 const location = require( '../../../assets/images/icons/locationGray.png' );
@@ -12,7 +15,9 @@ const PlaceItem = ( { ...places } ) => (
 			<Image
 				style={s.widthImage}
 				source={places.image}
+			// eslint-disable-next-line react/jsx-no-comment-textnodes
 			/>
+			<Spacing size="smallPlus" />
 			<Typography
 				variant="midTitleBold"
 				color="charcoalGrey"
@@ -20,9 +25,9 @@ const PlaceItem = ( { ...places } ) => (
 			>
 				{places.name}
 			</Typography>
-			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+			<View style={s.descriptionPlaces}>
 				<Image
-					style={{ marginLeft: 10 }}
+					style={s.sectionIcon}
 					source={location}
 				/>
 				<Typography
@@ -33,7 +38,7 @@ const PlaceItem = ( { ...places } ) => (
 					{places.location}
 				</Typography>
 				<Image
-					style={{ marginLeft: 10 }}
+					style={s.sectionIcon}
 					source={fromNear}
 				/>
 				<Typography
@@ -42,8 +47,9 @@ const PlaceItem = ( { ...places } ) => (
 					textAlign="left"
 				>
 					{places.distance}
-				</Typography>
+				</Typography> 
 			</View>
+			<Spacing size="smallPlus" />
 		</View>
 	</TouchableOpacity>
 );

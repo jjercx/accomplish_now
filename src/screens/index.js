@@ -61,8 +61,8 @@ export function registerScreens() {
 	Navigation.registerComponent( 'aboutMe', () => AboutMe );
 	Navigation.registerComponent( 'addAccomplishment', () => AddAccomplishment );
 	Navigation.registerComponent( 'userProfile', () => UserProfile, store, Provider );
-	Navigation.registerComponent( 'messages', () => Messages );
 	Navigation.registerComponent( 'places', () => Places );
+	Navigation.registerComponent( 'messages', () => Messages, store, Provider );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
 	Navigation.registerComponent( 'messagesDetails', () => MessagesDetails );
 	Navigation.registerComponent( 'notifications', () => Notifications );

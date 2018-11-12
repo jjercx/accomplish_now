@@ -17,7 +17,8 @@ export default {
 	},
 	imageProfile: {
 		width: wp( WTP( 50 ) ),
-		height: hp( HTP( 50 ) )
+		height: hp( HTP( 50 ) ),
+		borderRadius: hp( HTP( 50 ) ) / 2
 	},
 	imageContainer: {
 		paddingRight: wp( WTP( 30 ) ),

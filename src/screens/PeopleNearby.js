@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable indent */
 import React, { Component } from 'react';
 import {
-	View, StyleSheet, Image, TouchableOpacity, StatusBar, FlatList, Platform
+	View, StyleSheet, StatusBar, FlatList, Platform
 } from 'react-native';
 
 import {
@@ -13,6 +15,7 @@ import NavigatorPropType from '../types/navigator';
 import NavBar from '../components/navbar/NavBar';
 import Typography from '../components/typography/Typography';
 import PersonCard from '../components/person/person-card/PersonCard';
+import Header from '../components/header/Header';
 
 import Person, { PersonState } from '../entities/Person';
 import Skill, { ComputedSkill } from '../entities/Skill';
@@ -29,28 +32,6 @@ const styles = StyleSheet.create( {
 		marginTop: hpd( HTP( Platform.OS === 'ios' ? 20 : 0 ) ),
 		marginHorizontal: wpd( WTP( 5 ) )
 	},
-	headerButtonsContainer: {
-		flexDirection: 'row',
-		marginTop: hpd( HTP( 10 ) ),
-		marginLeft: wpd( WTP( 10 ) )
-	},
-	headerButtonAccomplishContainer: {
-		flex: 1,
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'flex-start'
-	},
-	buttonAccomplish: {
-		paddingVertical: hpd( HTP( 5 ) ),
-		paddingHorizontal: wpd( WTP( 5 ) )
-	},
-	headerButtonFiltersContainer: {
-		flex: 1,
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'flex-end',
-		marginRight: wpd( WTP( 10 ) )
-	},
 	titleContainer: {
 		marginLeft: wpd( WTP( 10 ) )
 	},
@@ -65,7 +46,7 @@ const styles = StyleSheet.create( {
 	}
 } );
 
-const logoAccomplish = require( '../assets/images/messages/isoGray.png' );
+const iconFiltter = require( '../assets/images/icons/filterSmall.png' );
 
 const formatData = ( items, numberOfColumns ) => {
 	const numberOfFullItems = Math.floor( items.length, numberOfColumns );
@@ -108,10 +89,21 @@ class PeopleNearby extends Component {
 
 	_keyExtractor = item => item.id;
 
-	_onPressBack() {
+	_buttonIcons = () => [
+		{ id: 1, icon: iconFiltter, onPress: this._filter }
+	 ];
+
+	 _onPressBack() {
 		const { navigator } = this.props;
 		navigator.pop();
 	}
+
+	 // eslint-disable-next-line class-methods-use-this
+	 _filter() {
+    	// eslint-disable-next-line no-console
+    	console.log( 'Filter actions' );
+     }
+
 
 	render() {
 		const { navigator: _navigator } = this.props;
@@ -128,23 +120,10 @@ class PeopleNearby extends Component {
 					<StatusBar
 						barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
 					/>
-
-					<View style={styles.headerButtonsContainer}>
-						<View style={styles.headerButtonAccomplishContainer}>
-							<TouchableOpacity onPress={() => this._onPressBack()}>
-								<View style={styles.buttonAccomplish}>
-									<Image
-										style={styles.logo}
-										source={logoAccomplish}
-									/>
-								</View>
-							</TouchableOpacity>
-						</View>
-						<View style={styles.headerButtonFiltersContainer}>
-							<Image source={require( '../assets/images/icons/filter.png' )} />
-						</View>
-					</View>
-
+					<Header
+						onPressBack={this._onPressBack.bind( this )}
+						buttonIcons={this._buttonIcons()}
+					/>
 					<View style={styles.titleContainer}>
 						<Typography
 							variant="semiLargeTitle"

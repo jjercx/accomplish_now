@@ -118,14 +118,14 @@ class UserProfile extends Component {
 			user.basicInfo.lastName,
 			'Product Designer', // Preguntar de donde va a salir
 			image,
-			this._skills( user.skills ),
+			user.skills ? this._skills( user.skills ) : null,
 			new AboutInfo(
-				this._expertise( user.aboutMe.expertise ),
-				this._interest( user.aboutMe.interests )
+				user.aboutMe ? this._expertise( user.aboutMe.expertise ) : null,
+				user.aboutMe ? this._interest( user.aboutMe.interests ) : null
 			),
 			user.biggestChallenge,
 			user.workingOn,
-			this._acomplishments( user.accomplishments ),
+			user.accomplishments ? this._acomplishments( user.accomplishments ) : null,
 			user.basicInfo.availableStatus ? PersonState.AVAILABLE : null
 		);
 
@@ -148,7 +148,7 @@ class UserProfile extends Component {
 						<Spacing size="smallPlus" />
 						<ActionsCard />
 						<Spacing size="smallPlus" />
-						{person.skills
+						{user.skills
 							? (
 								<SkillsCard
 									skills={person.skills}
@@ -158,7 +158,7 @@ class UserProfile extends Component {
 							)
 							: null}
 						<Spacing size="smallPlus" />
-						{person.aboutMe
+						{user.aboutMe
 							? (
 								<AboutCard
 									aboutInfo={person.aboutMe}
@@ -168,7 +168,7 @@ class UserProfile extends Component {
 							)
 							: null}
 						<Spacing size="smallPlus" />
-						{person.biggestChallenge
+						{user.biggestChallenge
 							? (
 								<ChallengeCard
 									text={person.biggestChallenge}
@@ -178,7 +178,7 @@ class UserProfile extends Component {
 							)
 							: null}
 						<Spacing size="smallPlus" />
-						{person.currentlyWorkingOn
+						{user.workingOn
 							? (
 								<WorkingOnCard
 									text={person.currentlyWorkingOn}
@@ -188,7 +188,7 @@ class UserProfile extends Component {
 							)
 							: null}
 						<Spacing size="smallPlus" />
-						{person.accomplishments ? (
+						{user.accomplishments ? (
 							<AccomplishmentsCard
 								accomplishments={person.accomplishments}
 								onPressAdd={this._navigateTo( 'addAccomplishment' )}
