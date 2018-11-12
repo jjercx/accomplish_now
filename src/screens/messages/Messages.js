@@ -2,7 +2,8 @@
 
 import React, { Component } from 'react';
 import {
-	View, StyleSheet, Image, TouchableOpacity, StatusBar, FlatList, Platform
+	View, StyleSheet, Image, TouchableOpacity, StatusBar, FlatList, Platform,
+	ActivityIndicator
 } from 'react-native';
 import {
 	heightPercentageToDP as hp,
@@ -115,7 +116,7 @@ class Messages extends Component {
 	render() {
 		const { navigator: _navigator, isFetching } = this.props;
 		const { _notifications } = this.state;
-		if ( isFetching ) return null;
+
 		return (
 			<View style={s.container}>
 				<View style={s.subContainer}>
@@ -151,16 +152,16 @@ class Messages extends Component {
 					>
 						{'Messages'}
 					</Typography>
-
-					<FlatList
-						style={s.flatList}
-						data={this._messages()}
-						keyExtractor={item => item.messageId}
-						renderItem={( { item } ) => (
-							<MessagePreview onMessagePress={this._openMessageDetail} {...item} />
-						)}
-					/>
-
+					{isFetching ? <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} /> : (
+						<FlatList
+							style={s.flatList}
+							data={this._messages()}
+							keyExtractor={item => item.messageId}
+							renderItem={( { item } ) => (
+								<MessagePreview onMessagePress={this._openMessageDetail} {...item} />
+							)}
+						/>
+					) }
 				</View>
 				<NavBar navigator={_navigator} />
 			</View>
