@@ -1,11 +1,13 @@
-/* eslint-disable max-len */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
 	ImageBackground,
 	View,
 	Switch,
 	StyleSheet
 } from 'react-native';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import UserSection from '../components/home/header/UserSection';
 import { HTP, WTP } from '../utils/dimensions';
@@ -58,7 +60,6 @@ const SW = new Person( 4, 'Stephanie', 'W.', 'Designer', require( '../assets/ima
 
 let connections = [ JD, C, MD, SW ];
 
-/* eslint-disable react/prefer-stateless-function */
 class Home extends Component {
 	static navigatorStyle = {
 		navBarHidden: true
@@ -103,7 +104,7 @@ class Home extends Component {
 
 	render() {
 		const { available } = this.state;
-		const { navigator: _navigator } = this.props;
+		const { navigator: _navigator, user } = this.props;
 
 		return (
 			<View style={styles.container}>
@@ -111,7 +112,7 @@ class Home extends Component {
 					source={require( '../assets/images/home/header.png' )}
 					style={styles.imageBackground}
 				>
-					<UserSection userFirstName="Javier" meetings={12} />
+					<UserSection userFirstName={user.basicInfo.firstName} meetings={12} />
 					<View style={styles.wrapperContainerAvailable}>
 						<View style={styles.wrapperAvailable}>
 							<Typography variant="smallTitle" color="white">{IM_AVAILABLE_TEXT}</Typography>
@@ -128,7 +129,8 @@ class Home extends Component {
 					</View>
 					<HomeSearch />
 				</ImageBackground>
-				{ connections.length > 0 ? this.renderMyConnectionsSection() : this.renderWithOuthConnectionSection() }
+				{ connections.length > 0
+					? this.renderMyConnectionsSection() : this.renderWithOuthConnectionSection() }
 				{ connections.length > 0 ? <Spacing size="large" /> : <Spacing size="xtiny" /> }
 				{this.renderPlacesSection()}
 				<NavBar navigator={_navigator} />
@@ -139,7 +141,12 @@ class Home extends Component {
 /* eslint-enable react/prefer-stateless-function */
 
 Home.propTypes = {
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	user: PropTypes.any.isRequired
 };
 
-export default Home;
+const mapStateToProps = store => ( {
+	user: store.authentication.user
+} );
+
+export default compose( connect( mapStateToProps, null )( Home ) );
