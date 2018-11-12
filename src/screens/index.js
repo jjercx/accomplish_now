@@ -11,6 +11,7 @@ import SetProfile from './authentication/SetProfile';
 import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin';
 import UserProfile from './UserProfile';
 import Messages from './Messages';
+import Places from './Places';
 import PeopleNearby from './PeopleNearby';
 
 export function initApp( action ) {
@@ -53,5 +54,6 @@ export function registerScreens() {
 	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin );
 	Navigation.registerComponent( 'userProfile', () => UserProfile );
 	Navigation.registerComponent( 'messages', () => Messages );
+	Navigation.registerComponent( 'places', () => Places );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
 }
