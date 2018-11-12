@@ -8,6 +8,10 @@ import {
 	heightPercentageToDP as hp,
 	widthPercentageToDP as wp
 } from 'react-native-responsive-screen';
+import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import { actGetMessages } from '../../actions/messages';
 import { HTP, WTP } from '../../utils/dimensions';
 import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
@@ -19,7 +23,7 @@ import Message from '../../entities/Message';
 import Person from '../../entities/Person';
 
 const logoAccomplish = require( '../../assets/images/messages/isoGray.png' );
-const imageProfileDefault = require( '../../assets/images/messages/phProfile.png' );
+const avatarImg = require( '../../assets/images/icons/addPhoto.png' );
 
 const s = StyleSheet.create( {
 	container: {
@@ -80,18 +84,20 @@ class Messages extends Component {
 		_notifications: true
 	}
 
+	componentWillMount() {
+		let { actMessagesInit } = this.props;
+		actMessagesInit();
+	}
+
 	_goToNotifications = () => {
 		const { navigator } = this.props;
 		navigator.push( { screen: 'notifications' } );
 	}
 
-	_messages = () => [
-		new Message( new Person( '1', 'Frank', 'Doe', '', imageProfileDefault, '', '', '', '', '', '' ), '1', 'Fri, Oct 19, 08:07 PM', 'Lorem ipsum dolor sit amet.' ),
-		new Message( new Person( '2', 'Frank', 'Doe', '', imageProfileDefault, '', '', '', '', '', '' ), '2', 'Fri, Oct 19, 08:07 PM', 'Lorem ipsum dolor sit amet.' ),
-		new Message( new Person( '3', 'Frank', 'Doe', '', imageProfileDefault, '', '', '', '', '', '' ), '3', 'Fri, Oct 19, 08:07 PM', 'Lorem ipsum dolor sit amet.' ),
-		new Message( new Person( '4', 'Frank', 'Doe', '', imageProfileDefault, '', '', '', '', '', '' ), '4', 'Fri, Oct 19, 08:07 PM', 'Lorem ipsum dolor sit amet.' ),
-		new Message( new Person( '5', 'Frank', 'Doe', '', imageProfileDefault, '', '', '', '', '', '' ), '5', 'Fri, Oct 19, 08:07 PM', 'Lorem ipsum dolor sit amet.' )
-	];
+	_messages = () => {
+		let { messages } = this.props;
+		return messages.map( msg => new Message( new Person( msg.id, msg.firstName, msg.lastName, '', msg.image ? { uri: msg.image } : avatarImg, '', '', '', '', '', '' ), msg.threadId, moment.unix( msg.createdOn ).format( 'ddd[,] MMM DD h:mm A' ), msg.text ) );
+	}
 
 	_openMessageDetail = ( messageId ) => {
 		console.log(`open conversation id: ${messageId}`); //eslint-disable-line
@@ -107,9 +113,9 @@ class Messages extends Component {
 	}
 
 	render() {
-		const { navigator: _navigator } = this.props;
+		const { navigator: _navigator, isFetching } = this.props;
 		const { _notifications } = this.state;
-
+		if ( isFetching ) return null;
 		return (
 			<View style={s.container}>
 				<View style={s.subContainer}>
@@ -166,4 +172,12 @@ Messages.propTypes = {
 	navigator: NavigatorPropType.isRequired
 };
 
-export default Messages;
+const mapStateToProps = store => ( {
+	messages: store.messages.messages,
+	isFetching: store.messages.isFetching
+} );
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{ actMessagesInit: actGetMessages }, dispatch );
+
+export default compose( connect( mapStateToProps, mapDispatchToProps )( Messages ) );
