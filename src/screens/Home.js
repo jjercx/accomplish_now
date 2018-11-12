@@ -4,7 +4,8 @@ import {
 	ImageBackground,
 	View,
 	Switch,
-	StyleSheet
+	StyleSheet,
+	ActivityIndicator
 } from 'react-native';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -105,7 +106,7 @@ class Home extends Component {
 	render() {
 		const { available } = this.state;
 		const { navigator: _navigator, user } = this.props;
-
+		if ( !user ) return <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} />;
 		return (
 			<View style={styles.container}>
 				<ImageBackground
@@ -141,8 +142,7 @@ class Home extends Component {
 /* eslint-enable react/prefer-stateless-function */
 
 Home.propTypes = {
-	navigator: NavigatorPropType.isRequired,
-	user: PropTypes.any.isRequired
+	navigator: NavigatorPropType.isRequired
 };
 
 const mapStateToProps = store => ( {
