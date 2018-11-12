@@ -21,6 +21,28 @@ get = ( uri, id ) => new Promise( ( resolve, reject ) => {
 	}
 } );
 
+getByQuery = ( base, orderBy, equalTo, callback ) => {
+	try {
+		Firebase
+			.database()
+			.ref( base )
+			.orderByChild( orderBy )
+			.equalTo( equalTo )
+			.on( 'value', ( snapshot ) => {
+				const data = snapshot.val();
+				let objData = Object.keys( data );
+				let itemsList = [];
+				objData.map( ( eachKey ) => {
+					let itemKey = data[ eachKey ];
+					return itemsList.push( itemKey );
+				} );
+				callback( itemsList );
+			} );
+	} catch ( e ) {
+		callback( e );
+	}
+}
+
 currentUserData = path => new Promise( ( resolve, reject ) => {
 	const { currentUser } = Firebase.auth();
 	const uid = currentUser._user.uid;
