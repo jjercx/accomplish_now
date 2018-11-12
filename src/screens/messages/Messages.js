@@ -24,7 +24,7 @@ import Message from '../../entities/Message';
 import Person from '../../entities/Person';
 
 const logoAccomplish = require( '../../assets/images/messages/isoGray.png' );
-const avatarImg = require( '../../assets/images/icons/addPhoto.png' );
+const avatarImg = require( '../../assets/images/messages/phProfile.png' );
 
 const s = StyleSheet.create( {
 	container: {
