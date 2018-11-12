@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import { HTP } from '../utils/dimensions';
 import { actLogOut } from '../actions/authentication';
@@ -40,7 +40,7 @@ const styles = StyleSheet.create( {
 	}
 } );
 
-/* eslint-disable react/prefer-stateless-function */
+
 class UserProfile extends Component {
 	static navigatorStyle = {
 		navBarHidden: true
@@ -84,8 +84,8 @@ class UserProfile extends Component {
 	}
 
 	_logOut() {
-		const { actLogOut } = this.props;
-		actLogOut( this._callback );
+		const { actLogOutConnect } = this.props;
+		actLogOutConnect( this._callback );
 	}
 
 	_onPressBack() {
@@ -204,11 +204,13 @@ class UserProfile extends Component {
 		);
 	}
 }
-/* eslint-enable react/prefer-stateless-function */
+
 
 UserProfile.propTypes = {
 	navigator: NavigatorPropType.isRequired,
-	editable: PropTypes.bool
+	editable: PropTypes.bool,
+	actLogOutConnect: PropTypes.func.isRequired,
+	user: PropTypes.any.isRequired
 };
 
 UserProfile.defaultProps = {
@@ -219,6 +221,7 @@ const mapStateToProps = store => ( {
 	user: store.authentication.user
 } );
 
-const mapDispatchToProps = dispatch => bindActionCreators( { actLogOut }, dispatch );
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{ actLogOutConnect: actLogOut }, dispatch );
 
-export default ( connect( mapStateToProps, mapDispatchToProps )( UserProfile ) );
+export default compose( connect( mapStateToProps, mapDispatchToProps )( UserProfile ) );

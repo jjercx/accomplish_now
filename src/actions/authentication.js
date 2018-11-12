@@ -1,7 +1,7 @@
+import Firebase from 'react-native-firebase';
 import AuthenticationServices from '../provider/authentication/AuthenticationServices';
 import { SET_USER, SET_USER_TOKEN } from './types';
 import AsyncStorage from '../utils/AsyncStorage';
-import Firebase from 'react-native-firebase'
 
 export const actCreateAccount = ( phone, callback ) => ( dispatch ) => {
 	AuthenticationServices.createAccount( phone )

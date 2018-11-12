@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
 	View, Image
 } from 'react-native';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper';
 
@@ -10,7 +11,6 @@ import {
 	widthPercentageToDP as wd,
 	heightPercentageToDP as hd
 } from 'react-native-responsive-screen';
-import Firebase from 'react-native-firebase';
 import AsyncStorage from '../utils/AsyncStorage';
 import { HTP, WTP } from '../utils/dimensions';
 import { actVerifyLogin } from '../actions/authentication';
@@ -86,10 +86,8 @@ const styles = {
 
 class Onboarding extends Component {
 	componentWillMount() {
-		// Firebase.auth().signOut();
-		// AsyncStorage.removeUser()
-		const { actVerifyLogin } = this.props;
-		actVerifyLogin();
+		const { actVerifyLoginConnect } = this.props;
+		actVerifyLoginConnect();
 	}
 
 	async componentDidMount() {
@@ -185,9 +183,11 @@ class Onboarding extends Component {
 }
 
 Onboarding.propTypes = {
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	actVerifyLoginConnect: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators( { actVerifyLogin }, dispatch );
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{ actVerifyLoginConnect: actVerifyLogin }, dispatch );
 
-export default ( connect( null, mapDispatchToProps )( Onboarding ) );
+export default compose( connect( null, mapDispatchToProps )( Onboarding ) );
