@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+
 import {
 	heightPercentageToDP as hp,
 	widthPercentageToDP as wp
@@ -31,22 +32,27 @@ const localStyles = StyleSheet.create( {
 	buttonContainer: {
 		flex: 1,
 		display: 'flex',
-		alignContent: 'space-around',
-		justifyContent: 'space-around'
+		alignContent: 'center',
+		justifyContent: 'center'
 	}
 } );
 
-class BiggestChallenge extends Component {
+class AboutMe extends Component {
 	static navigatorStyle = {
 		navBarHidden: true
 	};
 
 	constructor( props ) {
 		super( props );
-		this.state = { enabled: false };
-		this._onChangeText = this._onChangeText.bind( this );
+		this.state = {
+			iAmText: '',
+			iAmLookingToText: '',
+			enabled: false
+		};
+
+		this._onChangeIAmText = this._onChangeIAmText.bind( this );
+		this._onChangeIAmLookingToText = this._onChangeIAmLookingToText.bind( this );
 		this._onPressBack = this._onPressBack.bind( this );
-		this._onPressButtonFoward = this._onPressButtonFoward.bind( this );
 	}
 
 	componentDidMount() {
@@ -56,14 +62,16 @@ class BiggestChallenge extends Component {
 		}, 500 );
 	}
 
-	_onChangeText( text ) {
-		const isEnabled = ( text.length > 3 );
-		this.setState( { enabled: isEnabled } );
+	_onChangeIAmText( iAmText ) {
+		const { iAmLookingToText } = this.state;
+		const isEnabled = ( ( iAmText.length > 3 ) || ( iAmLookingToText.length > 3 ) );
+		this.setState( { enabled: isEnabled, iAmText } );
 	}
 
-	_onPressButtonFoward() {
-		const { navigator } = this.props;
-		navigator.push( { screen: 'currentlyWorkingOn' } );
+	_onChangeIAmLookingToText( iAmLookingToText ) {
+		const { iAmText } = this.state;
+		const isEnabled = ( ( iAmLookingToText.length > 3 ) || ( iAmText.length > 3 ) );
+		this.setState( { enabled: isEnabled, iAmLookingToText } );
 	}
 
 	_onPressBack() {
@@ -72,27 +80,36 @@ class BiggestChallenge extends Component {
 	}
 
 	render() {
-		let { enabled } = this.state;
+		let { enabled, iAmText, iAmLookingTo } = this.state;
 		const { editing } = this.props;
 
 		const isEnabled = enabled || editing;
 
-		const handlerOnPress = editing
-			? this._onPressBack
-			: this._onPressButtonFoward;
-
 		return (
 			<KeyboardAvoidingView style={s.container} behavior="padding">
-				<Header title="Biggest challenge" onPressBack={this._onPressBack} />
+				<Header title="About me" onPressBack={this._onPressBack} />
 				<View style={localStyles.inputContainer}>
 					<BaseInput
 						onRef={( ref ) => { this.baseInput = ref; }}
-						label="Add your text"
+						label="I am"
 						labelColor={Colors.charcoalGrey}
-						placeholder="Add your biggest challenge"
-						onChangeText={this.onChangeText}
+						placeholder="Lorem ipsum dolor sit amet..."
+						onChangeText={this._onChangeIAmText}
 						style={localStyles.input}
 						labelStyle={localStyles.label}
+						value={iAmText}
+					/>
+				</View>
+				<View style={localStyles.inputContainer}>
+					<BaseInput
+						onRef={( ref ) => { this.baseInput = ref; }}
+						label="I am looking to"
+						labelColor={Colors.charcoalGrey}
+						placeholder="Lorem ipsum dolor sit amet..."
+						onChangeText={this._onChangeIAmLookingToText}
+						style={localStyles.input}
+						labelStyle={localStyles.label}
+						value={iAmLookingTo}
 					/>
 				</View>
 				<View style={localStyles.buttonContainer}>
@@ -100,7 +117,7 @@ class BiggestChallenge extends Component {
 						style={s.buttonForward}
 						enabled={isEnabled}
 						editing={editing}
-						onPress={isEnabled ? handlerOnPress : null}
+						onPress={isEnabled ? this._onPressBack : null}
 					/>
 				</View>
 			</KeyboardAvoidingView>
@@ -108,13 +125,13 @@ class BiggestChallenge extends Component {
 	}
 }
 
-BiggestChallenge.propTypes = {
+AboutMe.propTypes = {
 	editing: PropTypes.bool,
 	navigator: NavigatorPropType.isRequired
 };
 
-BiggestChallenge.defaultProps = {
+AboutMe.defaultProps = {
 	editing: false
 };
 
-export default BiggestChallenge;
+export default AboutMe;

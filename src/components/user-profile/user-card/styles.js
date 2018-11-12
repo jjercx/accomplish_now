@@ -29,6 +29,12 @@ const styles = StyleSheet.create( {
 	jobTextWrapper: {
 		marginTop: 4,
 		marginBottom: 7
+	},
+	buttonEdit: {
+		zIndex: 2,
+		position: 'absolute',
+		top: hpd( HTP( 20 ) ),
+		right: wpd( WTP( 20 ) )
 	}
 } );
 

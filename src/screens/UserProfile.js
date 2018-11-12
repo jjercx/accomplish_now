@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import {
-	View,
-	ScrollView,
-	StyleSheet,
-	findNodeHandle
-} from 'react-native';
-
+import PropTypes from 'prop-types';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -18,14 +13,14 @@ import colors from '../theme/palette';
 import Person, { PersonState } from '../entities/Person';
 import Skill, { ComputedSkill } from '../entities/Skill';
 import AboutInfo from '../entities/AboutInfo';
-import Header from '../components/profile-user/header/Header';
-import UserCard from '../components/profile-user/user-card/UserCard';
-import ActionsCard from '../components/profile-user/actions-card/ActionsCard';
-import SkillsCard from '../components/profile-user/skills-card/SkillsCard';
-import AboutCard from '../components/profile-user/about-card/AboutCard';
-import ChallengeCard from '../components/profile-user/challenge-card/ChallengeCard';
-import WorkingOnCard from '../components/profile-user/working-card/WorkingCard';
-import AccomplishmentsCard from '../components/profile-user/accomplishments-card/AccomplishmentsCard';
+import Header from '../components/user-profile/header/Header';
+import UserCard from '../components/user-profile/user-card/UserCard';
+import ActionsCard from '../components/user-profile/actions-card/ActionsCard';
+import SkillsCard from '../components/user-profile/skills-card/SkillsCard';
+import AboutCard from '../components/user-profile/about-card/AboutCard';
+import ChallengeCard from '../components/user-profile/challenge-card/ChallengeCard';
+import WorkingOnCard from '../components/user-profile/working-card/WorkingCard';
+import AccomplishmentsCard from '../components/user-profile/accomplishments-card/AccomplishmentsCard';
 
 const styles = StyleSheet.create( {
 	container: {
@@ -53,17 +48,9 @@ class UserProfile extends Component {
 
 	constructor() {
 		super();
-		this.state = {
-			blurViewRef: null
-		};
 		this._logOut = this._logOut.bind( this );
 		this._callback = this._callback.bind( this );
-	}
-
-	componentDidMount() {
-		this.setState( {
-			blurViewRef: findNodeHandle( this.viewRef )
-		} );
+		this._onPressBack = this._onPressBack.bind( this );
 	}
 
 	_skills = ( skills ) => {
@@ -106,12 +93,25 @@ class UserProfile extends Component {
 		navigator.pop();
 	}
 
-	render() {
-		const { blurViewRef } = this.state;
-		const { user } = this.props;
-		const { navigator: _navigator } = this.props;
+	_navigateTo( screen ) {
+		return () => {
+			const { navigator } = this.props;
+			navigator.push( {
+				screen,
+				passProps: {
+					editing: true
+			  }
+			} );
+		};
+	}
 
-		let image = user.basicInfo.profilePhotoUrl ? { uri: user.basicInfo.profilePhotoUrl } : require( '../assets/images/icons/addPhoto.png' );
+	render() {
+		const { user, editable, navigator: _navigator } = this.props;
+
+		let image = user.basicInfo.profilePhotoUrl
+			? { uri: user.basicInfo.profilePhotoUrl }
+			: require( '../assets/images/icons/addPhoto.png' );
+
 		const person = new Person(
 			2,
 			user.basicInfo.firstName,
@@ -128,38 +128,78 @@ class UserProfile extends Component {
 			this._acomplishments( user.accomplishments ),
 			user.basicInfo.availableStatus ? PersonState.AVAILABLE : null
 		);
+
 		return (
 			<View style={styles.container}>
-				<View ref={( ref ) => { this.viewRef = ref; }} style={styles.scrollerWrapper}>
+				<View style={styles.scrollerWrapper}>
 					<ScrollView
 						vertical
 						showsVerticalScrollIndicator
 						style={styles.scroller}
 						contentContainerStyle={styles.scrollerContainer}
 					>
-						<Header onPressBack={() => this._onPressBack()} />
-						<UserCard person={person} onPress={this._logOut} />
+						<Header onPressBack={this._onPressBack} />
+						<UserCard
+							person={person}
+							onPress={this._logOut}
+							onPressEdit={this._navigateTo( 'setProfile' )}
+							editable={editable}
+						/>
 						<Spacing size="smallPlus" />
 						<ActionsCard />
 						<Spacing size="smallPlus" />
-						{person.skills ? <SkillsCard skills={person.skills} /> : null}
+						{person.skills
+							? (
+								<SkillsCard
+									skills={person.skills}
+									onPressAdd={this._navigateTo( 'addSkills' )}
+									editable={editable}
+								/>
+							)
+							: null}
 						<Spacing size="smallPlus" />
-						{person.aboutMe ? <AboutCard aboutInfo={person.aboutMe} /> : null}
+						{person.aboutMe
+							? (
+								<AboutCard
+									aboutInfo={person.aboutMe}
+									onPressEdit={this._navigateTo( 'aboutMe' )}
+									editable={editable}
+								/>
+							)
+							: null}
 						<Spacing size="smallPlus" />
-						{person.biggestChallenge ? <ChallengeCard text={person.biggestChallenge} /> : null}
+						{person.biggestChallenge
+							? (
+								<ChallengeCard
+									text={person.biggestChallenge}
+									onPressEdit={this._navigateTo( 'biggestChallenge' )}
+									editable={editable}
+								/>
+							)
+							: null}
 						<Spacing size="smallPlus" />
-						{person.currentlyWorkingOn ? <WorkingOnCard text={person.currentlyWorkingOn} /> : null}
+						{person.currentlyWorkingOn
+							? (
+								<WorkingOnCard
+									text={person.currentlyWorkingOn}
+									onPressEdit={this._navigateTo( 'currentlyWorkingOn' )}
+									editable={editable}
+								/>
+							)
+							: null}
 						<Spacing size="smallPlus" />
 						{person.accomplishments ? (
 							<AccomplishmentsCard
 								accomplishments={person.accomplishments}
+								onPressAdd={this._navigateTo( 'addAccomplishment' )}
+								editable={editable}
 							/>
 						)
 							: null}
 						<Spacing size="smallPlus" />
 					</ScrollView>
 				</View>
-				<NavBar viewRef={blurViewRef} navigator={_navigator} />
+				<NavBar navigator={_navigator} />
 			</View>
 		);
 	}
@@ -167,7 +207,12 @@ class UserProfile extends Component {
 /* eslint-enable react/prefer-stateless-function */
 
 UserProfile.propTypes = {
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	editable: PropTypes.bool
+};
+
+UserProfile.defaultProps = {
+	editable: true
 };
 
 const mapStateToProps = store => ( {

@@ -11,6 +11,8 @@ import PrivacyPolicy from './policies/PrivacyPolicy';
 import AddSkills from './authentication/AddSkills';
 import SetProfile from './authentication/SetProfile';
 import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin';
+import AboutMe from './authentication/AboutMe';
+import AddAccomplishment from './authentication/AddAccomplishment';
 import UserProfile from './UserProfile';
 import Messages from './messages/Messages';
 import PeopleNearby from './PeopleNearby';
@@ -55,6 +57,8 @@ export function registerScreens() {
 	Navigation.registerComponent( 'addSkills', () => AddSkills );
 	Navigation.registerComponent( 'setProfile', () => SetProfile );
 	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin, store, Provider );
+	Navigation.registerComponent( 'aboutMe', () => AboutMe );
+	Navigation.registerComponent( 'addAccomplishment', () => AddAccomplishment );
 	Navigation.registerComponent( 'userProfile', () => UserProfile, store, Provider );
 	Navigation.registerComponent( 'messages', () => Messages );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );

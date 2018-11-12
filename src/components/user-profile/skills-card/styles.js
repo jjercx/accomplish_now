@@ -26,6 +26,10 @@ const styles = StyleSheet.create( {
 	textWrapper: {
 		flex: 1,
 		paddingHorizontal: wpd( WTP( 10 ) )
+	},
+	buttonAdd: {
+		marginTop: hpd( HTP( 25 ) ),
+		marginBottom: 0
 	}
 } );
 
