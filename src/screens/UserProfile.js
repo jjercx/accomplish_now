@@ -107,7 +107,11 @@ class UserProfile extends Component {
 
 	render() {
 		const { user, editable, navigator: _navigator } = this.props;
-		let image = user.basicInfo.profilePhotoUrl ? { uri: user.basicInfo.profilePhotoUrl } : require( '../assets/images/icons/addPhoto.png' );
+
+		let image = user.basicInfo.profilePhotoUrl
+			? { uri: user.basicInfo.profilePhotoUrl }
+			: require( '../assets/images/icons/addPhoto.png' );
+
 		const person = new Person(
 			2,
 			user.basicInfo.firstName,
