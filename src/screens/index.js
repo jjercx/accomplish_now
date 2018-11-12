@@ -1,4 +1,6 @@
 import { Navigation } from 'react-native-navigation';
+import { Provider } from 'react-redux';
+import store from '../store';
 import Onboarding from './Onboarding';
 import Home from './Home';
 import CreateWelcomeAccount from './authentication/CreateWelcomeAccount';
@@ -9,10 +11,18 @@ import PrivacyPolicy from './policies/PrivacyPolicy';
 import AddSkills from './authentication/AddSkills';
 import SetProfile from './authentication/SetProfile';
 import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin';
+import AboutMe from './authentication/AboutMe';
+import AddAccomplishment from './authentication/AddAccomplishment';
 import UserProfile from './UserProfile';
+<<<<<<< HEAD
 import Messages from './Messages';
 import Places from './Places';
+=======
+import Messages from './messages/Messages';
+>>>>>>> 1a40c875a32423e3fa78bca0f53ec5741f54cd7c
 import PeopleNearby from './PeopleNearby';
+import MessagesDetails from './messages/MessagesDetails';
+import Notifications from './messages/Notifications';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -42,18 +52,22 @@ export function initApp( action ) {
 
 // register all screens of the app (including internal ones)
 export function registerScreens() {
-	Navigation.registerComponent( 'onboarding', () => Onboarding );
-	Navigation.registerComponent( 'home', () => Home );
-	Navigation.registerComponent( 'createWelcomeAccount', () => CreateWelcomeAccount );
+	Navigation.registerComponent( 'onboarding', () => Onboarding, store, Provider );
+	Navigation.registerComponent( 'home', () => Home, store, Provider );
+	Navigation.registerComponent( 'createWelcomeAccount', () => CreateWelcomeAccount, store, Provider );
 	Navigation.registerComponent( 'biggestChallenge', () => BiggestChallenge );
 	Navigation.registerComponent( 'currentlyWorkingOn', () => CurrentlyWorkingOn );
 	Navigation.registerComponent( 'termsAndConditions', () => TermsAndConditions );
 	Navigation.registerComponent( 'privacyPolicy', () => PrivacyPolicy );
 	Navigation.registerComponent( 'addSkills', () => AddSkills );
 	Navigation.registerComponent( 'setProfile', () => SetProfile );
-	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin );
-	Navigation.registerComponent( 'userProfile', () => UserProfile );
+	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin, store, Provider );
+	Navigation.registerComponent( 'aboutMe', () => AboutMe );
+	Navigation.registerComponent( 'addAccomplishment', () => AddAccomplishment );
+	Navigation.registerComponent( 'userProfile', () => UserProfile, store, Provider );
 	Navigation.registerComponent( 'messages', () => Messages );
 	Navigation.registerComponent( 'places', () => Places );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
+	Navigation.registerComponent( 'messagesDetails', () => MessagesDetails );
+	Navigation.registerComponent( 'notifications', () => Notifications );
 }

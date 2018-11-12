@@ -26,6 +26,11 @@ const semiLargeTitle = {
 	fontFamily: fonts.productSansBold
 };
 
+const semiSmallTitle = {
+	fontSize: normalize( 26 ),
+	fontFamily: fonts.productSansBold
+};
+
 const midPlusTitle = {
 	fontSize: normalize( 23 ),
 	fontFamily: fonts.productSansBold
@@ -76,6 +81,7 @@ export default {
 	'smallBody': smallBody,
 	'midBody': midBody,
 	'semiLargeTitle': semiLargeTitle,
+	'semiSmallTitle': semiSmallTitle,
 	'smallTitleBold': smallTitleBold,
 	'midPlusTitle': midPlusTitle,
 	'xsmallBody': xsmallBody,

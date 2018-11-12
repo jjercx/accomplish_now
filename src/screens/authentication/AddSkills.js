@@ -1,6 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
 	View, Platform, ScrollView, KeyboardAvoidingView
 } from 'react-native';
@@ -98,6 +99,12 @@ class AddSkills extends Component {
 		skillsAdded: []
 	};
 
+	constructor( props ) {
+		super( props );
+		this._onPressBack = this._onPressBack.bind( this );
+		this._onSaveAndStart = this._onSaveAndStart.bind( this );
+	}
+
 	componentDidMount() {
 		this.textInput.focus();
 	}
@@ -137,9 +144,11 @@ class AddSkills extends Component {
 			text, skills, skillsAdded, baseInputFocused
 		} = this.state;
 
+		const { editing } = this.props;
+
 		return (
-			<KeyboardAvoidingView style={styles.container} behavior="padding">
-				<Header title="Add your skills" onPressBack={() => this._onPressBack()} />
+			<KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : null}>
+				<Header title="Add your skills" onPressBack={this._onPressBack} />
 				<View style={localStyles.inputContainer}>
 					<BaseInput
 						onRef={( ref ) => { this.textInput = ref; }}
@@ -183,10 +192,10 @@ class AddSkills extends Component {
 
 				<View style={localStyles.buttonContainer}>
 					<Button
-						text="Save skills and start"
+						text={editing ? 'Save skills' : 'Save skills and start'}
 						textColor={colors.white}
 						buttonColor={colors.orange}
-						onPress={() => this._onSaveAndStart()}
+						onPress={editing ? this._onPressBack : this._onSaveAndStart}
 						style={{ height: hp( HTP( 45 ) ) }}
 					/>
 				</View>
@@ -196,7 +205,12 @@ class AddSkills extends Component {
 }
 
 AddSkills.propTypes = {
+	editing: PropTypes.bool,
 	navigator: NavigatorPropType.isRequired
+};
+
+AddSkills.defaultProps = {
+	editing: false
 };
 
 export default AddSkills;

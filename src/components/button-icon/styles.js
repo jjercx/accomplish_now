@@ -30,5 +30,17 @@ export default {
 	},
 	buttonBack: {
 		top: '5%'
+	},
+	iconEdit: {
+		marginRight: wp( WTP( 8 ) )
+	},
+	buttonEdit: {
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
+		alignItems: 'center'
+	},
+	buttonAdd: {
+		alignSelf: 'center',
+		marginVertical: hp( HTP( 10 ) )
 	}
 };

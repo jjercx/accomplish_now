@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, View } from 'react-native';
+import { Image, View, TouchableOpacity } from 'react-native';
 import Typography from '../../typography/Typography';
 import Person from '../../../entities/Person';
 import styles from './styles';
 import Spacing from '../../spacing/Spacing';
 
 const PersonCard = ( {
-	person, rating, meetingsCount, distance
+	person, rating, meetingsCount, distance, onPress
 } ) => (
 	<View style={styles.cardContainer}>
 		{ ( ( distance > 0 ) && (
 			<View style={styles.distanceWrapper}>
-				<Image style={styles.icon} source={require( '../../../assets/images/icons/location.png' )} />
+				<TouchableOpacity onPress={onPress}>
+					<Image style={styles.icon} source={require( '../../../assets/images/icons/location.png' )} />
+				</TouchableOpacity>
 				<Typography variant="xsmallBody" color="greyishBrown">{ `${distance} miles` }</Typography>
 			</View>
 		) ) || (
@@ -70,13 +72,15 @@ PersonCard.propTypes = {
 	person: PropTypes.instanceOf( Person ).isRequired,
 	rating: PropTypes.number,
 	meetingsCount: PropTypes.number,
-	distance: PropTypes.number
+	distance: PropTypes.number,
+	onPress: PropTypes.func
 };
 
 PersonCard.defaultProps = {
 	rating: 0,
 	meetingsCount: 0,
-	distance: 0
+	distance: 0,
+	onPress: () => {}
 };
 
 export default PersonCard;

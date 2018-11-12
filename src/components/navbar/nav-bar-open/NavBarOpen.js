@@ -8,9 +8,24 @@ import { HTP, WTP } from '../../../utils/dimensions';
 import NavigatorPropType from '../../../types/navigator';
 
 class NavBarOpen extends Component {
+	_onPressDashboard = () => {
+		const { navigator } = this.props;
+		navigator.resetTo( { screen: 'home', animationType: 'fade' } );
+	}
+
 	_onPressMessages = () => {
 		const { navigator } = this.props;
-		navigator.push( { screen: 'messages' } );
+		navigator.resetTo( { screen: 'messages', animationType: 'fade' } );
+	}
+
+	_onPressPeople = () => {
+		const { navigator } = this.props;
+		navigator.resetTo( { screen: 'peopleNearby', animationType: 'fade' } );
+	}
+
+	_onPressUserProfile = () => {
+		const { navigator } = this.props;
+		navigator.resetTo( { screen: 'userProfile', animationType: 'fade' } );
 	}
 
 	_onPressPlaces = () => {
@@ -29,7 +44,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/dashboardon.png' )}
 							imageWidth={wpd( WTP( 29.7 - ( 29.7 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 30.3 - ( 30.3 * percentSmaller ) ) )}
-							onPress={() => this._onPressDashbaord()}
+							onPress={() => this._onPressDashboard()}
 						/>
 						<Spacing size="base" horizontal />
 						<TabButton
@@ -37,7 +52,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/peopleon.png' )}
 							imageWidth={wpd( WTP( 33.7 - ( 33.7 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 33.7 - ( 33.7 * percentSmaller ) ) )}
-							onPress={() => this._onPressDashbaord()}
+							onPress={() => this._onPressPeople()}
 						/>
 						<Spacing size="base" horizontal />
 						<TabButton
@@ -63,7 +78,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/meetingson.png' )}
 							imageWidth={wpd( WTP( 35.7 - ( 35.7 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 26.7 - ( 26.7 * percentSmaller ) ) )}
-							onPress={() => this._onPressDashbaord()}
+							onPress={() => this._onPressMessages()}
 						/>
 						<Spacing size="base" horizontal />
 						<TabButton
@@ -71,7 +86,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/profileon.png' )}
 							imageWidth={wpd( WTP( 34 - ( 34 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 34 - ( 34 * percentSmaller ) ) )}
-							onPress={() => this._onPressDashbaord()}
+							onPress={() => this._onPressUserProfile()}
 						/>
 					</View>
 				</View>

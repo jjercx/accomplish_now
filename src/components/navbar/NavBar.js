@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { BlurView } from 'react-native-blur';
 import styles from './styles';
 import NavBarClosed from './nav-bar-closed/NavBarClosed';
@@ -29,6 +29,7 @@ class NavBar extends Component {
 				{ open
 					? (
 						<BlurView
+							viewRef={5}
 							style={styles.blur}
 							blurType="dark"
 							blurAmount={3}

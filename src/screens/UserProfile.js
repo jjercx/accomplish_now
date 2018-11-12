@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import {
-	View,
-	ScrollView,
-	StyleSheet,
-	findNodeHandle
-} from 'react-native';
-
+import PropTypes from 'prop-types';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
+import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
 import { HTP } from '../utils/dimensions';
-
+import { actLogOut } from '../actions/authentication';
 import NavigatorPropType from '../types/navigator';
 import Spacing from '../components/spacing/Spacing';
 import NavBar from '../components/navbar/NavBar';
@@ -16,15 +13,14 @@ import colors from '../theme/palette';
 import Person, { PersonState } from '../entities/Person';
 import Skill, { ComputedSkill } from '../entities/Skill';
 import AboutInfo from '../entities/AboutInfo';
-
-import Header from '../components/profile-user/header/Header';
-import UserCard from '../components/profile-user/user-card/UserCard';
-import ActionsCard from '../components/profile-user/actions-card/ActionsCard';
-import SkillsCard from '../components/profile-user/skills-card/SkillsCard';
-import AboutCard from '../components/profile-user/about-card/AboutCard';
-import ChallengeCard from '../components/profile-user/challenge-card/ChallengeCard';
-import WorkingOnCard from '../components/profile-user/working-card/WorkingCard';
-import AccomplishmentsCard from '../components/profile-user/accomplishments-card/AccomplishmentsCard';
+import Header from '../components/user-profile/header/Header';
+import UserCard from '../components/user-profile/user-card/UserCard';
+import ActionsCard from '../components/user-profile/actions-card/ActionsCard';
+import SkillsCard from '../components/user-profile/skills-card/SkillsCard';
+import AboutCard from '../components/user-profile/about-card/AboutCard';
+import ChallengeCard from '../components/user-profile/challenge-card/ChallengeCard';
+import WorkingOnCard from '../components/user-profile/working-card/WorkingCard';
+import AccomplishmentsCard from '../components/user-profile/accomplishments-card/AccomplishmentsCard';
 
 const styles = StyleSheet.create( {
 	container: {
@@ -44,7 +40,7 @@ const styles = StyleSheet.create( {
 	}
 } );
 
-/* eslint-disable react/prefer-stateless-function */
+
 class UserProfile extends Component {
 	static navigatorStyle = {
 		navBarHidden: true
@@ -52,15 +48,44 @@ class UserProfile extends Component {
 
 	constructor() {
 		super();
-		this.state = {
-			blurViewRef: null
-		};
+		this._logOut = this._logOut.bind( this );
+		this._callback = this._callback.bind( this );
+		this._onPressBack = this._onPressBack.bind( this );
 	}
 
-	componentDidMount() {
-		this.setState( {
-			blurViewRef: findNodeHandle( this.viewRef )
+	_skills = ( skills ) => {
+		let skillList = [];
+		skills.forEach( ( skill, i ) => {
+			skillList.push( new ComputedSkill( new Skill( i + 1, skill.description, require( '../assets/images/icons/designer.png' ) ), skill.endorsements ) );
 		} );
+		return skillList;
+	}
+
+	_expertise = expertises => expertises.map( experise => experise.desc )
+
+	_interest = interests => interests.map( interest => interest.desc )
+
+	_acomplishments = ( acomplishments ) => {
+		let objAcomplishments = Object.keys( acomplishments );
+		return objAcomplishments.map( ( eachKey ) => {
+			let itemKey = acomplishments[ eachKey ];
+			return itemKey.description;
+		} );
+	}
+
+	_callback() {
+		const { navigator } = this.props;
+		navigator.resetTo( {
+			screen: 'onboarding',
+			navigatorStyle: {
+				navBarHidden: true
+			}
+		} );
+	}
+
+	_logOut() {
+		const { actLogOutConnect } = this.props;
+		actLogOutConnect( this._callback );
 	}
 
 	_onPressBack() {
@@ -68,68 +93,135 @@ class UserProfile extends Component {
 		navigator.pop();
 	}
 
+	_navigateTo( screen ) {
+		return () => {
+			const { navigator } = this.props;
+			navigator.push( {
+				screen,
+				passProps: {
+					editing: true
+			  }
+			} );
+		};
+	}
+
 	render() {
-		const { blurViewRef } = this.state;
+		const { user, editable, navigator: _navigator } = this.props;
+
+		let image = user.basicInfo.profilePhotoUrl
+			? { uri: user.basicInfo.profilePhotoUrl }
+			: require( '../assets/images/icons/addPhoto.png' );
 
 		const person = new Person(
 			2,
-			'Stephanie',
-			'Doe',
-			'Product Designer',
-			require( '../assets/images/connections/sd.png' ),
-			[
-				new ComputedSkill( new Skill( 1, 'Designer', require( '../assets/images/icons/designer.png' ) ), 0 ),
-				new ComputedSkill( new Skill( 2, 'Coaching', require( '../assets/images/icons/coaching.png' ) ), 0 ),
-				new ComputedSkill( new Skill( 3, 'User Experience', require( '../assets/images/icons/ux.png' ) ), 0 )
-			],
+			user.basicInfo.firstName,
+			user.basicInfo.lastName,
+			'Product Designer', // Preguntar de donde va a salir
+			image,
+			this._skills( user.skills ),
 			new AboutInfo(
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+				this._expertise( user.aboutMe.expertise ),
+				this._interest( user.aboutMe.interests )
 			),
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dignissim sapien vel turpis finibus dignissim. Etiam aliquam massa euismod dolor vehicula malesuada. Sed vulputate lacus.',
-			'I am working on 10 hour profitability improvement project for a NYC small business.',
-			[
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-			],
-			PersonState.AVAILABLE
+			user.biggestChallenge,
+			user.workingOn,
+			this._acomplishments( user.accomplishments ),
+			user.basicInfo.availableStatus ? PersonState.AVAILABLE : null
 		);
 
 		return (
 			<View style={styles.container}>
-				<View ref={( ref ) => { this.viewRef = ref; }} style={styles.scrollerWrapper}>
+				<View style={styles.scrollerWrapper}>
 					<ScrollView
 						vertical
 						showsVerticalScrollIndicator
 						style={styles.scroller}
 						contentContainerStyle={styles.scrollerContainer}
 					>
-						<Header onPressBack={() => this._onPressBack()} />
-						<UserCard person={person} />
+						<Header onPressBack={this._onPressBack} />
+						<UserCard
+							person={person}
+							onPress={this._logOut}
+							onPressEdit={this._navigateTo( 'setProfile' )}
+							editable={editable}
+						/>
 						<Spacing size="smallPlus" />
 						<ActionsCard />
 						<Spacing size="smallPlus" />
-						<SkillsCard skills={person.skills} />
+						{person.skills
+							? (
+								<SkillsCard
+									skills={person.skills}
+									onPressAdd={this._navigateTo( 'addSkills' )}
+									editable={editable}
+								/>
+							)
+							: null}
 						<Spacing size="smallPlus" />
-						<AboutCard aboutInfo={person.aboutMe} />
+						{person.aboutMe
+							? (
+								<AboutCard
+									aboutInfo={person.aboutMe}
+									onPressEdit={this._navigateTo( 'aboutMe' )}
+									editable={editable}
+								/>
+							)
+							: null}
 						<Spacing size="smallPlus" />
-						<ChallengeCard text={person.biggestChallenge} />
+						{person.biggestChallenge
+							? (
+								<ChallengeCard
+									text={person.biggestChallenge}
+									onPressEdit={this._navigateTo( 'biggestChallenge' )}
+									editable={editable}
+								/>
+							)
+							: null}
 						<Spacing size="smallPlus" />
-						<WorkingOnCard text={person.currentlyWorkingOn} />
+						{person.currentlyWorkingOn
+							? (
+								<WorkingOnCard
+									text={person.currentlyWorkingOn}
+									onPressEdit={this._navigateTo( 'currentlyWorkingOn' )}
+									editable={editable}
+								/>
+							)
+							: null}
 						<Spacing size="smallPlus" />
-						<AccomplishmentsCard accomplishments={person.accomplishments} />
+						{person.accomplishments ? (
+							<AccomplishmentsCard
+								accomplishments={person.accomplishments}
+								onPressAdd={this._navigateTo( 'addAccomplishment' )}
+								editable={editable}
+							/>
+						)
+							: null}
 						<Spacing size="smallPlus" />
 					</ScrollView>
 				</View>
-				<NavBar viewRef={blurViewRef} />
+				<NavBar navigator={_navigator} />
 			</View>
 		);
 	}
 }
-/* eslint-enable react/prefer-stateless-function */
+
 
 UserProfile.propTypes = {
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	editable: PropTypes.bool,
+	actLogOutConnect: PropTypes.func.isRequired,
+	user: PropTypes.any.isRequired
 };
 
-export default UserProfile;
+UserProfile.defaultProps = {
+	editable: true
+};
+
+const mapStateToProps = store => ( {
+	user: store.authentication.user
+} );
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{ actLogOutConnect: actLogOut }, dispatch );
+
+export default compose( connect( mapStateToProps, mapDispatchToProps )( UserProfile ) );
