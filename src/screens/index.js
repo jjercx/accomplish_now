@@ -14,12 +14,8 @@ import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin'
 import AboutMe from './authentication/AboutMe';
 import AddAccomplishment from './authentication/AddAccomplishment';
 import UserProfile from './UserProfile';
-<<<<<<< HEAD
-import Messages from './Messages';
 import Places from './Places';
-=======
 import Messages from './messages/Messages';
->>>>>>> 1a40c875a32423e3fa78bca0f53ec5741f54cd7c
 import PeopleNearby from './PeopleNearby';
 import MessagesDetails from './messages/MessagesDetails';
 import Notifications from './messages/Notifications';

@@ -12,6 +12,8 @@ import { HTP, WTP } from '../utils/dimensions';
 import NavigatorPropType from '../types/navigator';
 import NavBar from '../components/navbar/NavBar';
 import Typography from '../components/typography/Typography';
+import PlaceItem from '../components/place/place-item/PlaceItem';
+import Place from '../entities/Place';
 
 const logoAccomplish = require( '../assets/images/messages/isoGray.png' );
 const iconOrder = require( '../assets/images/icons/orderSmall.png' );
@@ -63,6 +65,10 @@ const s = StyleSheet.create( {
 		paddingBottom: hp( HTP( 5 ) ),
 		paddingLeft: wp( WTP( 5 ) ),
 		paddingRight: wp( WTP( 10 ) )
+	},
+	flatList: {
+		flex: 1,
+		marginTop: hp( HTP( 5 ) )
 	}
 } );
 
@@ -72,12 +78,18 @@ class Places extends Component {
     	navBarHidden: true
     };
 
+    // eslint-disable-next-line react/sort-comp
     _onPressBack() {
     	const { navigator } = this.props;
     	navigator.pop();
     }
 
-    render() {
+	_places = () => [
+		 new Place( 1, 'Office Global 305', require( '../assets/images/places/office305.png' ), 'New York', '2 miles from you' ),
+		 new Place( 2, 'Corner Corner SC', require( '../assets/images/places/cornersc.png' ), 'New York', '2 miles from you' )
+	];
+
+	render() {
     	const { navigator: _navigator } = this.props;
     	return (
     		// eslint-disable-next-line react/jsx-indent
@@ -133,12 +145,21 @@ class Places extends Component {
     				>
     					{'Places to work'}
     				</Typography>
+					<FlatList
+						style={s.flatList}
+						data={this._places()}
+						keyExtractor={item => item.id}
+						renderItem={( { item } ) => (
+							<PlaceItem {...item} />
+						)}
+					/>
+
     			</View>
     			<NavBar navigator={_navigator} />
     		</View>
 
     	);
-    }
+	}
 }
 
 Places.propTypes = {
