@@ -4,21 +4,25 @@ import { ImageBackground } from 'react-native';
 import ButtonBack from '../../button-icon/ButtonBack';
 import styles from './styles';
 
-const Header = ( { onPressBack } ) => (
+const Header = ( { onPressBack, backButton } ) => (
 	<ImageBackground
 		source={require( '../../../assets/images/home/header.png' )}
 		style={styles.imageBackground}
 	>
-		<ButtonBack onPress={onPressBack} />
+		{
+			backButton && <ButtonBack onPress={onPressBack} />
+		}
 	</ImageBackground>
 );
 
 Header.propTypes = {
-	onPressBack: PropTypes.func
+	onPressBack: PropTypes.func,
+	backButton: PropTypes.bool
 };
 
 Header.defaultProps = {
-	onPressBack: () => {}
+	onPressBack: () => {},
+	backButton: false
 };
 
 export default Header;

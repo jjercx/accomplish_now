@@ -29,5 +29,8 @@ export default {
 	lightGrey: '#d8d8de',
 	tangerine: '#fba104',
 	paleGreyThree: '#f6f7f9',
+	editButton: '#c3c3cd',
+	whiteThree: '#e8e8e8',
+	electricBlue: '#1c57ff',
 	nextGray: '#A7A7A7'
 };

@@ -10,12 +10,12 @@ import NavigatorPropType from '../../../types/navigator';
 class NavBarOpen extends Component {
 	_onPressDashboard = () => {
 		const { navigator } = this.props;
-		navigator.push( { screen: 'home', animationType: 'fade' } );
+		navigator.resetTo( { screen: 'home', animationType: 'fade' } );
 	}
 
 	_onPressMessages = () => {
 		const { navigator } = this.props;
-		navigator.push( { screen: 'messages', animationType: 'fade' } );
+		navigator.resetTo( { screen: 'messages', animationType: 'fade' } );
 	}
 
 	_onPressMeetings = () => {
@@ -25,12 +25,12 @@ class NavBarOpen extends Component {
 
 	_onPressPeople = () => {
 		const { navigator } = this.props;
-		navigator.push( { screen: 'peopleNearby', animationType: 'fade' } );
+		navigator.resetTo( { screen: 'peopleNearby', animationType: 'fade' } );
 	}
 
 	_onPressUserProfile = () => {
 		const { navigator } = this.props;
-		navigator.push( { screen: 'userProfile' } );
+		navigator.resetTo( { screen: 'userProfile', animationType: 'fade' } );
 	}
 
 	render() {

@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Image, TouchableOpacity } from 'react-native';
 import Person, { getStateName } from '../../../entities/Person';
-
 import Typography from '../../typography/Typography';
+import ButtonEdit from '../../button-icon/ButtonEdit';
 import Card from '../card/Card';
 import styles from './styles';
 
-const UserCard = ( { person, onPress } ) => (
+const UserCard = ( {
+	person, editable, onPress, onPressEdit
+} ) => (
 	<Card style={styles.cardContainer}>
 		<View style={styles.avatarWrapper}>
 			<TouchableOpacity onPress={onPress}>
@@ -25,16 +27,20 @@ const UserCard = ( { person, onPress } ) => (
 				{getStateName( person.state )}
 			</Typography>
 		</View>
+		{ editable && <ButtonEdit onPress={onPressEdit} style={styles.buttonEdit} /> }
 	</Card>
 );
 
 UserCard.propTypes = {
 	person: PropTypes.instanceOf( Person ).isRequired,
-	onPress: PropTypes.func
+	editable: PropTypes.bool.isRequired,
+	onPress: PropTypes.func,
+	onPressEdit: PropTypes.func
 };
 
 UserCard.defaultProps = {
-	onPress: () => {}
+	onPress: () => {},
+	onPressEdit: () => {}
 };
 
 export default UserCard;

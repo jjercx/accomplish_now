@@ -36,7 +36,7 @@ const localStyles = StyleSheet.create( {
 	}
 } );
 
-class BiggestChallenge extends Component {
+class AddAccomplishment extends Component {
 	static navigatorStyle = {
 		navBarHidden: true
 	};
@@ -46,7 +46,6 @@ class BiggestChallenge extends Component {
 		this.state = { enabled: false };
 		this._onChangeText = this._onChangeText.bind( this );
 		this._onPressBack = this._onPressBack.bind( this );
-		this._onPressButtonFoward = this._onPressButtonFoward.bind( this );
 	}
 
 	componentDidMount() {
@@ -61,11 +60,6 @@ class BiggestChallenge extends Component {
 		this.setState( { enabled: isEnabled } );
 	}
 
-	_onPressButtonFoward() {
-		const { navigator } = this.props;
-		navigator.push( { screen: 'currentlyWorkingOn' } );
-	}
-
 	_onPressBack() {
 		const { navigator } = this.props;
 		navigator.pop();
@@ -77,20 +71,16 @@ class BiggestChallenge extends Component {
 
 		const isEnabled = enabled || editing;
 
-		const handlerOnPress = editing
-			? this._onPressBack
-			: this._onPressButtonFoward;
-
 		return (
 			<KeyboardAvoidingView style={s.container} behavior="padding">
-				<Header title="Biggest challenge" onPressBack={this._onPressBack} />
+				<Header title="Add Accomplishment" titleSize="small" onPressBack={this._onPressBack} />
 				<View style={localStyles.inputContainer}>
 					<BaseInput
 						onRef={( ref ) => { this.baseInput = ref; }}
 						label="Add your text"
 						labelColor={Colors.charcoalGrey}
-						placeholder="Add your biggest challenge"
-						onChangeText={this.onChangeText}
+						placeholder="Add your accomplishment"
+						onChangeText={this._onChangeText}
 						style={localStyles.input}
 						labelStyle={localStyles.label}
 					/>
@@ -98,9 +88,9 @@ class BiggestChallenge extends Component {
 				<View style={localStyles.buttonContainer}>
 					<ButtonForward
 						style={s.buttonForward}
-						enabled={isEnabled}
 						editing={editing}
-						onPress={isEnabled ? handlerOnPress : null}
+						enabled={isEnabled}
+						onPress={isEnabled ? this._onPressBack : null}
 					/>
 				</View>
 			</KeyboardAvoidingView>
@@ -108,13 +98,13 @@ class BiggestChallenge extends Component {
 	}
 }
 
-BiggestChallenge.propTypes = {
+AddAccomplishment.propTypes = {
 	editing: PropTypes.bool,
 	navigator: NavigatorPropType.isRequired
 };
 
-BiggestChallenge.defaultProps = {
+AddAccomplishment.defaultProps = {
 	editing: false
 };
 
-export default BiggestChallenge;
+export default AddAccomplishment;

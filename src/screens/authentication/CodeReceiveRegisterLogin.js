@@ -2,9 +2,16 @@
 
 import React, { Component } from 'react';
 import {
-	View, TextInput, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Alert, ActivityIndicator
+	View,
+	TextInput,
+	KeyboardAvoidingView,
+	Platform,
+	TouchableWithoutFeedback,
+	Keyboard,
+	Alert,
+	ActivityIndicator
 } from 'react-native';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -31,7 +38,9 @@ const localStyles = {
 	codeContainer: {
 		flexDirection: 'row',
 		paddingTop: hp( HTP( 20 ) ),
-		paddingBottom: hp( HTP( 10 ) )
+		paddingBottom: hp( HTP( 10 ) ),
+		alignItems: 'center',
+		justifyContent: 'center'
 	},
 	codeViewContainer: {
 		paddingTop: hp( HTP( iPhoneSE() ? 5 : 20 ) ),
@@ -97,14 +106,13 @@ class CodeReceiveRegisterLogin extends Component {
 	_onPressResendCode() {
 		alert('resendCode'); // eslint-disable-line
 	}
-
 	/* eslint-enable class-methods-use-this */
 
 	_onRegisterLogin() {
 		const { code } = this.state;
-		const { actVerifyAndSignIn, user } = this.props;
+		const { actVerifyAndSignInConnect, user } = this.props;
 		this.setState( { isLoading: true } );
-		actVerifyAndSignIn( user.uid, code, this._callback.bind( this ) );
+		actVerifyAndSignInConnect( user.uid, code, this._callback.bind( this ) );
 	}
 
 	_onCodeChange( newCode ) {
@@ -167,7 +175,7 @@ class CodeReceiveRegisterLogin extends Component {
 				<View style={localStyles.contentContainer}>
 					<View style={localStyles.codeViewContainer}>
 						<TouchableWithoutFeedback onPress={() => this.textInput.focus()}>
-							<View style={[ localStyles.codeContainer, s.center ]}>
+							<View style={[ localStyles.codeContainer ]}>
 								{[ 0, 1, 2, 3, 4, 5 ].map( number => (
 									<OneNumberInput key={number} number={code[ number ]} /> ) )}
 							</View>
@@ -197,7 +205,9 @@ class CodeReceiveRegisterLogin extends Component {
 
 CodeReceiveRegisterLogin.propTypes = {
 	navigator: NavigatorPropType.isRequired,
-	codeRegister: PropTypes.bool
+	codeRegister: PropTypes.bool,
+	actVerifyAndSignInConnect: PropTypes.func.isRequired,
+	user: PropTypes.any.isRequired
 };
 
 CodeReceiveRegisterLogin.defaultProps = {
@@ -208,6 +218,8 @@ const mapStateToProps = store => ( {
 	user: store.authentication.user
 } );
 
-const mapDispatchToProps = dispatch => bindActionCreators( { actVerifyAndSignIn }, dispatch );
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{ actVerifyAndSignInConnect: actVerifyAndSignIn }, dispatch );
 
-export default ( connect( mapStateToProps, mapDispatchToProps )( CodeReceiveRegisterLogin ) );
+export default compose(
+	connect( mapStateToProps, mapDispatchToProps )( CodeReceiveRegisterLogin ) );
