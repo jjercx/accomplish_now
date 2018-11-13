@@ -8,7 +8,7 @@ import {
 	widthPercentageToDP as wpd
 } from 'react-native-responsive-screen';
 
-import { HTP, WTP } from '../utils/dimensions';
+import { HTP, WTP, iPhoneSE } from '../utils/dimensions';
 import NavigatorPropType from '../types/navigator';
 import NavBar from '../components/navbar/NavBar';
 import Typography from '../components/typography/Typography';
@@ -58,7 +58,7 @@ const styles = StyleSheet.create( {
 		flex: 1,
 		marginTop: hpd( HTP( 15 ) ),
 		marginBottom: hpd( HTP( 40 ) ),
-		alignSelf: 'center'
+		alignSelf: iPhoneSE() ? 'auto' : 'center'
 	},
 	invisible: {
 		backgroundColor: 'transparent'
@@ -120,7 +120,7 @@ class PeopleNearby extends Component {
 		const meetingCount = 562;
 		const distance = 1.5;
 
-		const numberOfColumns = 2;
+		const numberOfColumns = iPhoneSE() ? 1 : 2;
 
 		return (
 			<View style={styles.container}>
