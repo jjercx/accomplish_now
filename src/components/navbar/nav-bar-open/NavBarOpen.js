@@ -18,6 +18,11 @@ class NavBarOpen extends Component {
 		navigator.resetTo( { screen: 'messages', animationType: 'fade' } );
 	}
 
+	_onPressMeetings = () => {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'meetings', animationType: 'fade' } );
+	}
+
 	_onPressPeople = () => {
 		const { navigator } = this.props;
 		navigator.resetTo( { screen: 'peopleNearby', animationType: 'fade' } );
@@ -78,7 +83,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/meetingson.png' )}
 							imageWidth={wpd( WTP( 35.7 - ( 35.7 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 26.7 - ( 26.7 * percentSmaller ) ) )}
-							onPress={() => this._onPressMessages()}
+							onPress={() => this._onPressMeetings()}
 						/>
 						<Spacing size="base" horizontal />
 						<TabButton
