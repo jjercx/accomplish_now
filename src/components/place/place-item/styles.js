@@ -12,6 +12,7 @@ export default {
 		height: hpd( HTP( 215 ) ),
 		borderRadius: 13
 	},
+
 	descriptionPlaces: {
 		flexDirection: 'row',
 		alignItems: 'center'
