@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { BlurView } from 'react-native-blur';
 import styles from './styles';
 import NavBarClosed from './nav-bar-closed/NavBarClosed';

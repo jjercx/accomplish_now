@@ -36,6 +36,11 @@ const midPlusTitle = {
 	fontFamily: fonts.productSansBold
 };
 
+const midTitleBold = {
+	fontSize: normalize( 17 ),
+	fontFamily: fonts.productSansBold
+};
+
 const midTitle = {
 	fontSize: normalize( 17 ),
 	fontFamily: fonts.productSansRegular
@@ -77,6 +82,7 @@ export default {
 	'profileUserTitleRegular': profileUserTitleRegular,
 	'largeTitle': largeTitle,
 	'midTitle': midTitle,
+	'midTitleBold': midTitleBold,
 	'smallTitle': smallTitle,
 	'smallBody': smallBody,
 	'midBody': midBody,

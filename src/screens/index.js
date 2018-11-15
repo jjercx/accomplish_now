@@ -14,6 +14,7 @@ import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin'
 import AboutMe from './authentication/AboutMe';
 import AddAccomplishment from './authentication/AddAccomplishment';
 import UserProfile from './UserProfile';
+import Places from './Places';
 import Meetings from './Meetings';
 import Messages from './messages/Messages';
 import PeopleNearby from './PeopleNearby';
@@ -61,6 +62,7 @@ export function registerScreens() {
 	Navigation.registerComponent( 'aboutMe', () => AboutMe );
 	Navigation.registerComponent( 'addAccomplishment', () => AddAccomplishment );
 	Navigation.registerComponent( 'userProfile', () => UserProfile, store, Provider );
+	Navigation.registerComponent( 'places', () => Places );
 	Navigation.registerComponent( 'messages', () => Messages, store, Provider );
 	Navigation.registerComponent( 'meetings', () => Meetings );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );

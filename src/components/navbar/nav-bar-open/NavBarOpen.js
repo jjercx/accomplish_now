@@ -33,6 +33,11 @@ class NavBarOpen extends Component {
 		navigator.resetTo( { screen: 'userProfile', animationType: 'fade' } );
 	}
 
+	_onPressPlaces = () => {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'places' } );
+	}
+
 	render() {
 		const percentSmaller = 0.10;
 		return (
@@ -60,7 +65,7 @@ class NavBarOpen extends Component {
 							image={require( '../../../assets/images/navbar/placeson.png' )}
 							imageWidth={wpd( WTP( 38.3 - ( 38.3 * percentSmaller ) ) )}
 							imageHeight={hpd( HTP( 30.3 - ( 30.3 * percentSmaller ) ) )}
-							onPress={() => this._onPressMessages()}
+							onPress={() => this._onPressPlaces()}
 						/>
 					</View>
 					<Spacing size="base" />
