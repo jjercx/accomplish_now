@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import React, { Component } from 'react';
 import {
 	ImageBackground,
@@ -73,6 +74,11 @@ class Home extends Component {
 		this.setState( { available: value } );
 	}
 
+	_showPlacesList() {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'places' } );
+	}
+
 	/* eslint-disable class-methods-use-this */
 	renderMyConnectionsSection() {
 		return (
@@ -88,6 +94,7 @@ class Home extends Component {
 		return (
 			<PlacesSection
 				places={places}
+				onPressShowPlacesList={this._showPlacesList.bind( this )}
 			/>
 		);
 	}
