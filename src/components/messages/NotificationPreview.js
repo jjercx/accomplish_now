@@ -15,6 +15,7 @@ const NotificationPreview = ( {
 			<Image
 				style={s.npImage}
 				source={image}
+				resizeMode="cover"
 			/>
 		</View>
 		<View style={s.npTextNotificationContainer}>

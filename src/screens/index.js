@@ -67,5 +67,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'meetings', () => Meetings );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
 	Navigation.registerComponent( 'messagesDetails', () => MessagesDetails );
-	Navigation.registerComponent( 'notifications', () => Notifications );
+	Navigation.registerComponent( 'notifications', () => Notifications, store, Provider );
 }
