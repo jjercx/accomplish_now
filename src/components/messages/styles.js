@@ -128,5 +128,10 @@ export default {
 		justifyContent: 'center',
 		padding: 10,
 		marginRight: 20
+	},
+	npImage: {
+		width: wp( WTP( 60 ) ),
+		height: hp( HTP( 60 ) ),
+		borderRadius: 30
 	}
 };
