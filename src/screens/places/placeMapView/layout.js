@@ -1,25 +1,37 @@
 import React from 'react';
 import { View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import PropTypes from 'prop-types';
+import HeaderTitle from '../../../components/headerTitle';
+import Place from '../../../entities/Place';
+import PlaceMarker from './placeMarker';
+import styles from './styles';
 
-const placeMapView = () => (
-	<View style={{ flex: 1 }}>
+const placeMapView = ( { region, places } ) => (
+	<View style={styles.container}>
+		<HeaderTitle title="Places to Work" />
 		<MapView
 			provider={PROVIDER_GOOGLE}
-			style={{
-				flex: 1,
-				justifyContent: 'flex-end',
-				alignItems: 'center'
-			}}
-			region={{
-				latitude: 37.78825,
-				longitude: -122.4324,
-				latitudeDelta: 0.015,
-				longitudeDelta: 0.0121
-			}}
-		/>
+			showsUserLocation
+			style={styles.map}
+			region={region}
+		>
+			{places.map( place => (
+				<PlaceMarker key={place.id} place={place} />
+			) )}
+		</MapView>
 	</View>
 
 );
+
+placeMapView.propTypes = {
+	region: PropTypes.shape( {
+		latitude: PropTypes.number,
+		longitude: PropTypes.number,
+		latitudeDelta: PropTypes.number,
+		longitudeDelta: PropTypes.number
+	} ).isRequired,
+	places: PropTypes.arrayOf( PropTypes.instanceOf( Place ) ).isRequired
+};
 
 export default placeMapView;

@@ -2,10 +2,16 @@ class Place {
 	constructor(
 		id,
 		name,
-		image ) {
+		image,
+		latitude,
+		longitude ) {
 		this.id = id;
 		this.name = name;
 		this.image = image;
+		this.coordinate = {
+			latitude,
+			longitude
+		};
 	}
 }
 
