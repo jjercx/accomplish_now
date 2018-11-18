@@ -1,8 +1,9 @@
+/* eslint-disable react/jsx-no-bind */
 /* @flow */
 
 import React, { Component } from 'react';
 import {
-	View, StyleSheet, Image, TouchableOpacity, StatusBar, FlatList, Platform,
+	View, StyleSheet, StatusBar, FlatList, Platform,
 	ActivityIndicator
 } from 'react-native';
 import {
@@ -14,17 +15,17 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { actGetMessages } from '../../actions/messages';
 import { HTP, WTP } from '../../utils/dimensions';
-import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
-import ButtonIcon from '../../components/button-icon/ButtonIcon';
 import Typography from '../../components/typography/Typography';
 import MessagePreview from '../../components/messages/MessagePreview';
+import Header from '../../components/header/Header';
 import NavBar from '../../components/navbar/NavBar';
 import Message from '../../entities/Message';
 import Person from '../../entities/Person';
 
-const logoAccomplish = require( '../../assets/images/messages/isoGray.png' );
+// const logoAccomplish = require( '../../assets/images/messages/isoGray.png' );
 const avatarImg = require( '../../assets/images/messages/phProfile.png' );
+const notificationIcon = require( '../../assets/images/icons/notifications.png' );
 
 const s = StyleSheet.create( {
 	container: {
@@ -108,7 +109,11 @@ class Messages extends Component {
 		navigator.push( { screen: 'messagesDetails' } );
 	}
 
-	_onPressBack() {
+	_buttonIcons = () => [
+		{ id: 1, icon: notificationIcon, onPress: this._goToNotifications.bind( this ) }
+	 ];
+
+	 _onPressBack() {
 		const { navigator } = this.props;
 		navigator.pop();
 	}
@@ -123,28 +128,11 @@ class Messages extends Component {
 					<StatusBar
 						barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
 					/>
-
-					<View style={s.headerButtonsContainer}>
-						<View style={s.headerButtonAccomplishContainer}>
-							<TouchableOpacity onPress={() => this._onPressBack()}>
-								<View style={s.buttonAccomplish}>
-									<Image
-										style={s.logo}
-										source={logoAccomplish}
-									/>
-								</View>
-							</TouchableOpacity>
-						</View>
-						<View style={s.headerButtonNotificationsContainer}>
-							<ButtonIcon
-								iconName="notifications-none"
-								iconStyle={{ color: Colors.charcoalGrey }}
-								onPress={() => this._goToNotifications()}
-							/>
-							<View style={[ s.notification, { opacity: _notifications ? 1 : 0 } ]} />
-						</View>
-					</View>
-
+					<Header
+						onPressBack={this._onPressBack.bind( this )}
+						buttonIcons={this._buttonIcons()}
+						notification={_notifications}
+					/>
 					<Typography
 						variant="semiLargeTitle"
 						color="darkSkyBlue"

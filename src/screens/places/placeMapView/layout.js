@@ -2,14 +2,12 @@ import React from 'react';
 import { View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import PropTypes from 'prop-types';
-import HeaderTitle from '../../../components/headerTitle';
 import Place from '../../../entities/Place';
 import PlaceMarker from './placeMarker';
 import styles from './styles';
 
 const placeMapView = ( { region, places } ) => (
 	<View style={styles.container}>
-		<HeaderTitle title="Places to Work" />
 		<MapView
 			provider={PROVIDER_GOOGLE}
 			showsUserLocation

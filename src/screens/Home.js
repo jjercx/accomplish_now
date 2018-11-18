@@ -1,5 +1,5 @@
+/* eslint-disable react/jsx-no-bind */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
 	ImageBackground,
 	View,
@@ -74,6 +74,11 @@ class Home extends Component {
 		this.setState( { available: value } );
 	}
 
+	_showPlacesList() {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'places' } );
+	}
+
 	/* eslint-disable class-methods-use-this */
 	renderMyConnectionsSection() {
 		return (
@@ -89,6 +94,7 @@ class Home extends Component {
 		return (
 			<PlacesSection
 				places={places}
+				onPressShowPlacesList={this._showPlacesList.bind( this )}
 			/>
 		);
 	}
@@ -105,6 +111,7 @@ class Home extends Component {
 
 	render() {
 		const { available } = this.state;
+		// eslint-disable-next-line react/prop-types
 		const { navigator: _navigator, user } = this.props;
 		if ( !user ) return <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} />;
 		return (

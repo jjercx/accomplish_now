@@ -15,18 +15,13 @@ class PlaceMapViewContainer extends Component {
 		}
 	};
 
-	// Place Mock
-	placesMock =[
-		new Place( 1, 'Office 305', require( '../../../assets/images/places/office305.png' ), 37.7860575, -122.4060963 ),
-		new Place( 2, 'Office 305', require( '../../../assets/images/places/office305.png' ), 37.784805, -122.402686 ),
-		new Place( 3, 'Office 305', require( '../../../assets/images/places/office305.png' ), 37.783210, -122.405471 ),
-		new Place( 4, 'Office 305', require( '../../../assets/images/places/office305.png' ), 37.782413, -122.409462 ),
-		new Place( 5, 'Office 305', require( '../../../assets/images/places/office305.png' ), 37.785347, -122.410771 )
-	];
-
 	componentDidMount() {
 		this.getCurrentPosition();
 	}
+
+	componentWillUnmount() {
+		navigator.geolocation.clearWatch( this.watchID );
+	  }
 
 	getCurrentPosition = () => {
 		navigator.geolocation.getCurrentPosition(
@@ -57,7 +52,8 @@ class PlaceMapViewContainer extends Component {
 
 	render() {
 		const { region } = this.state;
-		return <PlaceMapView region={region} places={this.placesMock} />;
+		const { places } = this.props;
+		return <PlaceMapView region={region} places={places} />;
 	}
 }
 

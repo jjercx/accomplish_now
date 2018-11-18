@@ -4,10 +4,14 @@ class Place {
 		name,
 		image,
 		latitude,
-		longitude ) {
+		longitude,
+		location,
+		distance ) {
 		this.id = id;
 		this.name = name;
 		this.image = image;
+		this.location = location;
+		this.distance = distance;
 		this.coordinate = {
 			latitude,
 			longitude
