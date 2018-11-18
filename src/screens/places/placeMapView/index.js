@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import PlaceMapView from './layout';
 import Place from '../../../entities/Place';
 import {
@@ -56,5 +57,9 @@ class PlaceMapViewContainer extends Component {
 		return <PlaceMapView region={region} places={places} />;
 	}
 }
+
+PlaceMapViewContainer.propTypes = {
+	places: PropTypes.arrayOf( PropTypes.instanceOf( Place ) ).isRequired
+};
 
 export default PlaceMapViewContainer;
