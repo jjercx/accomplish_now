@@ -8,9 +8,10 @@ import PropTypes from 'prop-types';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { reduxForm, Field } from 'redux-form';
 import { actCreateAccount, actLoginUser } from '../../actions/authentication';
 import Typography from '../../components/typography/Typography';
-import BaseInput from '../../components/base-input/BaseInput';
+import BaseInputForm from '../../components/base-input/BaseInputForm';
 import ButtonForward from '../../components/button-icon/ButtonForward';
 import Header from '../../components/register/Header';
 import Colors from '../../theme/palette';
@@ -18,6 +19,7 @@ import { HTP, WTP, iPhoneSE } from '../../utils/dimensions';
 import fonts from '../../theme/fonts';
 import s from './styles';
 import NavigatorPropType from '../../types/navigator';
+import { required } from '../../utils/Validations';
 
 const localStyles = StyleSheet.create( {
 	infoWrapper: {
@@ -114,7 +116,7 @@ class CreateWelcomeAccount extends Component {
 				'Ups!',
 				res.error.message,
 				[
-					{ text: isErrorLogin ? 'Create Account' : 'Cancel', onPress: () => ( createAccount ? null : this._onPressButtonFoward( isErrorLogin ) ) },
+					{ text: isErrorLogin ? 'Create Account' : 'Cancel', onPress: () => ( createAccount ? null : this._onPressButtonFoward( {}, isErrorLogin ) ) },
 					{ text: 'OK' }
 				],
 				{ cancelable: false }
@@ -127,7 +129,7 @@ class CreateWelcomeAccount extends Component {
 		}
 	}
 
-	_onPressButtonFoward( isErrorLogin ) {
+	_onPressButtonFoward( formValues, isErrorLogin ) {
 		const { phone } = this.state;
 		const { actCreateAccount, createAccount, actLoginUser } = this.props;
 		this.setState( { isLoading: true } );
@@ -147,7 +149,7 @@ class CreateWelcomeAccount extends Component {
 
 	render() {
 		let { enabled, isLoading } = this.state;
-		const { createAccount } = this.props;
+		const { createAccount, handleSubmit } = this.props;
 		let title = createAccount ? 'Create Account' : 'Welcome back';
 		/* eslint-disable react/jsx-one-expression-per-line */
 		return (
@@ -164,11 +166,15 @@ class CreateWelcomeAccount extends Component {
 						<View style={localStyles.inputTextHint}>
 							<Typography variant="midTitle" color="charcoalGrey" textAlign="center"> +1 </Typography>
 						</View>
-						<BaseInput
+						<Field
+							name="basicInfo.phone"
 							onRef={( ref ) => { this.baseInput = ref; }}
+							withRef
+							validate={required}
 							style={localStyles.inputText}
 							placeholder="(000) 000-0000"
 							keyboardType="numeric"
+							component={BaseInputForm}
 							onChangeText={this.onChangeText}
 							maxLength={10}
 						/>
@@ -194,7 +200,7 @@ class CreateWelcomeAccount extends Component {
 						{isLoading ? <ActivityIndicator size="large" color={Colors.orange} /> : (
 							<ButtonForward
 								enabled={enabled}
-								onPress={enabled ? () => this._onPressButtonFoward() : null}
+								onPress={handleSubmit( values => this._onPressButtonFoward( values ) )}
 								style={[ s.buttonForward, localStyles.buttonStyle ]}
 							/>
 						)}
@@ -215,6 +221,9 @@ CreateWelcomeAccount.defaultProps = {
 	createAccount: true
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators( { actCreateAccount, actLoginUser }, dispatch );
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{ actCreateAccount, actLoginUser }, dispatch );
 
-export default ( connect( null, mapDispatchToProps )( CreateWelcomeAccount ) );
+export default reduxForm( {
+	form: 'createAccountForm'
+} )( connect( null, mapDispatchToProps )( CreateWelcomeAccount ) );

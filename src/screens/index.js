@@ -52,12 +52,12 @@ export function registerScreens() {
 	Navigation.registerComponent( 'onboarding', () => Onboarding, store, Provider );
 	Navigation.registerComponent( 'home', () => Home, store, Provider );
 	Navigation.registerComponent( 'createWelcomeAccount', () => CreateWelcomeAccount, store, Provider );
-	Navigation.registerComponent( 'biggestChallenge', () => BiggestChallenge );
-	Navigation.registerComponent( 'currentlyWorkingOn', () => CurrentlyWorkingOn );
+	Navigation.registerComponent( 'biggestChallenge', () => BiggestChallenge, store, Provider );
+	Navigation.registerComponent( 'currentlyWorkingOn', () => CurrentlyWorkingOn, store, Provider );
 	Navigation.registerComponent( 'termsAndConditions', () => TermsAndConditions );
 	Navigation.registerComponent( 'privacyPolicy', () => PrivacyPolicy );
-	Navigation.registerComponent( 'addSkills', () => AddSkills );
-	Navigation.registerComponent( 'setProfile', () => SetProfile );
+	Navigation.registerComponent( 'addSkills', () => AddSkills, store, Provider );
+	Navigation.registerComponent( 'setProfile', () => SetProfile, store, Provider );
 	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin, store, Provider );
 	Navigation.registerComponent( 'aboutMe', () => AboutMe );
 	Navigation.registerComponent( 'addAccomplishment', () => AddAccomplishment );

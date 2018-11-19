@@ -102,7 +102,6 @@ class Messages extends Component {
 	}
 
 	_openMessageDetail = ( messageId ) => {
-		console.log(`open conversation id: ${messageId}`); //eslint-disable-line
 		// TODO: save the messageId in redux
 
 		const { navigator } = this.props;
@@ -119,7 +118,7 @@ class Messages extends Component {
 	}
 
 	render() {
-		const { navigator: _navigator, isFetching } = this.props;
+		const { navigator: _navigator, isFetching, messages } = this.props;
 		const { _notifications } = this.state;
 
 		return (
@@ -143,7 +142,7 @@ class Messages extends Component {
 					{isFetching ? <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} /> : (
 						<FlatList
 							style={s.flatList}
-							data={this._messages()}
+							data={messages ? this._messages() : []}
 							keyExtractor={item => item.messageId}
 							renderItem={( { item } ) => (
 								<MessagePreview onMessagePress={this._openMessageDetail} {...item} />
