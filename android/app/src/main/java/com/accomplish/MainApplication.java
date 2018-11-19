@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.imagepicker.ImagePickerPackage;
-
+import com.airbnb.android.react.maps.MapsPackage;
 
 
 public class MainApplication extends NavigationApplication implements ReactApplication {
@@ -46,7 +46,8 @@ public class MainApplication extends NavigationApplication implements ReactAppli
             new RNFirebaseNotificationsPackage(),
             new BlurViewPackage(),
             new VectorIconsPackage(),
-            new ImagePickerPackage()
+            new ImagePickerPackage(),
+            new MapsPackage()
     );
   }
 

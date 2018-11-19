@@ -52,8 +52,8 @@ const styles = StyleSheet.create( {
 } );
 
 const IM_AVAILABLE_TEXT = "I'm Available";
-const Place1 = new Place( 1, 'Office 305', require( '../assets/images/places/office305.png' ) );
-const Place2 = new Place( 2, 'Corner SC', require( '../assets/images/places/cornersc.png' ) );
+const Place1 = new Place( 1, 'Office 305', require( '../assets/images/places/office305.png' ), 0, 0 );
+const Place2 = new Place( 2, 'Corner SC', require( '../assets/images/places/cornersc.png' ), 0, 0 );
 
 const places = [ Place1, Place2 ];
 
