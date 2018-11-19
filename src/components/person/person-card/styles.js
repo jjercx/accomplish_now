@@ -40,16 +40,16 @@ const styles = StyleSheet.create( {
 		minWidth: wpd( WTP( 150 ) )
 	},
 	ratingWrapper: {
-		flex: 40,
 		flexDirection: 'row',
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		marginHorizontal: wpd( WTP( 5 ) )
 	},
 	meetingsCountWrapper: {
-		flex: 60,
 		flexDirection: 'row',
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		marginHorizontal: wpd( WTP( 5 ) )
 	},
 	skillsWrapper: {
 		flex: 1,
@@ -57,6 +57,10 @@ const styles = StyleSheet.create( {
 		flexWrap: 'wrap',
 		marginTop: hpd( HTP( 20 ) ),
 		marginBottom: hpd( HTP( 10 ) )
+	},
+	fewSkillsWrapper: {
+		flexWrap: 'nowrap',
+		justifyContent: 'center'
 	},
 	skill: {
 		flex: -1,

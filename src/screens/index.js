@@ -20,6 +20,7 @@ import Messages from './messages/Messages';
 import PeopleNearby from './PeopleNearby';
 import MessagesDetails from './messages/MessagesDetails';
 import Notifications from './messages/Notifications';
+import PlaceMapView from './places/placeMapView';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -68,4 +69,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
 	Navigation.registerComponent( 'messagesDetails', () => MessagesDetails );
 	Navigation.registerComponent( 'notifications', () => Notifications );
+	Navigation.registerComponent( 'placeMapView', () => PlaceMapView, store, Provider );
 }

@@ -3,11 +3,13 @@ import { reducer as formReducer } from 'redux-form';
 import skills from './skills';
 import authentication from './authentication';
 import messages from './messages';
+import notifications from './notifications';
 
 const rootReducer = combineReducers( {
 	skills,
 	authentication,
 	messages,
+	notifications,
 	form: formReducer
 } );
 

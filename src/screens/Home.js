@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-bind */
+/* @flow */
 import React, { Component } from 'react';
 import {
 	ImageBackground,
@@ -6,9 +8,11 @@ import {
 	StyleSheet,
 	ActivityIndicator
 } from 'react-native';
-import { compose } from 'redux';
+import Firebase from 'react-native-firebase';
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
+import { actGetMessages } from '../actions/messages';
 import UserSection from '../components/home/header/UserSection';
 import { HTP, WTP } from '../utils/dimensions';
 import Typography from '../components/typography/Typography';
@@ -48,17 +52,10 @@ const styles = StyleSheet.create( {
 } );
 
 const IM_AVAILABLE_TEXT = "I'm Available";
-const Place1 = new Place( 1, 'Office 305', require( '../assets/images/places/office305.png' ) );
-const Place2 = new Place( 2, 'Corner SC', require( '../assets/images/places/cornersc.png' ) );
+const Place1 = new Place( 1, 'Office 305', require( '../assets/images/places/office305.png' ), 0, 0 );
+const Place2 = new Place( 2, 'Corner SC', require( '../assets/images/places/cornersc.png' ), 0, 0 );
 
 const places = [ Place1, Place2 ];
-
-const JD = new Person( 1, 'Jhon', 'D.', 'Designer', require( '../assets/images/connections/jd.png' ) );
-const C = new Person( 2, 'Claire', 'T.', 'Designer', require( '../assets/images/connections/c.png' ) );
-const MD = new Person( 3, 'Michae', 'D.', 'Designer', require( '../assets/images/connections/md.png' ) );
-const SW = new Person( 4, 'Stephanie', 'W.', 'Designer', require( '../assets/images/connections/sd.png' ) );
-
-let connections = [ JD, C, MD, SW ];
 
 class Home extends Component {
 	static navigatorStyle = {
@@ -69,12 +66,41 @@ class Home extends Component {
 		available: false
 	}
 
+	componentWillMount() {
+		let { actMessagesInit } = this.props; // eslint-disable-line react/prop-types
+		actMessagesInit();
+	}
+
+	getConnections = ( messages ) => {
+		let connections = [];
+
+		messages.forEach( ( message ) => {
+			if ( connections.map( e => e.id ).indexOf( message.id )
+				&& message.id !== Firebase.auth().currentUser._user.uid ) {
+				connections.push( new Person(
+					message.id,
+					message.firstName,
+					message.lastName,
+					null,
+					{ uri: message.image }
+				) );
+			}
+		} );
+
+		return connections;
+	}
+
 	_onValueChange( value ) {
 		this.setState( { available: value } );
 	}
 
+	_showPlacesList() {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'places' } );
+	}
+
 	/* eslint-disable class-methods-use-this */
-	renderMyConnectionsSection() {
+	renderMyConnectionsSection( connections ) {
 		return (
 			<MyConnectionsSection
 				connections={connections}
@@ -88,6 +114,7 @@ class Home extends Component {
 		return (
 			<PlacesSection
 				places={places}
+				onPressShowPlacesList={this._showPlacesList.bind( this )}
 			/>
 		);
 	}
@@ -105,8 +132,17 @@ class Home extends Component {
 	render() {
 		const { available } = this.state;
 		// eslint-disable-next-line react/prop-types
-		const { navigator: _navigator, user } = this.props;
-		if ( !user ) return <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} />;
+		const {
+			navigator: _navigator,
+			user, // eslint-disable-line react/prop-types
+			isFetching, // eslint-disable-line react/prop-types
+			messages // eslint-disable-line react/prop-types
+		} = this.props;
+
+		if ( !user || isFetching ) return <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} />;
+
+		let connections = this.getConnections( messages );
+
 		return (
 			<View style={styles.container}>
 				<ImageBackground
@@ -131,7 +167,8 @@ class Home extends Component {
 					<HomeSearch />
 				</ImageBackground>
 				{ connections.length > 0
-					? this.renderMyConnectionsSection() : this.renderWithOuthConnectionSection() }
+					? this.renderMyConnectionsSection( connections )
+					: this.renderWithOuthConnectionSection() }
 				{ connections.length > 0 ? <Spacing size="large" /> : <Spacing size="xtiny" /> }
 				{this.renderPlacesSection()}
 				<NavBar navigator={_navigator} />
@@ -146,7 +183,12 @@ Home.propTypes = {
 };
 
 const mapStateToProps = store => ( {
-	user: store.authentication.user
+	user: store.authentication.user,
+	messages: store.messages.messages,
+	isFetching: store.messages.isFetching
 } );
 
-export default compose( connect( mapStateToProps, null )( Home ) );
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{ actMessagesInit: actGetMessages }, dispatch );
+
+export default compose( connect( mapStateToProps, mapDispatchToProps )( Home ) );

@@ -2,13 +2,17 @@
 
 import React, { Component } from 'react';
 import {
-	View, StyleSheet, TouchableOpacity, StatusBar, FlatList, Platform
+	View, StyleSheet, TouchableOpacity, StatusBar, FlatList, Platform,
+	ActivityIndicator
 } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators, compose } from 'redux';
 import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
 import Typography from '../../components/typography/Typography';
 import Header from '../../components/register/Header';
 import NotificationPreview from '../../components/messages/NotificationPreview';
+import { actGetFromNotification, actGetToNotifications } from '../../actions/notifications';
 
 const imageProfileDefault = require( '../../assets/images/messages/phProfile.png' );
 
@@ -48,6 +52,12 @@ class Notifications extends Component {
 
 	state = {
 		viewReceivedNotifications: true
+	};
+
+	componentWillMount() {
+		const { fromNotificationInit, toNotificationInit } = this.props;
+		toNotificationInit();
+		fromNotificationInit();
 	}
 
 	_notificationsReceived = () => [
@@ -104,17 +114,25 @@ class Notifications extends Component {
 		}
 	];
 
+    _keyExtractor = item => item.id;
+
 	_openNotification = () => {
 		alert('open notification'); //eslint-disable-line
-	}
+	};
 
 	_onPressBack() {
 		const { navigator } = this.props;
 		navigator.pop();
 	}
 
+
 	render() {
 		const { viewReceivedNotifications } = this.state;
+		const { notifications } = this.props;
+		const {
+			fromIsFetching, toIsFetching, fromNotifications, toNotifications
+		} = notifications;
+
 		return (
 			<View style={s.container}>
 				<StatusBar
@@ -152,16 +170,43 @@ class Notifications extends Component {
 							</Typography>
 						</TouchableOpacity>
 					</View>
-					<FlatList
-						style={s.flatList}
-						data={viewReceivedNotifications
-							? this._notificationsReceived()
-							: this._notificationsSended()}
-						keyExtractor={item => item.id}
-						renderItem={( { item } ) => (
-							<NotificationPreview onPress={this._openNotification} {...item} />
-						)}
-					/>
+					{( toIsFetching && fromIsFetching ) ? (
+						<ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} />
+					) : (
+						<FlatList
+							style={s.flatList}
+							data={viewReceivedNotifications
+								? toNotifications
+								: fromNotifications}
+							keyExtractor={this._keyExtractor}
+							renderItem={( { item, index } ) => {
+								let notification = {};
+								if ( viewReceivedNotifications ) {
+									const {
+										from: { basicInfo: { firstName, lastName, profilePhotoUrl }, uid }
+									} = item;
+									notification.text = `Message received from ${firstName} ${lastName}`;
+									notification.action = 'Tap to view profile';
+									notification.image = ( typeof profilePhotoUrl !== 'undefined' )
+										? ( { uri: profilePhotoUrl } ) : ( imageProfileDefault );
+									notification.uid = uid;
+									notification.id = index;
+								} else {
+									const {
+										to: { basicInfo: { firstName, lastName, profilePhotoUrl }, uid }
+									} = item;
+									notification.text = `Message sended to ${firstName} ${lastName}`;
+									notification.action = 'Tap to view profile';
+									notification.image = ( typeof profilePhotoUrl !== 'undefined' )
+										? ( { uri: profilePhotoUrl } ) : ( imageProfileDefault );
+									notification.uid = uid;
+									notification.id = index;
+								}
+								return <NotificationPreview onPress={this._openNotification} {...notification} />;
+							}}
+						/>
+					)}
+
 				</View>
 			</View>
 		);
@@ -172,4 +217,14 @@ Notifications.propTypes = {
 	navigator: NavigatorPropType.isRequired
 };
 
-export default Notifications;
+const mapStateToProps = state => ( {
+	notifications: state.notifications
+} );
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{
+		fromNotificationInit: actGetFromNotification,
+		toNotificationInit: actGetToNotifications
+	}, dispatch );
+
+export default compose( connect( mapStateToProps, mapDispatchToProps )( Notifications ) );

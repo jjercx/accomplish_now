@@ -54,7 +54,14 @@ const PersonCard = ( {
 			</View>
 		) }
 		{ ( person.skills.length > 0 ) && (
-			<View style={styles.skillsWrapper}>
+			<View
+				style={[
+					styles.skillsWrapper,
+					person.skills.length < 3
+						? styles.fewSkillsWrapper
+						: null
+				]}
+			>
 				<View style={styles.skill}>
 					<Typography variant="xxsmallBody" color="greyishBrown">{person.skills[ 0 ].skill.name}</Typography>
 				</View>

@@ -7,7 +7,8 @@ export default {
 		justifyContent: 'center'
 	},
 	wrapperConnections: {
-		marginLeft: hpd( HTP( 32 ) ),
-		top: hpd( HTP( 52 ) )
+		paddingLeft: hpd( HTP( 32 ) ),
+		top: hpd( HTP( 52 ) ),
+		width: '100%'
 	}
 };

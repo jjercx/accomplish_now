@@ -5,7 +5,10 @@ import colors from '../../theme/palette';
 export default {
 	container: {
 		height: hp( HTP( iPhoneSE() ? 40 : 50 ) ),
-		width: wp( WTP( iPhoneSE() ? 40 : 50 ) )
+		width: wp( WTP( iPhoneSE() ? 40 : 50 ) ),
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center'
 	},
 	line: {
 		height: hp( HTP( 1 ) ),
