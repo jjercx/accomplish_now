@@ -13,7 +13,7 @@ import {
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { actGetMessages } from '../../actions/messages';
+import { actGetMessages, actOpenConversation } from '../../actions/messages';
 import { HTP, WTP } from '../../utils/dimensions';
 import NavigatorPropType from '../../types/navigator';
 import Typography from '../../components/typography/Typography';
@@ -102,8 +102,8 @@ class Messages extends Component {
 	}
 
 	_openMessageDetail = ( messageId ) => {
-		console.log(`open conversation id: ${messageId}`); //eslint-disable-line
-		// TODO: save the messageId in redux
+		let { actOpenConversation: openConversation } = this.props;
+		openConversation( messageId );
 
 		const { navigator } = this.props;
 		navigator.push( { screen: 'messagesDetails' } );
@@ -166,7 +166,9 @@ const mapStateToProps = store => ( {
 	isFetching: store.messages.isFetching
 } );
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-	{ actMessagesInit: actGetMessages }, dispatch );
+const mapDispatchToProps = dispatch => bindActionCreators( {
+	actMessagesInit: actGetMessages,
+	actOpenConversation
+}, dispatch );
 
 export default compose( connect( mapStateToProps, mapDispatchToProps )( Messages ) );

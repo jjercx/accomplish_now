@@ -7,13 +7,18 @@ import {
 	Platform,
 	StatusBar,
 	ScrollView,
+	FlatList,
 	TextInput,
 	KeyboardAvoidingView,
-	TouchableOpacity
+	TouchableOpacity,
+	ActivityIndicator
 } from 'react-native';
-import {
-	heightPercentageToDP as hp
-} from 'react-native-responsive-screen';
+
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import { actGetMessagesByThreadId } from '../../actions/messages';
 import { HTP } from '../../utils/dimensions';
 import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
@@ -22,8 +27,6 @@ import Typography from '../../components/typography/Typography';
 import MessageReceived from '../../components/messages/MessageReceived';
 import MessageSended from '../../components/messages/MessageSended';
 import fonts from '../../theme/fonts';
-
-const imageProfileDefault = require( '../../assets/images/messages/phProfile.png' );
 
 const s = StyleSheet.create( {
 	container: {
@@ -43,9 +46,6 @@ const s = StyleSheet.create( {
 		marginRight: 35
 	},
 	conversationTime: {
-		flex: 1,
-		display: 'flex',
-		justifyContent: 'center',
 		alignItems: 'center',
 		padding: 20
 	},
@@ -69,38 +69,32 @@ const s = StyleSheet.create( {
 		alignItems: 'center',
 		justifyContent: 'center',
 		padding: 13
+	},
+	flatList: {
+		flex: 1,
+		marginTop: hp( HTP( 5 ) )
 	}
 } );
+
+const avatarImg = require( '../../assets/images/messages/phProfile.png' );
 
 class MessagesDetails extends Component {
 	static navigatorStyle = {
 		navBarHidden: true
 	};
 
+	static formatDate( unixTimestamp ) {
+		return moment.unix( unixTimestamp ).format( 'ddd[,] MMM DD h:mm A' );
+	}
+
 	state = {
-		person: {
-			firstName: 'Frank',
-			lastName: 'Doe'
-		},
 		date: '12:24 PM',
-		messages: [
-			{
-				send: false,
-				date: '1 hour ago',
-				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vehicula placerat libero.'
-			},
-			{
-				send: true,
-				date: '1 min ago',
-				text: 'Awesome! Tell me more!'
-			},
-			{
-				send: false,
-				date: '1 min ago',
-				text: 'Ok! Wait'
-			}
-		],
 		_textInputText: ''
+	}
+
+	componentWillMount() {
+		const { actMessagesByThreadIdInit, threadId } = this.props;
+		actMessagesByThreadIdInit( threadId );
 	}
 
 	_onSendMessage = () => {
@@ -122,10 +116,20 @@ class MessagesDetails extends Component {
 		navigator.pop();
 	}
 
+	_fullName() {
+		const { messages } = this.props;
+		let participants = messages
+			.filter( message => !message.send )
+			.map( data => `${data.firstName} ${data.lastName}` );
+
+		participants = [ ...new Set( participants ) ];
+
+		return participants.join( ', ' );
+	}
+
 	render() {
-		const {
-			 person, date, messages, _textInputText
-		} = this.state;
+		const { date, _textInputText } = this.state;
+		const { messages, isFetching } = this.props;
 
 		// const message = this.props.messages[this.props.messageId]; // redux
 
@@ -147,7 +151,7 @@ class MessagesDetails extends Component {
 							color="charcoalGrey"
 							textAlign="left"
 						>
-							{`${person.firstName} ${person.lastName}`}
+							{this._fullName()}
 						</Typography>
 					</View>
 				</View>
@@ -168,26 +172,31 @@ class MessagesDetails extends Component {
 						</Typography>
 					</View>
 
-					{messages.map( ( message ) => {
-						if ( message.send ) {
-							return (
-								<MessageSended
-									key={message.date + message.text}
-									text={message.text}
-									date={message.date}
-								/>
-							);
-						}
-						return (
-							<MessageReceived
-								key={message.date + message.text}
-								text={message.text}
-								image={imageProfileDefault}
-								date={message.date}
-							/>
-						);
-					} )}
-
+					{isFetching ? <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} /> : (
+						<FlatList
+							style={s.flatList}
+							data={messages}
+							keyExtractor={item => item.id}
+							renderItem={( { item } ) => (
+								item.send
+									? (
+										<MessageSended
+											key={item.id}
+											text={item.text}
+											date={MessagesDetails.formatDate( item.createdOn )}
+										/>
+									)
+									: (
+										<MessageReceived
+											key={item.id}
+											text={item.text}
+											image={item.image ? { uri: item.image } : avatarImg}
+											date={MessagesDetails.formatDate( item.createdOn )}
+										/>
+									)
+							)}
+						/>
+					)}
 				</ScrollView>
 
 				<View style={s.messageInputContainer}>
@@ -222,4 +231,14 @@ MessagesDetails.propTypes = {
 	navigator: NavigatorPropType.isRequired
 };
 
-export default MessagesDetails;
+const mapStateToProps = store => ( {
+	threadId: store.messages.activeThreadId,
+	messages: store.messages.threadMessages,
+	isFetching: store.messages.isFetching
+} );
+
+const mapDispatchToProps = dispatch => bindActionCreators( {
+	actMessagesByThreadIdInit: actGetMessagesByThreadId
+}, dispatch );
+
+export default compose( connect( mapStateToProps, mapDispatchToProps )( MessagesDetails ) );

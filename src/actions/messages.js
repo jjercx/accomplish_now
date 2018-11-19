@@ -1,6 +1,13 @@
 import Firebase from 'react-native-firebase';
 import MessagesServices from '../provider/messages/MessagesServices';
-import { GET_MESSAGE, MESSAGE_LIST } from './types';
+
+import {
+	GET_MESSAGE,
+	MESSAGE_LIST,
+	SET_CURRENT_THREAD,
+	GET_MESSAGES_BY_THREAD,
+	MESSAGES_BY_THREAD_LIST
+} from './types';
 
 export const actGetMessages = () => ( dispatch ) => {
 	MessagesServices.getMessages( ( messages ) => {
@@ -32,6 +39,57 @@ export const actGetMessages = () => ( dispatch ) => {
 		} );
 		dispatch( {
 			type: MESSAGE_LIST,
+			payload: messageEntity
+		} );
+	} );
+};
+
+export const actOpenConversation = threadId => ( dispatch ) => {
+	dispatch( {
+		type: SET_CURRENT_THREAD,
+		payload: threadId
+	} );
+};
+
+export const actGetMessagesByThreadId = threadId => ( dispatch ) => {
+	MessagesServices.getThreadMessages( threadId, ( err, messages ) => {
+		dispatch( {
+			type: GET_MESSAGES_BY_THREAD,
+			payload: messages
+		} );
+
+		const curUserId = Firebase.auth()._user.uid;
+
+		let messageEntity = messages.map( ( msg ) => {
+			const {
+				id,
+				createdOn,
+				isRead,
+				text,
+				sender: {
+					uid: senderId,
+					basicInfo: {
+						firstName,
+						lastName,
+						profilePhotoUrl: image
+					}
+				}
+			} = msg;
+
+			return {
+				id,
+				createdOn,
+				isRead,
+				text,
+				senderId,
+				firstName,
+				lastName,
+				image,
+				send: ( senderId === curUserId )
+			};
+		} );
+		dispatch( {
+			type: MESSAGES_BY_THREAD_LIST,
 			payload: messageEntity
 		} );
 	} );
