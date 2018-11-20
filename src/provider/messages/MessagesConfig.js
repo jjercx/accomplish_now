@@ -3,7 +3,7 @@ import FirebaseConnector from '../base/FirebaseConnector';
 
 const firebaseConnector = new FirebaseConnector( { timeout: 30000 } );
 
-export default class AuthConfig {
+export default class MessagesConfig {
 	static get FirebaseConnector() {
 		return firebaseConnector;
 	}
@@ -15,5 +15,9 @@ export default class AuthConfig {
 	static get membersPath() {
 		let { currentUser } = Firebase.auth();
 		return `members/${currentUser._user.uid}/uid`;
+	}
+
+	static chatMessagesPath( threadId ) {
+		return `chatThreads/${threadId}/messages`;
 	}
 }

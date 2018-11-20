@@ -119,7 +119,7 @@ class Messages extends Component {
 	}
 
 	render() {
-		const { navigator: _navigator, isFetching } = this.props;
+		const { navigator: _navigator, isFetching, messages } = this.props;
 		const { _notifications } = this.state;
 
 		return (
@@ -143,7 +143,7 @@ class Messages extends Component {
 					{isFetching ? <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} /> : (
 						<FlatList
 							style={s.flatList}
-							data={this._messages()}
+							data={messages ? this._messages() : []}
 							keyExtractor={item => item.messageId}
 							renderItem={( { item } ) => (
 								<MessagePreview onMessagePress={this._openMessageDetail} {...item} />

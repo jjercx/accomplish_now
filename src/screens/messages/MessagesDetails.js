@@ -18,7 +18,12 @@ import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { actGetMessagesByThreadId } from '../../actions/messages';
+
+import {
+	actGetMessagesByThreadId,
+	actNewMessage
+} from '../../actions/messages';
+
 import { HTP } from '../../utils/dimensions';
 import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
@@ -84,7 +89,14 @@ class MessagesDetails extends Component {
 	};
 
 	static formatDate( unixTimestamp ) {
-		return moment.unix( unixTimestamp ).format( 'ddd[,] MMM DD h:mm A' );
+		const _15daysAgo = moment().subtract( 15, 'days' );
+		const date = moment.unix( unixTimestamp / 1000 );
+
+		if ( date.isAfter( _15daysAgo, 'days' ) ) {
+			return date.fromNow();
+		}
+
+		return date.format( 'ddd[,] MMM DD h:mm A' );
 	}
 
 	state = {
@@ -94,21 +106,15 @@ class MessagesDetails extends Component {
 
 	componentWillMount() {
 		const { actMessagesByThreadIdInit, threadId } = this.props;
+		debugger;
 		actMessagesByThreadIdInit( threadId );
 	}
 
 	_onSendMessage = () => {
-		const { messages, _textInputText } = this.state;
-		let _messages = messages.slice();
-		_messages.push( {
-			send: true,
-			date: 'Less than a minute ago',
-			text: _textInputText
-		} );
-		this.setState( {
-			messages: _messages,
-			_textInputText: ''
-		} );
+		const { _textInputText } = this.state;
+		const { actNewMessageInit, threadId, user } = this.props;
+		debugger;
+		actNewMessageInit( threadId, _textInputText, user );
 	}
 
 	_onPressBack() {
@@ -129,7 +135,7 @@ class MessagesDetails extends Component {
 
 	render() {
 		const { date, _textInputText } = this.state;
-		const { messages, isFetching } = this.props;
+		const { messages, isFetching, isSending } = this.props;
 
 		// const message = this.props.messages[this.props.messageId]; // redux
 
@@ -211,7 +217,10 @@ class MessagesDetails extends Component {
 								{ animated: true } ), 500 )}
 						/>
 					</View>
-					<TouchableOpacity style={s.buttonSend} onPress={this._onSendMessage}>
+					<TouchableOpacity
+						style={s.buttonSend}
+						onPress={isSending ? () => {} : this._onSendMessage}
+					>
 						<Typography
 							variant="smallBody"
 							color="charcoalGrey"
@@ -232,13 +241,16 @@ MessagesDetails.propTypes = {
 };
 
 const mapStateToProps = store => ( {
+	user: store.authentication.user,
 	threadId: store.messages.activeThreadId,
 	messages: store.messages.threadMessages,
-	isFetching: store.messages.isFetching
+	isFetching: store.messages.isFetching,
+	isSending: store.messages.isSending
 } );
 
 const mapDispatchToProps = dispatch => bindActionCreators( {
-	actMessagesByThreadIdInit: actGetMessagesByThreadId
+	actMessagesByThreadIdInit: actGetMessagesByThreadId,
+	actNewMessageInit: actNewMessage
 }, dispatch );
 
 export default compose( connect( mapStateToProps, mapDispatchToProps )( MessagesDetails ) );

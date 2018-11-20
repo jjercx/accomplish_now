@@ -11,6 +11,10 @@ export default class AuthConfig {
 		return '/users';
 	}
 
+	static get imgPath() {
+		return '/profilePhotoUrl';
+	}
+
 	static get endpointCreateUser() {
 		return 'https://us-central1-accomplishtest-66926.cloudfunctions.net/createUser?phone=';
 	}

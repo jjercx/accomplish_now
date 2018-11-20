@@ -20,6 +20,7 @@ import Messages from './messages/Messages';
 import PeopleNearby from './PeopleNearby';
 import MessagesDetails from './messages/MessagesDetails';
 import Notifications from './messages/Notifications';
+import PlaceMapView from './places/placeMapView';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -52,12 +53,12 @@ export function registerScreens() {
 	Navigation.registerComponent( 'onboarding', () => Onboarding, store, Provider );
 	Navigation.registerComponent( 'home', () => Home, store, Provider );
 	Navigation.registerComponent( 'createWelcomeAccount', () => CreateWelcomeAccount, store, Provider );
-	Navigation.registerComponent( 'biggestChallenge', () => BiggestChallenge );
-	Navigation.registerComponent( 'currentlyWorkingOn', () => CurrentlyWorkingOn );
+	Navigation.registerComponent( 'biggestChallenge', () => BiggestChallenge, store, Provider );
+	Navigation.registerComponent( 'currentlyWorkingOn', () => CurrentlyWorkingOn, store, Provider );
 	Navigation.registerComponent( 'termsAndConditions', () => TermsAndConditions );
 	Navigation.registerComponent( 'privacyPolicy', () => PrivacyPolicy );
-	Navigation.registerComponent( 'addSkills', () => AddSkills );
-	Navigation.registerComponent( 'setProfile', () => SetProfile );
+	Navigation.registerComponent( 'addSkills', () => AddSkills, store, Provider );
+	Navigation.registerComponent( 'setProfile', () => SetProfile, store, Provider );
 	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin, store, Provider );
 	Navigation.registerComponent( 'aboutMe', () => AboutMe );
 	Navigation.registerComponent( 'addAccomplishment', () => AddAccomplishment );
@@ -67,5 +68,6 @@ export function registerScreens() {
 	Navigation.registerComponent( 'meetings', () => Meetings );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
 	Navigation.registerComponent( 'messagesDetails', () => MessagesDetails, store, Provider );
-	Navigation.registerComponent( 'notifications', () => Notifications, store, Provider );
+	Navigation.registerComponent( 'notifications', () => Notifications );
+	Navigation.registerComponent( 'placeMapView', () => PlaceMapView, store, Provider );
 }

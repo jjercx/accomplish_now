@@ -22,5 +22,8 @@ export default {
 	},
 	textInputContainer: {
 		flexDirection: 'row'
+	},
+	errorText: {
+		fontSize: hp( HTP( 10 ) )
 	}
 };

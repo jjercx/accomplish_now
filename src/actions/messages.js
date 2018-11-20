@@ -4,9 +4,12 @@ import MessagesServices from '../provider/messages/MessagesServices';
 import {
 	GET_MESSAGE,
 	MESSAGE_LIST,
+	START_FETCHING_MESSAGES,
 	SET_CURRENT_THREAD,
 	GET_MESSAGES_BY_THREAD,
-	MESSAGES_BY_THREAD_LIST
+	MESSAGES_BY_THREAD_LIST,
+	START_SENDING_MESSAGE,
+	MESSAGE_ADDED_TO_THREAD
 } from './types';
 
 export const actGetMessages = () => ( dispatch ) => {
@@ -17,30 +20,32 @@ export const actGetMessages = () => ( dispatch ) => {
 		} );
 		let { currentUser } = Firebase.auth();
 		let messageEntity = [];
-		messages.forEach( ( msg ) => {
-			let lastMessage = msg.latestMessage;
-			let newMessageObj = {};
-			let membersObj = Object.keys( msg.members );
-			membersObj.map( ( eachKey ) => {
-				if ( eachKey !== currentUser._user.uid ) {
-					let member = msg.members[ eachKey ].basicInfo;
-					newMessageObj.id = eachKey;
-					newMessageObj.firstName = member.firstName;
-					newMessageObj.lastName = member.lastName;
-					newMessageObj.image = member.profilePhotoUrl;
-				}
-				return eachKey;
+		if ( messages ) {
+			messages.forEach( ( msg ) => {
+				let lastMessage = msg.latestMessage;
+				let newMessageObj = {};
+				let membersObj = Object.keys( msg.members );
+				membersObj.map( ( eachKey ) => {
+					if ( eachKey !== currentUser._user.uid ) {
+						let member = msg.members[ eachKey ].basicInfo;
+						newMessageObj.id = eachKey;
+						newMessageObj.firstName = member.firstName;
+						newMessageObj.lastName = member.lastName;
+						newMessageObj.image = member.profilePhotoUrl;
+					}
+					return eachKey;
+				} );
+				newMessageObj.threadId = lastMessage.threadId;
+				newMessageObj.createdOn = lastMessage.createdOn;
+				newMessageObj.isRead = lastMessage.isRead;
+				newMessageObj.text = lastMessage.text;
+				messageEntity.push( newMessageObj );
 			} );
-			newMessageObj.threadId = lastMessage.threadId;
-			newMessageObj.createdOn = lastMessage.createdOn;
-			newMessageObj.isRead = lastMessage.isRead;
-			newMessageObj.text = lastMessage.text;
-			messageEntity.push( newMessageObj );
-		} );
-		dispatch( {
-			type: MESSAGE_LIST,
-			payload: messageEntity
-		} );
+			dispatch( {
+				type: MESSAGE_LIST,
+				payload: messageEntity
+			} );
+		}
 	} );
 };
 
@@ -52,6 +57,10 @@ export const actOpenConversation = threadId => ( dispatch ) => {
 };
 
 export const actGetMessagesByThreadId = threadId => ( dispatch ) => {
+	dispatch( {
+		type: START_FETCHING_MESSAGES
+	} );
+
 	MessagesServices.getThreadMessages( threadId, ( err, messages ) => {
 		dispatch( {
 			type: GET_MESSAGES_BY_THREAD,
@@ -88,9 +97,36 @@ export const actGetMessagesByThreadId = threadId => ( dispatch ) => {
 				send: ( senderId === curUserId )
 			};
 		} );
+
 		dispatch( {
 			type: MESSAGES_BY_THREAD_LIST,
 			payload: messageEntity
+		} );
+	} );
+};
+
+
+export const actNewMessage = ( threadId, message, sender ) => ( dispatch ) => {
+	dispatch( {
+		type: START_SENDING_MESSAGE
+	} );
+
+	let { currentUser } = Firebase.auth();
+	debugger;
+	const newMessage = {
+		createdOn: Date.now(),
+		isRead: false,
+		text: message,
+		sender: {
+			...sender,
+			uid: currentUser._user.uid
+		},
+		threadId
+	};
+
+	MessagesServices.putNewMessage( newMessage, () => {
+		dispatch( {
+			type: MESSAGE_ADDED_TO_THREAD
 		} );
 	} );
 };
