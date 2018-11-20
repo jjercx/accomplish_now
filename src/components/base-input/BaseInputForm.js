@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 import Colors from '../../theme/palette';
 
-class BaseInput extends Component {
+class BaseInputForm extends Component {
 	state = { isFocused: false };
 
 	componentWillMount() { this._animatedIsFocused = new Animated.Value( 0 ); }
@@ -38,7 +38,7 @@ class BaseInput extends Component {
   render() {
   	let {
   		  style, label, labelStyle = {}, labelColor, width, containerStyle = {},
-			  iconName, iconStyle, ...customProps
+			  iconName, iconStyle, input, meta: { touched, error }, ...customProps
 		  } = this.props;
 
   	const color = ( typeof labelColor === 'string' )
@@ -79,11 +79,13 @@ class BaseInput extends Component {
 						style={[ styles.input, { flex: 1 }, style ]}
 						onFocus={this.handleFocus}
 						onBlur={this.handleBlur}
+						{...input}
 						{...customProps}
 					/>
 					{iconName ? <Icon name={iconName} style={[ styles.icon, iconStyle ]} /> : null}
 				</View>
   </Animated.View>
+		{ touched && error ? <Text style={styles.errorText}>{error}</Text> : null }
  </View>
 		);
 		/* eslint-enable react/jsx-indent */
@@ -92,7 +94,7 @@ class BaseInput extends Component {
   }
 }
 
-BaseInput.propTypes = {
+BaseInputForm.propTypes = {
 	label: PropTypes.string,
 	labelColor: PropTypes.oneOfType( [
 		PropTypes.string,
@@ -109,7 +111,7 @@ BaseInput.propTypes = {
 	] ) )
 };
 
-BaseInput.defaultProps = {
+BaseInputForm.defaultProps = {
 	width: '100%',
 	label: '',
 	labelColor: {
@@ -120,4 +122,4 @@ BaseInput.defaultProps = {
 	iconStyle: {}
 };
 
-export default BaseInput;
+export default BaseInputForm;

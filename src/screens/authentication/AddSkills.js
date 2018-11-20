@@ -3,14 +3,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-	View, Platform, ScrollView, KeyboardAvoidingView
+	View, Platform, ScrollView, KeyboardAvoidingView, Alert
 } from 'react-native';
 import {
 	heightPercentageToDP as hp,
 	widthPercentageToDP as wp
 } from 'react-native-responsive-screen';
-
+import { reduxForm, change, formValueSelector } from 'redux-form';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { HTP, WTP } from '../../utils/dimensions';
+import { actSetProfileData } from '../../actions/authentication';
 import Header from '../../components/register/Header';
 import BaseInput from '../../components/base-input/BaseInput';
 import Button from '../../components/button/Button';
@@ -19,6 +22,7 @@ import SuggestedSkillCard from '../../components/skills/suggested-skill-card/Sug
 import colors from '../../theme/palette';
 import styles from './styles';
 import NavigatorPropType from '../../types/navigator';
+import skillList from '../../data/data-skills';
 
 const arrayRemove = ( array, toRemove ) => {
 	array = array.slice();
@@ -87,15 +91,9 @@ class AddSkills extends Component {
 	};
 
 	state = {
-		baseInputFocused: false,
 		text: '',
-		skills: [
-			'Designer',
-			'Coaching',
-			'User Experience',
-			'User Interface',
-			'Another skill'
-		],
+		skills: skillList,
+		filteredSkills: [],
 		skillsAdded: []
 	};
 
@@ -103,6 +101,7 @@ class AddSkills extends Component {
 		super( props );
 		this._onPressBack = this._onPressBack.bind( this );
 		this._onSaveAndStart = this._onSaveAndStart.bind( this );
+		this._callback = this._callback.bind( this );
 	}
 
 	componentDidMount() {
@@ -110,28 +109,59 @@ class AddSkills extends Component {
 	}
 
 	_onChangeText( newText ) {
-		this.setState( { text: newText } );
+		let { skills } = this.state;
+		let filteredSkills = [];
+		if ( newText.length >= 3 ) {
+			filteredSkills = skills.filter(
+				skill => skill.description.toLowerCase().indexOf( newText.toLowerCase() ) === 0 );
+			let newFilteredSkills = filteredSkills.slice( 0, 10 );
+			this.setState( { text: newText, filteredSkills: newFilteredSkills } );
+		} else {
+			this.setState( { text: newText, filteredSkills: [] } );
+		}
 	}
 
 	_onDeleteSkillCard( skill ) {
 		const { skillsAdded } = this.state;
-		this.setState( { skillsAdded: arrayRemove( skillsAdded, skill ) } );
+		const { dispatch } = this.props;
+		this.setState( { skillsAdded: arrayRemove( skillsAdded, skill ) }, () => { dispatch( change( 'createAccountForm', 'skills', arrayRemove( skillsAdded, skill ) ) ); } );
 	}
 
 	_onAddSkillCard( skill ) {
-		const { skillsAdded, skills } = this.state;
+		skill.endorsements = 0;
+		const { skillsAdded } = this.state;
+		const { dispatch } = this.props;
 		this.setState( {
 			skillsAdded: arrayAdd( skillsAdded, skill ),
-			text: ''
+			text: '',
+			filteredSkills: []
 		 }, () => {
-			 if ( skillsAdded.length === skills.length - 1 ) this.textInput.blur();
+			 dispatch( change( 'createAccountForm', 'skills', arrayAdd( skillsAdded, skill ) ) );
+			 this.textInput.blur();
 		 } );
 	}
 
-	_onSaveAndStart() {
-		// alert('on save and start - skill enter: ' + this.state.text);
+	_callback() {
 		const { navigator } = this.props;
 		navigator.push( { screen: 'home' } );
+	}
+
+	_onSaveAndStart( formValues ) {
+		const { actSetProfileData, selectedSkills } = this.props;
+		// alert('on save and start - skill enter: ' + this.state.text);
+		if ( selectedSkills && selectedSkills.length > 0 ) {
+			actSetProfileData( formValues, this._callback );
+		} else {
+			Alert.alert(
+				'Ups!',
+				'Add at least one skill',
+				[
+					{ text: 'OK' }
+				],
+				{ cancelable: false }
+			);
+		}
+		return null;
 	}
 
 	_onPressBack() {
@@ -141,20 +171,21 @@ class AddSkills extends Component {
 
 	render() {
 		const {
-			text, skills, skillsAdded, baseInputFocused
+			text, skillsAdded, filteredSkills, emptySkill
 		} = this.state;
 
-		const { editing } = this.props;
+		const { editing, handleSubmit } = this.props;
 
 		return (
 			<KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : null}>
 				<Header title="Add your skills" onPressBack={this._onPressBack} />
 				<View style={localStyles.inputContainer}>
 					<BaseInput
+						name="skills"
 						onRef={( ref ) => { this.textInput = ref; }}
-						handleFocus={() => this.setState( { baseInputFocused: true } )}
-						handleBlur={() => this.setState( { baseInputFocused: false } )}
 						label="Enter skill"
+						withRef
+						component={BaseInput}
 						labelColor={colors.charcoalGrey}
 						placeholder="Ej. Designer"
 						value={text}
@@ -165,15 +196,14 @@ class AddSkills extends Component {
 						iconStyle={{ color: colors.skyBlue }}
 					/>
 				</View>
-
 				<View style={localStyles.contentContainer}>
-					{baseInputFocused ? (
+					{ filteredSkills.length > 0 ? (
 						<View style={localStyles.suggestedSkillsContainer}>
 							<ScrollView keyboardShouldPersistTaps="always" contentContainerStyle={localStyles.suggestedSkillsScrollView}>
-								{arrayRemove( skills, skillsAdded ).map( skill => (
+								{arrayRemove( filteredSkills, skillsAdded ).map( skill => (
 									<SuggestedSkillCard
-										key={skill}
-										text={skill}
+										key={skill.id}
+										text={skill.description}
 										onAdd={() => this._onAddSkillCard( skill )}
 									/> ) )}
 							</ScrollView>
@@ -182,8 +212,8 @@ class AddSkills extends Component {
 						<ScrollView contentContainerStyle={localStyles.skillsContainer}>
 							{skillsAdded.map( skill => (
 								<SkillCard
-									key={skill}
-									text={skill}
+									key={skill.id}
+									text={skill.description}
 									onDelete={() => this._onDeleteSkillCard( skill )}
 								/> ) )}
 						</ScrollView>
@@ -195,7 +225,7 @@ class AddSkills extends Component {
 						text={editing ? 'Save skills' : 'Save skills and start'}
 						textColor={colors.white}
 						buttonColor={colors.orange}
-						onPress={editing ? this._onPressBack : this._onSaveAndStart}
+						onPress={editing ? this._onPressBack : handleSubmit( this._onSaveAndStart )}
 						style={{ height: hp( HTP( 45 ) ) }}
 					/>
 				</View>
@@ -213,4 +243,16 @@ AddSkills.defaultProps = {
 	editing: false
 };
 
-export default AddSkills;
+const mapStateToProps = ( store ) => {
+	const selector = formValueSelector( 'createAccountForm' );
+	return {
+		selectedSkills: selector( store, 'skills' )
+	};
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{ actSetProfileData }, dispatch );
+
+export default reduxForm( {
+	form: 'createAccountForm'
+} )( connect( mapStateToProps, mapDispatchToProps )( AddSkills ) );

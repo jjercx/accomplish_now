@@ -7,10 +7,11 @@ import {
 	heightPercentageToDP as hp,
 	widthPercentageToDP as wp
 } from 'react-native-responsive-screen';
-
+import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
 import { HTP, WTP } from '../../utils/dimensions';
 import Header from '../../components/register/Header';
-import BaseInput from '../../components/base-input/BaseInput';
+import BaseInputForm from '../../components/base-input/BaseInputForm';
 import ButtonForward from '../../components/button-icon/ButtonForward';
 import Colors from '../../theme/palette';
 import s from './styles';
@@ -73,7 +74,7 @@ class BiggestChallenge extends Component {
 
 	render() {
 		let { enabled } = this.state;
-		const { editing } = this.props;
+		const { editing, handleSubmit } = this.props;
 
 		const isEnabled = enabled || editing;
 
@@ -85,7 +86,9 @@ class BiggestChallenge extends Component {
 			<KeyboardAvoidingView style={s.container} behavior="padding">
 				<Header title="Biggest challenge" onPressBack={this._onPressBack} />
 				<View style={localStyles.inputContainer}>
-					<BaseInput
+					<Field
+						name="biggestChallenge"
+						withRef
 						onRef={( ref ) => { this.baseInput = ref; }}
 						label="Add your text"
 						labelColor={Colors.charcoalGrey}
@@ -93,14 +96,15 @@ class BiggestChallenge extends Component {
 						onChangeText={this.onChangeText}
 						style={localStyles.input}
 						labelStyle={localStyles.label}
+						component={BaseInputForm}
 					/>
 				</View>
 				<View style={localStyles.buttonContainer}>
 					<ButtonForward
 						style={s.buttonForward}
-						enabled={isEnabled}
+						enabled
 						editing={editing}
-						onPress={isEnabled ? handlerOnPress : null}
+						onPress={handleSubmit( handlerOnPress )}
 					/>
 				</View>
 			</KeyboardAvoidingView>
@@ -117,4 +121,6 @@ BiggestChallenge.defaultProps = {
 	editing: false
 };
 
-export default BiggestChallenge;
+export default reduxForm( {
+	form: 'createAccountForm'
+} )( connect( null, null )( BiggestChallenge ) );

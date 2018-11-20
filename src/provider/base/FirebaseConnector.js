@@ -69,9 +69,15 @@ setPush = ( uri, obj ) => {
 	Firebase.database().ref( uri ).push( obj );
 };
 
-update = ( uri, obj ) => {
-	Firebase.database().ref( `${uri}/${obj.ref}` ).update( obj );
-};
+update = ( path, data ) => new Promise( ( resolve, reject ) => {
+	try {
+		Firebase.database().ref( `${path}` ).update( data ).then( () => {
+			resolve( 'ok' );
+		} );
+	} catch ( e ) {
+		reject( e );
+	}
+} );
 
 listener = ( uri, callback ) => {
 	Firebase.database().ref( uri ).on( 'value', ( snapshot ) => {
@@ -122,4 +128,44 @@ signWithCustomToken = token => new Promise( async ( resolve, reject ) => {
 		reject( error );
 	}
 } )
+
+uploadImg = ( file, path ) => new Promise( async ( resolve, reject ) => {
+	try {
+		let storageRef = Firebase.storage().ref();
+		let filename = new Date().getTime();
+		let metadata = {
+			contentType: 'image/jpeg'
+		};
+		let uploadTask = storageRef
+			.child( `images/${path}/${filename}.jpg` )
+			.put( file, metadata );
+		uploadTask.on(
+			'state_changed',
+			( snapshot ) => {
+				let progress = ( snapshot.bytesTransferred / snapshot.totalBytes ) * 100;
+				console.log( progress, ' %' );
+				switch ( snapshot.state ) {
+					case Firebase.storage.TaskState.PAUSED: // or 'paused'
+						console.log( 'Upload is paused' );
+						break;
+					case Firebase.storage.TaskState.RUNNING: // or 'running'
+						console.log( 'Upload is running' );
+						break;
+					default: console.log( 'Upload is running' );
+				}
+			},
+			( error ) => {
+			// Handle unsuccessful uploads
+				reject( error );
+				console.log( 'Has been occurred an error.', error );
+			},
+			( snapshot ) => {
+				resolve( snapshot.downloadURL );
+			}
+		);
+	} catch ( e ) {
+		console.log( 'looog', e );
+		reject( e );
+	}
+} );
 }

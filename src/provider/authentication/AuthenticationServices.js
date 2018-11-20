@@ -1,3 +1,4 @@
+import Firebase from 'react-native-firebase';
 import AuthenticationConfig from './AuthenticationConfig';
 
 export default class AuthenticationServices {
@@ -96,5 +97,17 @@ export default class AuthenticationServices {
 
 	static getUserData( ) {
 		return AuthenticationConfig.FirebaseConnector.currentUserData( AuthenticationConfig.userPath );
+	}
+
+	static setUserProfile( data ) {
+		const auth = Firebase.auth();
+		const { uid } = auth.currentUser;
+		return AuthenticationConfig
+			.FirebaseConnector.update( `${AuthenticationConfig.userPath}/${uid}`, data );
+	}
+
+	static uploadImage( img ) {
+		console.log('imaaaaage', img);
+		return AuthenticationConfig.FirebaseConnector.uploadImg( img, AuthenticationConfig.imgPath );
 	}
 }

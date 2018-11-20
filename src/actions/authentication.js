@@ -81,3 +81,23 @@ export const actVerifyLogin = () => ( dispatch ) => {
 		} );
 	} );
 };
+
+export const actSetProfileData = ( userData, callback ) => ( dispatch ) => {
+	AuthenticationServices.setUserProfile( userData ).then( ( ) => {
+		AuthenticationServices.getUserData().then( ( user ) => {
+			dispatch( {
+				type: SET_USER,
+				payload: user
+			} );
+			callback( 'ok' );
+		} );
+	} );
+};
+
+export const actUploadImg = ( source, callback ) => ( ) => {
+	AuthenticationServices.uploadImage( source ).then( ( uri ) => {
+		callback( uri );
+	} ).catch( ( e ) => {
+		console.log( 'Error al subir imagen', e );
+	} );
+};

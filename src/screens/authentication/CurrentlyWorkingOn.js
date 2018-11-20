@@ -7,10 +7,11 @@ import {
 	heightPercentageToDP as hp,
 	widthPercentageToDP as wp
 } from 'react-native-responsive-screen';
-
+import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
 import { HTP, WTP } from '../../utils/dimensions';
 import Header from '../../components/register/Header';
-import BaseInput from '../../components/base-input/BaseInput';
+import BaseInputForm from '../../components/base-input/BaseInputForm';
 import ButtonForward from '../../components/button-icon/ButtonForward';
 import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
@@ -73,7 +74,7 @@ class CurrentlyWorkingOn extends Component {
 
 	render() {
 		let { enabled } = this.state;
-		const { editing } = this.props;
+		const { editing, handleSubmit } = this.props;
 
 		const isEnabled = enabled || editing;
 
@@ -85,22 +86,25 @@ class CurrentlyWorkingOn extends Component {
 			<KeyboardAvoidingView style={s.container} behavior="padding">
 				<Header title="Currently working on" onPressBack={this._onPressBack} />
 				<View style={localStyles.inputContainer}>
-					<BaseInput
+					<Field
+						name="workingOn"
 						onRef={( ref ) => { this.baseInput = ref; }}
+						withRef
 						label="Add your text"
 						labelColor={Colors.charcoalGrey}
 						placeholder="Add your text here"
 						onChangeText={this.onChangeText}
 						style={localStyles.input}
+						component={BaseInputForm}
 						labelStyle={localStyles.label}
 					/>
 				</View>
 				<View style={localStyles.buttonContainer}>
 					<ButtonForward
 						style={s.buttonForward}
-						enabled={isEnabled}
+						enabled
 						editing={editing}
-						onPress={isEnabled ? handlerOnPress : null}
+						onPress={handleSubmit( handlerOnPress )}
 					/>
 				</View>
 			</KeyboardAvoidingView>
@@ -117,4 +121,6 @@ CurrentlyWorkingOn.defaultProps = {
 	editing: false
 };
 
-export default CurrentlyWorkingOn;
+export default reduxForm( {
+	form: 'createAccountForm'
+} )( connect( null, null )( CurrentlyWorkingOn ) );
