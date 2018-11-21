@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import s from './styles';
 import Typography from '../typography/Typography';
 
-const MessageReceived = ( { text, image, date } ) => (
+const MessageReceived = ( { text, date, image } ) => (
 	<View style={s.mrContainer}>
 		<View style={s.mrImageContainer}>
 			<Image
-				style={s.mrImage}
+				style={[ s.imageProfile ]}
 				source={image}
 			/>
 		</View>
@@ -35,7 +35,6 @@ const MessageReceived = ( { text, image, date } ) => (
 		</View>
 	</View>
 );
-
 
 MessageReceived.propTypes = {
 	text: PropTypes.string.isRequired,
