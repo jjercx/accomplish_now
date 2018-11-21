@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ViewOverflow from 'react-native-view-overflow';
 import { View, Image, TouchableOpacity } from 'react-native';
 import Person, { getStateName } from '../../../entities/Person';
 import Typography from '../../typography/Typography';
@@ -11,11 +12,13 @@ const UserCard = ( {
 	person, editable, onPress, onPressEdit
 } ) => (
 	<Card style={styles.cardContainer}>
-		<View style={styles.avatarWrapper}>
-			<TouchableOpacity onPress={onPress}>
-				<Image style={styles.avatar} source={person.image} />
-			</TouchableOpacity>
-		</View>
+		<ViewOverflow style={styles.viewOverflowContainer}>
+			<View style={styles.avatarWrapper}>
+				<TouchableOpacity onPress={onPress}>
+					<Image style={styles.avatar} source={person.image} />
+				</TouchableOpacity>
+			</View>
+		</ViewOverflow>
 		<View>
 			<Typography variant="profileUserTitleRegular" color="charcoalGrey">
 				{`${person.firstName} ${person.lastName}`}
