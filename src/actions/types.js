@@ -7,3 +7,6 @@ export const MESSAGE_LIST = 'MESSAGE_LIST';
 // Notifications
 export const GET_FROM_NOTIFICATION = 'GET_FROM_NOTIFICATION';
 export const GET_TO_NOTIFICATION = 'GET_TO_NOTIFICATION';
+// People
+export const GET_PEOPLE = 'GET_PEOPLE';
+export const GET_PEOPLE_NERBY = 'GET_PEOPLE_NEARBY';

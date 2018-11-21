@@ -72,7 +72,8 @@ const styles = StyleSheet.create( {
 	},
 	avatar: {
 		width: wpd( WTP( 100 ) ),
-		height: hpd( HTP( 100 ) )
+		height: hpd( HTP( 100 ) ),
+		borderRadius: 50
 	},
 	icon: {
 		marginRight: wpd( WTP( 5 ) )

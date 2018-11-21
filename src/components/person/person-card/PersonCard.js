@@ -24,7 +24,7 @@ const PersonCard = ( {
 			</View>
 		)}
 		<View style={styles.avatarWrapper}>
-			<Image style={styles.avatar} source={person.image} />
+			<Image style={styles.avatar} source={{ uri: person.image }} />
 		</View>
 		<View style={styles.personInfoWrapper}>
 			<Typography variant="midTitle" color="charcoalGrey">
@@ -53,24 +53,26 @@ const PersonCard = ( {
 				) }
 			</View>
 		) }
-		{ ( person.skills.length > 0 ) && (
-			<View
-				style={[
-					styles.skillsWrapper,
-					person.skills.length < 3
-						? styles.fewSkillsWrapper
-						: null
-				]}
+
+		{ ( person.skills.length > 0 ) ? (
+
+			<View style={[
+				styles.skillsWrapper,
+				person.skills.length < 3
+					? styles.fewSkillsWrapper
+					: null
+			]}
 			>
-				<View style={styles.skill}>
-					<Typography variant="xxsmallBody" color="greyishBrown">{person.skills[ 0 ].skill.name}</Typography>
-				</View>
-				{ ( person.skills.length > 1 ) && (
+				{ 		person.skills.map( s => (
 					<View style={styles.skill}>
-						<Typography variant="xxsmallBody" color="greyishBrown">{person.skills[ 1 ].skill.name}</Typography>
+						<Typography variant="xxsmallBody" color="greyishBrown">{s.skill.name}</Typography>
 					</View>
-				) }
+				) )
+				}
 			</View>
+
+		) : (
+			<View />
 		) }
 	</View>
 );
