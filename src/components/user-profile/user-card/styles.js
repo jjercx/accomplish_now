@@ -18,8 +18,6 @@ const styles = StyleSheet.create( {
 	avatarWrapper: {
 		padding: hpd( HTP( 7 ) ),
 		backgroundColor: colors.white,
-		position: 'absolute',
-		top: hpd( HTP( -50 ) ),
 		borderRadius: 100
 	},
 	avatar: {
@@ -35,6 +33,10 @@ const styles = StyleSheet.create( {
 		position: 'absolute',
 		top: hpd( HTP( 20 ) ),
 		right: wpd( WTP( 20 ) )
+	},
+	viewOverflowContainer: {
+		position: 'absolute',
+		top: hpd( HTP( -50 ) )
 	}
 } );
 
