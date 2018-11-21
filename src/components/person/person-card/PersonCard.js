@@ -15,7 +15,7 @@ const PersonCard = ( {
 				<TouchableOpacity onPress={onPress}>
 					<Image style={styles.icon} source={require( '../../../assets/images/icons/location.png' )} />
 				</TouchableOpacity>
-				<Typography variant="xsmallBody" color="greyishBrown">{ `${distance} miles` }</Typography>
+				<Typography variant="xsmallBody" color="greyishBrown">{ `${distance.toFixed( 2 )} miles` }</Typography>
 			</View>
 		) ) || (
 			<View>
