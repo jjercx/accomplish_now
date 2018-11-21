@@ -10,8 +10,9 @@ const rootReducer = combineReducers( {
 	skills,
 	authentication,
 	messages,
-	form: formReducer
-	peopleNearby
+	form: formReducer,
+	peopleNearby,
+	notifications
 } );
 
 export default rootReducer;
