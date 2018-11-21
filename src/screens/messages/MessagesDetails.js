@@ -1,6 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
 	View,
 	StyleSheet,
@@ -17,14 +18,15 @@ import {
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
 import {
 	actGetMessagesByThreadId,
-	actNewMessage
+	actNewMessage,
+	actInputTextChanged
 } from '../../actions/messages';
 
 import { HTP } from '../../utils/dimensions';
+import { formatDate } from '../../utils/formats';
 import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
 import ButtonIcon from '../../components/button-icon/ButtonIcon';
@@ -88,38 +90,35 @@ class MessagesDetails extends Component {
 		navBarHidden: true
 	};
 
-	static formatDate( unixTimestamp ) {
-		const _15daysAgo = moment().subtract( 15, 'days' );
-		const date = moment.unix( unixTimestamp / 1000 );
-
-		if ( date.isAfter( _15daysAgo, 'days' ) ) {
-			return date.fromNow();
-		}
-
-		return date.format( 'ddd[,] MMM DD h:mm A' );
+	constructor( props ) {
+		super( props );
+		this._onChangeText = this._onChangeText.bind( this );
 	}
 
 	state = {
-		date: '12:24 PM',
-		_textInputText: ''
+		date: '12:24 PM'
 	}
 
 	componentWillMount() {
 		const { actMessagesByThreadIdInit, threadId } = this.props;
-		debugger;
 		actMessagesByThreadIdInit( threadId );
 	}
 
 	_onSendMessage = () => {
-		const { _textInputText } = this.state;
-		const { actNewMessageInit, threadId, user } = this.props;
-		debugger;
-		actNewMessageInit( threadId, _textInputText, user );
+		const {
+			actNewMessageInit, threadId, user, inputMessageText
+		} = this.props;
+		actNewMessageInit( threadId, inputMessageText, user );
 	}
 
 	_onPressBack() {
 		const { navigator } = this.props;
 		navigator.pop();
+	}
+
+	_onChangeText( text ) {
+		const { actInputTextChangedInit } = this.props;
+		actInputTextChangedInit( text );
 	}
 
 	_fullName() {
@@ -134,10 +133,10 @@ class MessagesDetails extends Component {
 	}
 
 	render() {
-		const { date, _textInputText } = this.state;
-		const { messages, isFetching, isSending } = this.props;
-
-		// const message = this.props.messages[this.props.messageId]; // redux
+		const { date } = this.state;
+		const {
+			messages, isFetching, isSending, inputMessageText
+		} = this.props;
 
 		return (
 			<KeyboardAvoidingView style={s.container} behavior={Platform.OS === 'ios' ? 'padding' : null}>
@@ -189,7 +188,7 @@ class MessagesDetails extends Component {
 										<MessageSended
 											key={item.id}
 											text={item.text}
-											date={MessagesDetails.formatDate( item.createdOn )}
+											date={formatDate( item.createdOn )}
 										/>
 									)
 									: (
@@ -197,7 +196,7 @@ class MessagesDetails extends Component {
 											key={item.id}
 											text={item.text}
 											image={item.image ? { uri: item.image } : avatarImg}
-											date={MessagesDetails.formatDate( item.createdOn )}
+											date={formatDate( item.createdOn )}
 										/>
 									)
 							)}
@@ -211,8 +210,8 @@ class MessagesDetails extends Component {
 							ref={( ref ) => { this.textInput = ref; }}
 							style={s.textInput}
 							placeholder="Your message"
-							value={_textInputText}
-							onChangeText={text => this.setState( { _textInputText: text } )}
+							value={inputMessageText}
+							onChangeText={this._onChangeText}
 							onFocus={() => setTimeout( () => this.scrollView.scrollToEnd(
 								{ animated: true } ), 500 )}
 						/>
@@ -237,7 +236,16 @@ class MessagesDetails extends Component {
 }
 
 MessagesDetails.propTypes = {
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	user: PropTypes.any.isRequired,
+	threadId: PropTypes.string.isRequired,
+	messages: PropTypes.arrayOf( PropTypes.any ).isRequired,
+	isFetching: PropTypes.bool.isRequired,
+	isSending: PropTypes.bool.isRequired,
+	inputMessageText: PropTypes.string.isRequired,
+	actMessagesByThreadIdInit: PropTypes.func.isRequired,
+	actNewMessageInit: PropTypes.func.isRequired,
+	actInputTextChangedInit: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ( {
@@ -245,12 +253,14 @@ const mapStateToProps = store => ( {
 	threadId: store.messages.activeThreadId,
 	messages: store.messages.threadMessages,
 	isFetching: store.messages.isFetching,
-	isSending: store.messages.isSending
+	isSending: store.messages.isSending,
+	inputMessageText: store.messages.inputText
 } );
 
 const mapDispatchToProps = dispatch => bindActionCreators( {
 	actMessagesByThreadIdInit: actGetMessagesByThreadId,
-	actNewMessageInit: actNewMessage
+	actNewMessageInit: actNewMessage,
+	actInputTextChangedInit: actInputTextChanged
 }, dispatch );
 
 export default compose( connect( mapStateToProps, mapDispatchToProps )( MessagesDetails ) );

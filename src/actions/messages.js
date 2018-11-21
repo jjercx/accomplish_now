@@ -9,7 +9,8 @@ import {
 	GET_MESSAGES_BY_THREAD,
 	MESSAGES_BY_THREAD_LIST,
 	START_SENDING_MESSAGE,
-	MESSAGE_ADDED_TO_THREAD
+	MESSAGE_ADDED_TO_THREAD,
+	MESSAGE_TEXT_INPUT_CHANGED
 } from './types';
 
 export const actGetMessages = () => ( dispatch ) => {
@@ -107,12 +108,7 @@ export const actGetMessagesByThreadId = threadId => ( dispatch ) => {
 
 
 export const actNewMessage = ( threadId, message, sender ) => ( dispatch ) => {
-	dispatch( {
-		type: START_SENDING_MESSAGE
-	} );
-
 	let { currentUser } = Firebase.auth();
-	debugger;
 	const newMessage = {
 		createdOn: Date.now(),
 		isRead: false,
@@ -124,9 +120,24 @@ export const actNewMessage = ( threadId, message, sender ) => ( dispatch ) => {
 		threadId
 	};
 
+	dispatch( {
+		type: START_SENDING_MESSAGE,
+		payload: {
+			...newMessage,
+			id: String( Math.floor( Math.random() * 100000 ) + 1 )
+		}
+	} );
+
 	MessagesServices.putNewMessage( newMessage, () => {
 		dispatch( {
 			type: MESSAGE_ADDED_TO_THREAD
 		} );
+	} );
+};
+
+export const actInputTextChanged = newText => ( dispatch ) => {
+	dispatch( {
+		type: MESSAGE_TEXT_INPUT_CHANGED,
+		payload: newText
 	} );
 };

@@ -8,13 +8,23 @@ export default class MessagesConfig {
 		return firebaseConnector;
 	}
 
-	static get chatThreadsPath() {
-		return 'chatThreads';
-	}
-
 	static get membersPath() {
 		let { currentUser } = Firebase.auth();
 		return `members/${currentUser._user.uid}/uid`;
+	}
+
+	static get latestMessagePath() {
+		return 'latestMessage';
+	}
+
+	static get threadIdPath() {
+		return 'threadId';
+	}
+
+	static chatThreadsPath( threadId = '' ) {
+		return ( threadId === '' )
+			? 'chatThreads'
+			: `chatThreads/${threadId}`;
 	}
 
 	static chatMessagesPath( threadId ) {

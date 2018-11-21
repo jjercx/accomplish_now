@@ -4,14 +4,18 @@ import MessagesConfig from './MessagesConfig';
 export default class MessagesServices {
 	static getMessages( callback ) {
 		let { currentUser } = Firebase.auth();
-		return MessagesConfig.FirebaseConnector.getByQuery( MessagesConfig.chatThreadsPath,
-			MessagesConfig.membersPath, currentUser._user.uid, callback );
+		return MessagesConfig.FirebaseConnector.getByQuery(
+			MessagesConfig.chatThreadsPath(),
+			MessagesConfig.membersPath,
+			currentUser._user.uid,
+			callback
+		);
 	}
 
 	static getThreadMessages( threadId, callback ) {
 		MessagesConfig.FirebaseConnector.getByQuery(
 			MessagesConfig.chatMessagesPath( threadId ),
-			'threadId',
+			MessagesConfig.threadIdPath,
 			threadId,
 			( rows ) => {
 				if ( rows ) {
@@ -30,9 +34,16 @@ export default class MessagesServices {
 	}
 
 	static putNewMessage( newMessage, callback ) {
-		MessagesConfig.FirebaseConnector.setPush(
-			MessagesConfig.chatMessagesPath( newMessage.threadId ),
-			newMessage
-		).then( () => callback( null ) ).catch( e => callback( e ) );
+		Promise.all( [
+			MessagesConfig.FirebaseConnector.setPush(
+				MessagesConfig.chatMessagesPath( newMessage.threadId ),
+				newMessage
+			),
+			MessagesConfig.FirebaseConnector.set(
+				MessagesConfig.chatThreadsPath( newMessage.threadId ),
+				newMessage,
+				MessagesConfig.latestMessagePath
+			)
+		] ).then( () => callback( null ) ).catch( e => callback( e ) );
 	}
 }

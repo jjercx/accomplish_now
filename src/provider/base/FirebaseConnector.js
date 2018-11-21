@@ -30,12 +30,14 @@ getByQuery = ( base, orderBy, equalTo, callback ) => {
 			.equalTo( equalTo )
 			.on( 'value', ( snapshot ) => {
 				const data = snapshot.val();
-				let objData = Object.keys( data );
 				let itemsList = [];
-				objData.map( ( eachKey ) => {
-					let itemKey = data[ eachKey ];
-					return itemsList.push( itemKey );
-				} );
+				if ( data !== null ) {
+					let objData = Object.keys( data );
+					objData.map( ( eachKey ) => {
+						let itemKey = data[ eachKey ];
+						return itemsList.push( itemKey );
+					} );
+				}
 				callback( itemsList );
 			} );
 	} catch ( e ) {
@@ -61,22 +63,24 @@ remove = ( uri, id ) => {
 	Firebase.database().ref( `${uri}/${id}` ).remove();
 };
 
-set = ( uri, obj, id ) => {
-	Firebase.database().ref( `${uri}/${id}` ).set( obj );
-};
+set = ( uri, obj, id ) => new Promise( ( resolve, reject ) => {
+	Firebase.database().ref( `${uri}/${id}` ).set( obj, ( error ) => {
+		if ( error ) {
+			reject( error );
+		} else {
+			resolve( 'ok' );
+		}
+	} );
+} );
 
 setPush = ( uri, obj ) => new Promise( ( resolve, reject ) => {
-	try {
-		Firebase.database().ref( uri ).push( obj, ( error ) => {
-			if ( error ) {
-				reject( error );
-			} else {
-				resolve();
-			}
-		} );
-	} catch ( e ) {
-		reject( e );
-	}
+	Firebase.database().ref( uri ).push( obj, ( error ) => {
+		if ( error ) {
+			reject( error );
+		} else {
+			resolve( 'ok' );
+		}
+	} );
 } );
 
 update = ( path, data ) => new Promise( ( resolve, reject ) => {
