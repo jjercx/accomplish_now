@@ -4,21 +4,29 @@ import {
 	View,
 	Image,
 	TouchableOpacity,
-	StyleSheet
+	StyleSheet,
+	Alert,
+	ActivityIndicator
 } from 'react-native';
-
+import { bindActionCreators } from 'redux';
 import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
-
+import {
+	reduxForm, Field, change, formValueSelector
+} from 'redux-form';
+import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-picker';
+import { actUploadImg } from '../../actions/authentication';
 import Header from '../../components/register/Header';
-import BaseInput from '../../components/base-input/BaseInput';
+import BaseInputForm from '../../components/base-input/BaseInputForm';
 import ButtonForward from '../../components/button-icon/ButtonForward';
 import { HTP, WTP } from '../../utils/dimensions';
 import styles from './styles';
+import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
+import { required, validateEmail, onlyWords } from '../../utils/Validations';
 
 const localStyles = StyleSheet.create( {
 	SPInputSpace: {
@@ -40,7 +48,6 @@ const localStyles = StyleSheet.create( {
 	},
 	inputRow: {
 		flexDirection: 'row',
-		alignItems: 'center',
 		marginBottom: hp( HTP( 36 ) )
 	},
 	imageProfile: {
@@ -71,17 +78,36 @@ class SetProfile extends Component {
 		this.state = {
 			enabled: true,
 			avatarSource: null,
-			selectAvatar: false
+			selectAvatar: false,
+			isLoading: false
 		};
-
+		this._callback = this._callback.bind( this );
+		this.uploadImage = this.uploadImage.bind( this );
 		this._onPressBack = this._onPressBack.bind( this );
 		this._onPressButtonFoward = this._onPressButtonFoward.bind( this );
 		this._onPressProfilePicture = this._onPressProfilePicture.bind( this );
 	}
 
+	_callback = ( res ) => {
+		let { dispatch } = this.props;
+		this.setState( { isLoading: false } );
+		dispatch( change( 'createAccountForm', 'basicInfo.profilePhotoUrl', res ) );
+	}
+
 	_onPressButtonFoward() {
-  	const { navigator } = this.props;
+  	const { navigator, photo } = this.props;
+		if ( photo ) {
   	navigator.push( { screen: 'biggestChallenge' } );
+		} else {
+			Alert.alert(
+				'Ups!',
+				'You must select a photo',
+				[
+					{ text: 'OK' }
+				],
+				{ cancelable: false }
+			);
+		}
 	}
 
 	_onPressBack() {
@@ -91,6 +117,7 @@ class SetProfile extends Component {
 
 	/* eslint-disable no-console */
 	_onPressProfilePicture() {
+		let { dispatch } = this.props;
   	ImagePicker.showImagePicker( options, ( response ) => {
   	  console.log( 'Response = ', response );
 
@@ -110,16 +137,24 @@ class SetProfile extends Component {
 
 		    this.setState( {
 		      avatarSource: source,
-  				selectAvatar: true
-		    } );
+  				selectAvatar: true,
+					isLoading: true
+		    }, this.uploadImage( response.uri ) );
 		  }
   	} );
+	}
+
+	uploadImage( source ) {
+		let { actUploadImg } = this.props;
+		actUploadImg( source, this._callback );
 	}
 	/* eslint-enable no-console */
 
 	render() {
-		let { enabled, avatarSource, selectAvatar } = this.state;
-		const { editing } = this.props;
+		let {
+			enabled, avatarSource, selectAvatar, isLoading
+		} = this.state;
+		const { editing, handleSubmit } = this.props;
 
 		const isEnabled = enabled || editing;
 
@@ -141,16 +176,18 @@ class SetProfile extends Component {
   			</TouchableOpacity>
   			<View style={localStyles.inputsContainer}>
   				<View style={localStyles.inputRow}>
-  					<BaseInput placeholder="John" label="First name" width="46%" containerStyle={localStyles.SPInputSpace} />
-  					<BaseInput placeholder="Doe" label="Last name" width="46%" />
+  					<Field name="basicInfo.firstName" placeholder="John" label="First name" width="46%" containerStyle={localStyles.SPInputSpace} validate={[ required, onlyWords ]} component={BaseInputForm} />
+  					<Field name="basicInfo.lastName" placeholder="Doe" label="Last name" width="46%" component={BaseInputForm} validate={[ required, onlyWords ]} />
   				</View>
-  				<BaseInput placeholder="your@email.com" label="Email" />
-  				<ButtonForward
-					style={localStyles.SPButtonForward}
-					enabled={isEnabled}
-					editing={editing}
-					onPress={isEnabled ? handlerOnPress : null}
-  				/>
+  				<Field name="basicInfo.email" autoCapitalize="none" placeholder="your@email.com" label="Email" component={BaseInputForm} validate={[ required, validateEmail ]} />
+  				{ isLoading ? <ActivityIndicator size="large" color={Colors.orange} style={localStyles.SPButtonForward} /> : (
+							<ButtonForward
+												style={localStyles.SPButtonForward}
+												enabled={isEnabled}
+												editing={editing}
+												onPress={handleSubmit( handlerOnPress )}
+							/>
+							)}
   			</View>
   		</View>
   	);
@@ -169,4 +206,16 @@ SetProfile.defaultProps = {
 	editing: false
 };
 
-export default SetProfile;
+const mapStateToProps = ( store ) => {
+	const selector = formValueSelector( 'createAccountForm' );
+	return {
+		photo: selector( store, 'basicInfo.profilePhotoUrl' )
+	};
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{ actUploadImg }, dispatch );
+
+export default reduxForm( {
+	form: 'createAccountForm'
+} )( connect( mapStateToProps, mapDispatchToProps )( SetProfile ) );

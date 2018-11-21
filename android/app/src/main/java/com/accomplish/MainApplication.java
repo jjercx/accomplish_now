@@ -13,6 +13,7 @@ import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+import io.invertase.firebase.storage.RNFirebaseStoragePackage; // <-- Add this line
 import com.facebook.soloader.SoLoader;
 
 import com.reactnativenavigation.NavigationApplication;
@@ -44,6 +45,7 @@ public class MainApplication extends NavigationApplication implements ReactAppli
             new RNFirebaseDatabasePackage(),
             new RNFirebaseMessagingPackage(),
             new RNFirebaseNotificationsPackage(),
+            new RNFirebaseStoragePackage(),
             new BlurViewPackage(),
             new VectorIconsPackage(),
             new ImagePickerPackage(),
