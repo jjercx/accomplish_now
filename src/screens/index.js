@@ -60,8 +60,8 @@ export function registerScreens() {
 	Navigation.registerComponent( 'addSkills', () => AddSkills, store, Provider );
 	Navigation.registerComponent( 'setProfile', () => SetProfile, store, Provider );
 	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin, store, Provider );
-	Navigation.registerComponent( 'aboutMe', () => AboutMe );
-	Navigation.registerComponent( 'addAccomplishment', () => AddAccomplishment );
+	Navigation.registerComponent( 'aboutMe', () => AboutMe, store, Provider );
+	Navigation.registerComponent( 'addAccomplishment', () => AddAccomplishment, store, Provider );
 	Navigation.registerComponent( 'userProfile', () => UserProfile, store, Provider );
 	Navigation.registerComponent( 'places', () => Places );
 	Navigation.registerComponent( 'messages', () => Messages, store, Provider );

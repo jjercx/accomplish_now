@@ -9,6 +9,7 @@ import {
 } from 'react-native-responsive-screen';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { HTP, WTP } from '../../utils/dimensions';
 import Header from '../../components/register/Header';
 import BaseInputForm from '../../components/base-input/BaseInputForm';
@@ -16,6 +17,7 @@ import ButtonForward from '../../components/button-icon/ButtonForward';
 import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
 import s from './styles';
+import { actSetProfileData } from '../../actions/authentication';
 
 const localStyles = StyleSheet.create( {
 	inputContainer: {
@@ -47,7 +49,17 @@ class CurrentlyWorkingOn extends Component {
 		this.state = { enabled: false };
 		this._onChangeText = this._onChangeText.bind( this );
 		this._onPressBack = this._onPressBack.bind( this );
+		this._onPressSave = this._onPressSave.bind( this );
 		this._onPressButtonFoward = this._onPressButtonFoward.bind( this );
+	}
+
+	componentWillMount() {
+		let { initialize, editing, user } = this.props;
+		if ( editing ) {
+			initialize( {
+				workingOn: user.workingOn ? user.workingOn : ''
+			} );
+		}
 	}
 
 	componentDidMount() {
@@ -72,6 +84,11 @@ class CurrentlyWorkingOn extends Component {
 		navigator.pop();
 	}
 
+	_onPressSave( values ) {
+		let { actSetProfileData } = this.props;
+		actSetProfileData( values, this._onPressBack );
+	}
+
 	render() {
 		let { enabled } = this.state;
 		const { editing, handleSubmit } = this.props;
@@ -79,7 +96,7 @@ class CurrentlyWorkingOn extends Component {
 		const isEnabled = enabled || editing;
 
 		const handlerOnPress = editing
-			? this._onPressBack
+			? this._onPressSave
 			: this._onPressButtonFoward;
 
 		return (
@@ -114,13 +131,26 @@ class CurrentlyWorkingOn extends Component {
 
 CurrentlyWorkingOn.propTypes = {
 	editing: PropTypes.bool,
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	initialize: PropTypes.func,
+	user: PropTypes.any.isRequired,
+	handleSubmit: PropTypes.func
 };
 
 CurrentlyWorkingOn.defaultProps = {
-	editing: false
+	editing: false,
+	initialize: () => {},
+	handleSubmit: () => {}
 };
 
+const mapStateToProps = store => ( {
+	user: store.authentication.user
+} );
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{ actSetProfileData }, dispatch );
+
 export default reduxForm( {
-	form: 'createAccountForm'
-} )( connect( null, null )( CurrentlyWorkingOn ) );
+	form: 'createAccountForm',
+	destroyOnUnmount: false
+} )( connect( mapStateToProps, mapDispatchToProps )( CurrentlyWorkingOn ) );
