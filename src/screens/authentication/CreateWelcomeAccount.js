@@ -167,7 +167,7 @@ class CreateWelcomeAccount extends Component {
 							<Typography variant="midTitle" color="charcoalGrey" textAlign="center"> +1 </Typography>
 						</View>
 						<Field
-							name="basicInfo.phone"
+							name="basicInfo.phoneNumber"
 							onRef={( ref ) => { this.baseInput = ref; }}
 							withRef
 							validate={required}

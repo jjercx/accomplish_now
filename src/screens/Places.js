@@ -39,9 +39,9 @@ const styles = StyleSheet.create( {
 } );
 
 class Places extends Component {
-    static navigatorStyle = {
-    	navBarHidden: true
-    };
+	static navigatorStyle = {
+		navBarHidden: true
+	};
 
 	state = {
 		showMapView: false
@@ -72,17 +72,22 @@ class Places extends Component {
 		new Place( 4, 'Corner Corner SC', require( '../assets/images/places/cornersc.png' ), 37.782413, -122.409462, 'New York', '2 miles from you' )
 	];
 
-   	buttonIcons = () => {
-   		const { showMapView } = this.state;
-   		return [
-   			{ id: 1, icon: iconOrder, onPress: this._order },
-   			{ id: 2, icon: iconFiltter, onPress: this._filter },
-   			{ id: 3, icon: showMapView ? iconList : iconLocation, onPress: this._location }
-		   ];
-	   }
+	buttonIcons = () => {
+		const { showMapView } = this.state;
+		return [
+			{ id: 1, icon: iconOrder, onPress: this._order },
+			{ id: 2, icon: iconFiltter, onPress: this._filter },
+			{ id: 3, icon: showMapView ? iconList : iconLocation, onPress: this._location }
+		];
+	}
 
 	_location = () => {
     	this.setState( prevState => ( { showMapView: !prevState.showMapView } ) );
+	}
+
+	_goToPlaceDetails = () => {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'placeDetails' } );
 	}
 
 	renderPlaceListView =
@@ -91,7 +96,7 @@ class Places extends Component {
 			data={this.placesMock}
 			keyExtractor={( item, index ) => index.toString()}
 			renderItem={( { item } ) => (
-				<PlaceItem {...item} />
+				<PlaceItem {...item} _onPress={() => this._goToPlaceDetails()} />
 			)}
 		/>;
 
@@ -107,7 +112,7 @@ class Places extends Component {
     					barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
     				/>
 					<Header
-					    onPressBack={this._onPressBack.bind( this )}
+					  onPressBack={this._onPressBack.bind( this )}
 						buttonIcons={this.buttonIcons()}
 					/>
 					<HeaderTitle title="Places to Work" />

@@ -94,6 +94,18 @@ export const actSetProfileData = ( userData, callback ) => ( dispatch ) => {
 	} );
 };
 
+export const actPushAccomplisment = ( userData, callback ) => ( dispatch ) => {
+	AuthenticationServices.pushUserAccomplishment( userData ).then( ( ) => {
+		AuthenticationServices.getUserData().then( ( user ) => {
+			dispatch( {
+				type: SET_USER,
+				payload: user
+			} );
+			callback( 'ok' );
+		} );
+	} );
+};
+
 export const actUploadImg = ( source, callback ) => ( ) => {
 	AuthenticationServices.uploadImage( source ).then( ( uri ) => {
 		callback( uri );
