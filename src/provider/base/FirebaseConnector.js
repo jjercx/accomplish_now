@@ -47,7 +47,7 @@ getByQuery = ( base, orderBy, equalTo, callback ) => {
 
 currentUserData = path => new Promise( ( resolve, reject ) => {
 	const { currentUser } = Firebase.auth();
-	const uid = currentUser._user.uid;
+	const { uid } = currentUser._user;
 	try {
 		if ( uid ) { path = `${path}/${uid}`; }
 		Firebase.database().ref( path ).once( 'value', ( snapshot ) => {
@@ -63,21 +63,24 @@ remove = ( uri, id ) => {
 	Firebase.database().ref( `${uri}/${id}` ).remove();
 };
 
-set = ( uri, obj, id ) => {
-	Firebase.database().ref( `${uri}/${id}` ).set( obj );
-};
-
-setPush = ( path, data ) => new Promise( ( resolve, reject ) => {
-	try {
-		Firebase.database().ref( `${path}` ).push( data ).then( () => {
+set = ( uri, obj, id ) => new Promise( ( resolve, reject ) => {
+	Firebase.database().ref( `${uri}/${id}` ).set( obj, ( error ) => {
+		if ( error ) {
+			reject( error );
+		} else {
 			resolve( 'ok' );
-		} )
-			.catch( ( e ) => {
-				reject( e );
-			} );
-	} catch ( e ) {
-		reject( e );
-	}
+		}
+	} );
+} );
+
+setPush = ( uri, obj ) => new Promise( ( resolve, reject ) => {
+	Firebase.database().ref( uri ).push( obj, ( error ) => {
+		if ( error ) {
+			reject( error );
+		} else {
+			resolve( 'ok' );
+		}
+	} );
 } );
 
 update = ( path, data ) => new Promise( ( resolve, reject ) => {
