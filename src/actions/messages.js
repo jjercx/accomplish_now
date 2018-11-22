@@ -1,6 +1,17 @@
 import Firebase from 'react-native-firebase';
 import MessagesServices from '../provider/messages/MessagesServices';
-import { GET_MESSAGE, MESSAGE_LIST } from './types';
+
+import {
+	GET_MESSAGE,
+	MESSAGE_LIST,
+	START_FETCHING_MESSAGES,
+	SET_CURRENT_THREAD,
+	GET_MESSAGES_BY_THREAD,
+	MESSAGES_BY_THREAD_LIST,
+	START_SENDING_MESSAGE,
+	MESSAGE_ADDED_TO_THREAD,
+	MESSAGE_TEXT_INPUT_CHANGED
+} from './types';
 
 export const actGetMessages = () => ( dispatch ) => {
 	MessagesServices.getMessages( ( messages ) => {
@@ -36,5 +47,97 @@ export const actGetMessages = () => ( dispatch ) => {
 				payload: messageEntity
 			} );
 		}
+	} );
+};
+
+export const actOpenConversation = threadId => ( dispatch ) => {
+	dispatch( {
+		type: SET_CURRENT_THREAD,
+		payload: threadId
+	} );
+};
+
+export const actGetMessagesByThreadId = threadId => ( dispatch ) => {
+	dispatch( {
+		type: START_FETCHING_MESSAGES
+	} );
+
+	MessagesServices.getThreadMessages( threadId, ( err, messages ) => {
+		dispatch( {
+			type: GET_MESSAGES_BY_THREAD,
+			payload: messages
+		} );
+
+		const curUserId = Firebase.auth()._user.uid;
+
+		let messageEntity = messages.map( ( msg ) => {
+			const {
+				id,
+				createdOn,
+				isRead,
+				text,
+				sender: {
+					uid: senderId,
+					basicInfo: {
+						firstName,
+						lastName,
+						profilePhotoUrl: image
+					}
+				}
+			} = msg;
+
+			return {
+				id,
+				createdOn,
+				isRead,
+				text,
+				senderId,
+				firstName,
+				lastName,
+				image,
+				send: ( senderId === curUserId )
+			};
+		} );
+
+		dispatch( {
+			type: MESSAGES_BY_THREAD_LIST,
+			payload: messageEntity
+		} );
+	} );
+};
+
+
+export const actNewMessage = ( threadId, message, sender ) => ( dispatch ) => {
+	let { currentUser } = Firebase.auth();
+	const newMessage = {
+		createdOn: Date.now(),
+		isRead: false,
+		text: message,
+		sender: {
+			...sender,
+			uid: currentUser._user.uid
+		},
+		threadId
+	};
+
+	dispatch( {
+		type: START_SENDING_MESSAGE,
+		payload: {
+			...newMessage,
+			id: String( Math.floor( Math.random() * 100000 ) + 1 )
+		}
+	} );
+
+	MessagesServices.putNewMessage( newMessage, () => {
+		dispatch( {
+			type: MESSAGE_ADDED_TO_THREAD
+		} );
+	} );
+};
+
+export const actInputTextChanged = newText => ( dispatch ) => {
+	dispatch( {
+		type: MESSAGE_TEXT_INPUT_CHANGED,
+		payload: newText
 	} );
 };
