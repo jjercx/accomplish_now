@@ -10,19 +10,13 @@ const PersonCard = ( {
 	person, rating, meetingsCount, distance, onPress
 } ) => (
 	<View style={styles.cardContainer}>
-		{ ( ( distance > 0 ) && (
-			<View style={styles.distanceWrapper}>
-				<TouchableOpacity onPress={onPress}>
-					<Image style={styles.icon} source={require( '../../../assets/images/icons/location.png' )} />
-				</TouchableOpacity>
-				<Typography variant="xsmallBody" color="greyishBrown">{ `${distance.toFixed( 2 )} miles` }</Typography>
-			</View>
-		) ) || (
-			<View>
-				<Spacing size="base" />
-				<Spacing size="tiny" />
-			</View>
-		)}
+		<View style={styles.distanceWrapper}>
+			<TouchableOpacity onPress={onPress}>
+				<Image style={styles.icon} source={require( '../../../assets/images/icons/location.png' )} />
+			</TouchableOpacity>
+			<Typography variant="xsmallBody" color="greyishBrown">{ `${distance.toFixed( 2 )} miles` }</Typography>
+		</View>
+
 		<View style={styles.avatarWrapper}>
 			<Image style={styles.avatar} source={{ uri: person.image }} />
 		</View>
@@ -35,24 +29,24 @@ const PersonCard = ( {
 				{person.job}
 			</Typography>
 		</View>
-		{ ( ( rating > 0 ) || ( meetingsCount > 0 ) ) && (
-			<View style={styles.statsWrapper}>
-				{ ( rating > 0 ) && (
-					<View style={styles.ratingWrapper}>
-						<Image style={styles.icon} source={require( '../../../assets/images/icons/rating.png' )} />
-						<Typography variant="xsmallBody" color="greyishBrown">{ rating }</Typography>
-					</View>
-				) }
-				{ ( meetingsCount > 0 ) && (
-					<View style={styles.meetingsCountWrapper}>
-						<Image style={styles.icon} source={require( '../../../assets/images/icons/meeting.png' )} />
-						<Typography variant="xsmallBody" color="greyishBrown">
-							{ `${meetingsCount} meeting${meetingsCount === 1 ? 's' : ''}` }
-						</Typography>
-					</View>
-				) }
+
+		<View style={styles.statsWrapper}>
+
+			<View style={styles.ratingWrapper}>
+				<Image style={styles.icon} source={require( '../../../assets/images/icons/rating.png' )} />
+				<Typography variant="xsmallBody" color="greyishBrown">{ rating }</Typography>
 			</View>
-		) }
+
+
+			<View style={styles.meetingsCountWrapper}>
+				<Image style={styles.icon} source={require( '../../../assets/images/icons/meeting.png' )} />
+				<Typography variant="xsmallBody" color="greyishBrown">
+					{ `${meetingsCount} meeting${meetingsCount > 1 ? 's' : ''}` }
+				</Typography>
+			</View>
+
+		</View>
+
 
 		{ ( person.skills.length > 0 ) ? (
 
@@ -67,7 +61,7 @@ const PersonCard = ( {
 					<View style={styles.skill}>
 						<Typography variant="xxsmallBody" color="greyishBrown">{s.skill.name}</Typography>
 					</View>
-				) )
+				) ).slice( 0, 1 )
 				}
 			</View>
 
