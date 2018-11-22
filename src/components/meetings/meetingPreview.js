@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import s from './styles';
 import Typography from '../typography/Typography';
@@ -7,8 +7,10 @@ import ButtonIcon from '../button-icon/ButtonIcon';
 import Colors from '../../theme/palette';
 import Person from '../../entities/Person';
 
-const MessagePreview = ( { person, ...meeting } ) => (
-	<View style={s.meeting} key={meeting.meetingId}>
+const MessagePreview = ( { onPress, person, ...meeting } ) => {
+	const onPressMessage = () => onPress(meeting);
+
+	return (<TouchableOpacity onPress={onPressMessage} style={s.meeting} key={meeting.meetingId}>
 		<View style={s.imageContainer}>
 			<Image style={[ s.imageUserRight ]} source={meeting.profilePict} />
 			<Image source={person.image} style={[ s.imageUser ]} />
@@ -52,12 +54,15 @@ const MessagePreview = ( { person, ...meeting } ) => (
 				</View>
 			</View>
 		</View>
-	</View>
-);
+	</TouchableOpacity>
+	);
+
+}
 
 
 MessagePreview.propTypes = {
-	person: PropTypes.instanceOf( Person ).isRequired
+	person: PropTypes.instanceOf( Person ).isRequired,
+	onPress: PropTypes.func.isRequired
 };
 
 export default MessagePreview;

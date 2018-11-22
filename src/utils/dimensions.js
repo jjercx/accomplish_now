@@ -1,4 +1,8 @@
 import { Dimensions, Platform, PixelRatio } from 'react-native';
+import {
+	heightPercentageToDP as hp,
+	widthPercentageToDP as wp
+} from 'react-native-responsive-screen';
 
 let { height, width } = Dimensions.get( 'window' );
 
@@ -36,3 +40,11 @@ export function normalize( size ) {
 }
 
 export const iPhoneSE = () => height < 570;
+
+export function normalizeHP( value ) {
+	return Math.round( hp( value ) );
+}
+
+export function normalizeWP( value ) {
+	return Math.round( wp( value ) );
+}

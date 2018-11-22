@@ -11,6 +11,11 @@ const userTitle = {
 	fontFamily: fonts.productSansBold
 };
 
+const timerCountHeader = {
+	fontSize: normalize( 12 ),
+	fontFamily: fonts.productSansBold
+};
+
 const userTitleRegular = {
 	fontSize: normalize( 30 ),
 	fontFamily: fonts.productSansRegular
@@ -91,5 +96,6 @@ export default {
 	'smallTitleBold': smallTitleBold,
 	'midPlusTitle': midPlusTitle,
 	'xsmallBody': xsmallBody,
-	'xxsmallBody': xxsmallBody
+	'xxsmallBody': xxsmallBody,
+	'timerCountHeader': timerCountHeader
 };
