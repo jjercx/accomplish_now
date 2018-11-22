@@ -10,12 +10,15 @@ import {
 	widthPercentageToDP as wpd
 } from 'react-native-responsive-screen';
 
+import { connect } from 'react-redux';
+import { bindActionCreators, compose } from 'redux';
 import { HTP, WTP, iPhoneSE } from '../utils/dimensions';
 import NavigatorPropType from '../types/navigator';
 import NavBar from '../components/navbar/NavBar';
 import Typography from '../components/typography/Typography';
 import PersonCard from '../components/person/person-card/PersonCard';
 import Header from '../components/header/Header';
+import { actGetPeopleNerbay } from '../actions/peopleNearby';
 
 import Person, { PersonState } from '../entities/Person';
 import Skill, { ComputedSkill } from '../entities/Skill';
@@ -70,6 +73,12 @@ class PeopleNearby extends Component {
 		navBarHidden: true
 	};
 
+	componentWillMount() {
+		console.log( 'Props', this.props );
+		const { getPeopleNearby } = this.props;
+		getPeopleNearby();
+	}
+
 	_people = () => {
 		const skills = [
 			new ComputedSkill( new Skill( 1, 'Designer', null ), 0 ),
@@ -106,11 +115,8 @@ class PeopleNearby extends Component {
 
 
 	render() {
-		const { navigator: _navigator } = this.props;
+		const { navigator: _navigator, peopleNearby: { people } } = this.props;
 
-		const rating = 4.5;
-		const meetingCount = 562;
-		const distance = 1.5;
 
 		const numberOfColumns = iPhoneSE() ? 1 : 2;
 
@@ -138,16 +144,16 @@ class PeopleNearby extends Component {
 						style={styles.flatList}
 						vertical
 						numColumns={numberOfColumns}
-						data={formatData( this._people(), numberOfColumns )}
+						data={formatData( people, numberOfColumns )}
 						keyExtractor={this._keyExtractor}
-						renderItem={( { item } ) => ( ( item.empty ) ? (
+						  renderItem={( { item } ) => ( ( item.empty ) ? (
 							<View style={styles.invisible} />
 						) : (
 							<PersonCard
-								person={item}
-								rating={rating}
-								meetingsCount={meetingCount}
-								distance={distance}
+								person={item.person}
+								rating={item.rating}
+								meetingsCount={item.meetingsCount}
+								distance={item.distance}
 							/>
 						) )}
 					/>
@@ -164,4 +170,15 @@ PeopleNearby.propTypes = {
 	navigator: NavigatorPropType.isRequired
 };
 
-export default PeopleNearby;
+const mapStateToProps = state => ( {
+	peopleNearby: state.peopleNearby
+} );
+
+const mapDispatchProps = dispatch => bindActionCreators(
+	{
+		getPeopleNearby: actGetPeopleNerbay
+	}, dispatch
+);
+
+
+export default compose( connect( mapStateToProps, mapDispatchProps )( PeopleNearby ) );
