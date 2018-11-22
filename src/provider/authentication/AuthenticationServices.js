@@ -106,8 +106,14 @@ export default class AuthenticationServices {
 			.FirebaseConnector.update( `${AuthenticationConfig.userPath}/${uid}`, data );
 	}
 
+	static pushUserAccomplishment( data ) {
+		const auth = Firebase.auth();
+		const { uid } = auth.currentUser;
+		return AuthenticationConfig
+			.FirebaseConnector.setPush( `${AuthenticationConfig.userPath}/${uid}/accomplishments`, data.accomplishments );
+	}
+
 	static uploadImage( img ) {
-		console.log('imaaaaage', img);
 		return AuthenticationConfig.FirebaseConnector.uploadImg( img, AuthenticationConfig.imgPath );
 	}
 }

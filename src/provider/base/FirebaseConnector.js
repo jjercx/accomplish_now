@@ -30,12 +30,14 @@ getByQuery = ( base, orderBy, equalTo, callback ) => {
 			.equalTo( equalTo )
 			.on( 'value', ( snapshot ) => {
 				const data = snapshot.val();
-				let objData = Object.keys( data );
 				let itemsList = [];
-				objData.map( ( eachKey ) => {
-					let itemKey = data[ eachKey ];
-					return itemsList.push( itemKey );
-				} );
+				if ( data ) {
+					let objData = Object.keys( data );
+					objData.map( ( eachKey ) => {
+						let itemKey = data[ eachKey ];
+						return itemsList.push( itemKey );
+					} );
+				}
 				callback( itemsList );
 			} );
 	} catch ( e ) {
@@ -65,9 +67,18 @@ set = ( uri, obj, id ) => {
 	Firebase.database().ref( `${uri}/${id}` ).set( obj );
 };
 
-setPush = ( uri, obj ) => {
-	Firebase.database().ref( uri ).push( obj );
-};
+setPush = ( path, data ) => new Promise( ( resolve, reject ) => {
+	try {
+		Firebase.database().ref( `${path}` ).push( data ).then( () => {
+			resolve( 'ok' );
+		} )
+			.catch( ( e ) => {
+				reject( e );
+			} );
+	} catch ( e ) {
+		reject( e );
+	}
+} );
 
 update = ( path, data ) => new Promise( ( resolve, reject ) => {
 	try {

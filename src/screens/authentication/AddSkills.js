@@ -104,6 +104,16 @@ class AddSkills extends Component {
 		this._callback = this._callback.bind( this );
 	}
 
+	componentWillMount() {
+		let { initialize, editing, user } = this.props;
+		if ( editing ) {
+			this.setState( { skillsAdded: user.skills ? user.skills : [] } );
+			initialize( {
+				skills: user.skills ? user.skills : []
+			} );
+		}
+	}
+
 	componentDidMount() {
 		this.textInput.focus();
 	}
@@ -142,14 +152,15 @@ class AddSkills extends Component {
 	}
 
 	_callback() {
-		const { navigator } = this.props;
-		navigator.push( { screen: 'home' } );
+		const { navigator, editing } = this.props;
+		if ( !editing ) navigator.push( { screen: 'home' } ); else navigator.pop();
 	}
 
 	_onSaveAndStart( formValues ) {
 		const { actSetProfileData, selectedSkills } = this.props;
 		// alert('on save and start - skill enter: ' + this.state.text);
 		if ( selectedSkills && selectedSkills.length > 0 ) {
+			formValues.basicInfo.phoneNumber = `+1${formValues.basicInfo.phoneNumber}`;
 			actSetProfileData( formValues, this._callback );
 		} else {
 			Alert.alert(
@@ -225,7 +236,7 @@ class AddSkills extends Component {
 						text={editing ? 'Save skills' : 'Save skills and start'}
 						textColor={colors.white}
 						buttonColor={colors.orange}
-						onPress={editing ? this._onPressBack : handleSubmit( this._onSaveAndStart )}
+						onPress={handleSubmit( this._onSaveAndStart )}
 						style={{ height: hp( HTP( 45 ) ) }}
 					/>
 				</View>
@@ -236,17 +247,25 @@ class AddSkills extends Component {
 
 AddSkills.propTypes = {
 	editing: PropTypes.bool,
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	initialize: PropTypes.func,
+	user: PropTypes.any.isRequired,
+	handleSubmit: PropTypes.func,
+	dispatch: PropTypes.func
 };
 
 AddSkills.defaultProps = {
-	editing: false
+	editing: false,
+	initialize: () => {},
+	handleSubmit: () => {},
+	dispatch: () => {}
 };
 
 const mapStateToProps = ( store ) => {
 	const selector = formValueSelector( 'createAccountForm' );
 	return {
-		selectedSkills: selector( store, 'skills' )
+		selectedSkills: selector( store, 'skills' ),
+		user: store.authentication.user
 	};
 };
 
