@@ -120,12 +120,12 @@ class UserProfile extends Component {
 			image,
 			user.skills ? this._skills( user.skills ) : null,
 			new AboutInfo(
-				user.aboutMe ? this._expertise( user.aboutMe.expertise ) : null,
-				user.aboutMe ? this._interest( user.aboutMe.interests ) : null
+				user.aboutMe ? this._expertise( user.aboutMe.expertise ) : [ '' ],
+				user.aboutMe ? this._interest( user.aboutMe.interests ) : [ '' ]
 			),
 			user.biggestChallenge,
 			user.workingOn,
-			user.accomplishments ? this._acomplishments( user.accomplishments ) : null,
+			user.accomplishments ? this._acomplishments( user.accomplishments ) : [],
 			user.basicInfo.availableStatus ? PersonState.AVAILABLE : null
 		);
 
@@ -158,44 +158,29 @@ class UserProfile extends Component {
 							)
 							: null}
 						<Spacing size="smallPlus" />
-						{user.aboutMe
-							? (
-								<AboutCard
-									aboutInfo={person.aboutMe}
-									onPressEdit={this._navigateTo( 'aboutMe' )}
-									editable={editable}
-								/>
-							)
-							: null}
+						<AboutCard
+							aboutInfo={person.aboutMe}
+							onPressEdit={this._navigateTo( 'aboutMe' )}
+							editable={editable}
+						/>
 						<Spacing size="smallPlus" />
-						{user.biggestChallenge
-							? (
-								<ChallengeCard
-									text={person.biggestChallenge}
-									onPressEdit={this._navigateTo( 'biggestChallenge' )}
-									editable={editable}
-								/>
-							)
-							: null}
+						<ChallengeCard
+							text={person.biggestChallenge ? person.biggestChallenge : ''}
+							onPressEdit={this._navigateTo( 'biggestChallenge' )}
+							editable={editable}
+						/>
 						<Spacing size="smallPlus" />
-						{user.workingOn
-							? (
-								<WorkingOnCard
-									text={person.currentlyWorkingOn}
-									onPressEdit={this._navigateTo( 'currentlyWorkingOn' )}
-									editable={editable}
-								/>
-							)
-							: null}
+						<WorkingOnCard
+							text={person.currentlyWorkingOn ? person.currentlyWorkingOn : ''}
+							onPressEdit={this._navigateTo( 'currentlyWorkingOn' )}
+							editable={editable}
+						/>
 						<Spacing size="smallPlus" />
-						{user.accomplishments ? (
-							<AccomplishmentsCard
-								accomplishments={person.accomplishments}
-								onPressAdd={this._navigateTo( 'addAccomplishment' )}
-								editable={editable}
-							/>
-						)
-							: null}
+						<AccomplishmentsCard
+							accomplishments={person.accomplishments}
+							onPressAdd={this._navigateTo( 'addAccomplishment' )}
+							editable={editable}
+						/>
 						<Spacing size="smallPlus" />
 					</ScrollView>
 				</View>

@@ -31,7 +31,7 @@ getByQuery = ( base, orderBy, equalTo, callback ) => {
 			.on( 'value', ( snapshot ) => {
 				const data = snapshot.val();
 				let itemsList = [];
-				if ( data !== null ) {
+				if ( data ) {
 					let objData = Object.keys( data );
 					objData.map( ( eachKey ) => {
 						let itemKey = data[ eachKey ];

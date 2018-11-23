@@ -22,6 +22,7 @@ import FilterPeople from './FilterPeople';
 import MessagesDetails from './messages/MessagesDetails';
 import Notifications from './messages/Notifications';
 import PlaceMapView from './places/placeMapView';
+import PlaceDetails from './places/placeDetails';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -61,8 +62,8 @@ export function registerScreens() {
 	Navigation.registerComponent( 'addSkills', () => AddSkills, store, Provider );
 	Navigation.registerComponent( 'setProfile', () => SetProfile, store, Provider );
 	Navigation.registerComponent( 'codeReceiveRegisterLogin', () => CodeReceiveRegisterLogin, store, Provider );
-	Navigation.registerComponent( 'aboutMe', () => AboutMe );
-	Navigation.registerComponent( 'addAccomplishment', () => AddAccomplishment );
+	Navigation.registerComponent( 'aboutMe', () => AboutMe, store, Provider );
+	Navigation.registerComponent( 'addAccomplishment', () => AddAccomplishment, store, Provider );
 	Navigation.registerComponent( 'userProfile', () => UserProfile, store, Provider );
 	Navigation.registerComponent( 'places', () => Places );
 	Navigation.registerComponent( 'messages', () => Messages, store, Provider );
@@ -70,6 +71,8 @@ export function registerScreens() {
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
 	Navigation.registerComponent( 'filterPeople', () => FilterPeople );
 	Navigation.registerComponent( 'messagesDetails', () => MessagesDetails, store, Provider );
-	Navigation.registerComponent( 'notifications', () => Notifications );
+	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby, store, Provider );
+	Navigation.registerComponent( 'notifications', () => Notifications, store, Provider );
 	Navigation.registerComponent( 'placeMapView', () => PlaceMapView, store, Provider );
+	Navigation.registerComponent( 'placeDetails', () => PlaceDetails );
 }

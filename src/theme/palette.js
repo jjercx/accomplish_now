@@ -32,5 +32,6 @@ export default {
 	editButton: '#c3c3cd',
 	whiteThree: '#e8e8e8',
 	electricBlue: '#1c57ff',
-	nextGray: '#A7A7A7'
+	nextGray: '#A7A7A7',
+	paleGreyFour: '#eff1f5'
 };

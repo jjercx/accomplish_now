@@ -17,7 +17,7 @@ export const actGetMessages = () => ( dispatch ) => {
 	MessagesServices.getMessages( ( messages ) => {
 		dispatch( {
 			type: GET_MESSAGE,
-			payload: messages
+			payload: messages || []
 		} );
 		let { currentUser } = Firebase.auth();
 		let messageEntity = [];
