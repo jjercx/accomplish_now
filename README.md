@@ -13,6 +13,9 @@ $ pod install
 ## launch iOS
 ``$ react-native run-ios``
 
+IF YOU HAVE AN ERROR AT BUILDING APP IOS (MAC'S XCODE 10 USERS)
+Go to Xcode, File -> Project Settings then change the Build System Default to Legacy Build System.
+
 ## launch Android
 ``$ react-native run-android``
 
