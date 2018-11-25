@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import Typography from '../../typography/Typography';
 import Spacing from '../../spacing/Spacing';
 import Person from '../../../entities/Person';
+import Image from '../../default-profile-image-on-loading/DefaultProfileImageOnLoading';
 
 const ConnectionBox = ( { person } ) => (
 	<View style={styles.wrapperPerson}>

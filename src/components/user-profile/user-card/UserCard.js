@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ViewOverflow from 'react-native-view-overflow';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import Person, { getStateName } from '../../../entities/Person';
 import Typography from '../../typography/Typography';
 import ButtonEdit from '../../button-icon/ButtonEdit';
 import Card from '../card/Card';
 import styles from './styles';
+import Image from '../../default-profile-image-on-loading/DefaultProfileImageOnLoading';
 
 const UserCard = ( {
 	person, editable, onPress, onPressEdit

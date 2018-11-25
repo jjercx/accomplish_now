@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import s from './styles';
 import Typography from '../typography/Typography';
+import Image from '../default-profile-image-on-loading/DefaultProfileImageOnLoading';
 
 const NotificationPreview = ( {
 	 text,

@@ -13,6 +13,6 @@ export default {
 		top: hpd( HTP( 50 ) )
 	},
 	wrapperPlacesPlacesDetailActive: {
-		marginLeft: 15
+		marginLeft: hpd( HTP( 15 ) )
 	}
 };

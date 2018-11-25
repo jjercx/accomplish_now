@@ -5,6 +5,7 @@ import Typography from '../../typography/Typography';
 import Person from '../../../entities/Person';
 import styles from './styles';
 import Spacing from '../../spacing/Spacing';
+import ProfileImage from '../../default-profile-image-on-loading/DefaultProfileImageOnLoading';
 
 const PersonCard = ( {
 	person, rating, meetingsCount, distance, onPress
@@ -14,11 +15,11 @@ const PersonCard = ( {
 			<TouchableOpacity onPress={onPress}>
 				<Image style={styles.icon} source={require( '../../../assets/images/icons/location.png' )} />
 			</TouchableOpacity>
-			<Typography variant="xsmallBody" color="greyishBrown">{ `${distance.toFixed( 2 )} miles` }</Typography>
+			<Typography variant="xsmallBody" color="greyishBrown">{ distance === 0 ? 'Near you' : `${distance.toFixed( 2 )} miles` }</Typography>
 		</View>
 
 		<View style={styles.avatarWrapper}>
-			<Image style={styles.avatar} source={{ uri: person.image }} />
+			<ProfileImage style={styles.avatar} source={{ uri: person.image }} />
 		</View>
 		<View style={styles.personInfoWrapper}>
 			<Typography variant="midTitle" color="charcoalGrey">
@@ -26,17 +27,18 @@ const PersonCard = ( {
 			</Typography>
 			<Spacing size="small" />
 			<Typography variant="xsmallBody" color="greyishBrown">
-				{person.job}
+				{person.job ? person.job : ''}
 			</Typography>
 		</View>
 
 		<View style={styles.statsWrapper}>
 
-			<View style={styles.ratingWrapper}>
-				<Image style={styles.icon} source={require( '../../../assets/images/icons/rating.png' )} />
-				<Typography variant="xsmallBody" color="greyishBrown">{ rating }</Typography>
-			</View>
-
+			{rating ? (
+				<View style={styles.ratingWrapper}>
+					<Image style={styles.icon} source={require( '../../../assets/images/icons/rating.png' )} />
+					<Typography variant="xsmallBody" color="greyishBrown">{ rating }</Typography>
+				</View>
+			) : null}
 
 			<View style={styles.meetingsCountWrapper}>
 				<Image style={styles.icon} source={require( '../../../assets/images/icons/meeting.png' )} />
@@ -57,8 +59,8 @@ const PersonCard = ( {
 					: null
 			]}
 			>
-				{ 		person.skills.map( s => (
-					<View style={styles.skill}>
+				{person.skills.map( s => (
+					<View style={styles.skill} key={s}>
 						<Typography variant="xxsmallBody" color="greyishBrown">{s.skill.name}</Typography>
 					</View>
 				) ).slice( 0, 1 )

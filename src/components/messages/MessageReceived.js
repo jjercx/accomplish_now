@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import s from './styles';
 import Typography from '../typography/Typography';
+import Image from '../default-profile-image-on-loading/DefaultProfileImageOnLoading';
 
 const MessageReceived = ( { text, date, image } ) => (
 	<View style={s.mrContainer}>
