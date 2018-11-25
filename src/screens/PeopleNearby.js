@@ -74,8 +74,7 @@ class PeopleNearby extends Component {
 	};
 
 	componentWillMount() {
-		console.log( 'Props', this.props );
-		const { getPeopleNearby } = this.props;
+		const { getPeopleNearby } = this.props; // eslint-disable-line react/prop-types
 		getPeopleNearby();
 	}
 
@@ -96,8 +95,6 @@ class PeopleNearby extends Component {
 		return people;
 	}
 
-	_keyExtractor = item => item.id;
-
 	_buttonIcons = () => [
 		{ id: 1, icon: iconFiltter, onPress: this._filter }
 	 ];
@@ -115,9 +112,10 @@ class PeopleNearby extends Component {
 
 
 	render() {
-		const { navigator: _navigator, peopleNearby: { people } } = this.props;
-
-
+		const {
+			navigator: _navigator,
+			peopleNearby: { people } // eslint-disable-line react/prop-types
+		} = this.props;
 		const numberOfColumns = iPhoneSE() ? 1 : 2;
 
 		return (
@@ -145,8 +143,8 @@ class PeopleNearby extends Component {
 						vertical
 						numColumns={numberOfColumns}
 						data={formatData( people, numberOfColumns )}
-						keyExtractor={this._keyExtractor}
-						  renderItem={( { item } ) => ( ( item.empty ) ? (
+						keyExtractor={item => item.id}
+						renderItem={( { item } ) => ( item.empty ? (
 							<View style={styles.invisible} />
 						) : (
 							<PersonCard

@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import s from './styles';
 import Typography from '../typography/Typography';
 import ButtonIcon from '../button-icon/ButtonIcon';
 import Colors from '../../theme/palette';
 import Person from '../../entities/Person';
+import Image from '../default-profile-image-on-loading/DefaultProfileImageOnLoading';
 
 const MessagePreview = ( { person, onMessagePress, ...message } ) => (
 	<TouchableOpacity style={s.message} onPress={() => onMessagePress( message.messageId )}>
