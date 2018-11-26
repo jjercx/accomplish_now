@@ -7,6 +7,8 @@ import styles from './styles';
 import Spacing from '../../spacing/Spacing';
 import ProfileImage from '../../default-profile-image-on-loading/DefaultProfileImageOnLoading';
 
+const avatarImg = require( '../../../assets/images/messages/phProfile.png' );
+
 const PersonCard = ( {
 	person, rating, meetingsCount, distance, onPress
 } ) => (
@@ -19,7 +21,10 @@ const PersonCard = ( {
 		</View>
 
 		<View style={styles.avatarWrapper}>
-			<ProfileImage style={styles.avatar} source={{ uri: person.image }} />
+			<ProfileImage
+				style={styles.avatar}
+				source={( person.image ) ? { uri: person.image } : avatarImg}
+			/>
 		</View>
 		<View style={styles.personInfoWrapper}>
 			<Typography variant="midTitle" color="charcoalGrey">
@@ -50,7 +55,7 @@ const PersonCard = ( {
 		</View>
 
 
-		{ ( person.skills.length > 0 ) ? (
+		{ ( person.skills && person.skills.length > 0 ) ? (
 
 			<View style={[
 				styles.skillsWrapper,
@@ -60,7 +65,7 @@ const PersonCard = ( {
 			]}
 			>
 				{person.skills.map( s => (
-					<View style={styles.skill} key={s}>
+					<View style={styles.skill} key={s.id}>
 						<Typography variant="xxsmallBody" color="greyishBrown">{s.skill.name}</Typography>
 					</View>
 				) ).slice( 0, 1 )

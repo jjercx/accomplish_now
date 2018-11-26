@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable indent */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
 	View, StyleSheet, StatusBar, FlatList, Platform
 } from 'react-native';
@@ -18,7 +19,7 @@ import NavBar from '../components/navbar/NavBar';
 import Typography from '../components/typography/Typography';
 import PersonCard from '../components/person/person-card/PersonCard';
 import Header from '../components/header/Header';
-import { actGetPeopleNerbay } from '../actions/peopleNearby';
+import { actGetPeopleNearby } from '../actions/peopleNearby';
 
 import Person, { PersonState } from '../entities/Person';
 import Skill, { ComputedSkill } from '../entities/Skill';
@@ -49,7 +50,7 @@ const styles = StyleSheet.create( {
 	}
 } );
 
-const iconFiltter = require( '../assets/images/icons/filterSmall.png' );
+const iconFilter = require( '../assets/images/icons/filterSmall.png' );
 
 const formatData = ( items, numberOfColumns ) => {
 	const numberOfFullItems = Math.floor( items.length, numberOfColumns );
@@ -96,7 +97,7 @@ class PeopleNearby extends Component {
 	}
 
 	_buttonIcons = () => [
-		{ id: 1, icon: iconFiltter, onPress: this._filter }
+		{ id: 1, icon: iconFilter, onPress: this._filter }
 	 ];
 
 	 _onPressBack() {
@@ -114,8 +115,9 @@ class PeopleNearby extends Component {
 	render() {
 		const {
 			navigator: _navigator,
-			peopleNearby: { people } // eslint-disable-line react/prop-types
+			people: { peopleNearby: people }
 		} = this.props;
+
 		const numberOfColumns = iPhoneSE() ? 1 : 2;
 
 		return (
@@ -165,18 +167,18 @@ class PeopleNearby extends Component {
 /* eslint-enable react/prefer-stateless-function */
 
 PeopleNearby.propTypes = {
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	people: PropTypes.any.isRequired,
+	getPeopleNearby: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ( {
-	peopleNearby: state.peopleNearby
+	people: state.people
 } );
 
-const mapDispatchProps = dispatch => bindActionCreators(
-	{
-		getPeopleNearby: actGetPeopleNerbay
-	}, dispatch
-);
+const mapDispatchProps = dispatch => bindActionCreators( {
+	getPeopleNearby: actGetPeopleNearby
+}, dispatch );
 
 
 export default compose( connect( mapStateToProps, mapDispatchProps )( PeopleNearby ) );

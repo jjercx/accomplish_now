@@ -1,13 +1,19 @@
 import GeoLib from 'geolib';
-import PeopleNearbyServices from '../provider/people/PeopleNearbyServices';
-import { GET_PEOPLE_NERBY } from './types';
+import PeopleServices from '../provider/people/PeopleServices';
+import {
+	GET_PEOPLE_NEARBY,
+	START_SEARCHING_PEOPLE
+} from './types';
 
 import Person, { PersonState } from '../entities/Person';
 import Skill, { ComputedSkill } from '../entities/Skill';
 
 // id: k, ...people[ k ]
-export const actGetPeopleNerbay = ( miles = 30 ) => ( dispatch ) => {
-	PeopleNearbyServices.getPeople( ( people ) => {
+export const actGetPeopleNearby = ( miles = 30 ) => ( dispatch ) => {
+	dispatch( {
+		type: START_SEARCHING_PEOPLE
+	} );
+	PeopleServices.getPeopleNearby( ( people ) => {
 		navigator.geolocation.getCurrentPosition( ( position ) => {
 			const { coords: { latitude, longitude } } = position;
 			const keys = Object.keys( people );
@@ -47,7 +53,7 @@ export const actGetPeopleNerbay = ( miles = 30 ) => ( dispatch ) => {
 				.filter( f => ( f !== false ) ).sort( ( a, b ) => ( a.distance - b.distance ) );
 
 			dispatch( {
-				type: GET_PEOPLE_NERBY,
+				type: GET_PEOPLE_NEARBY,
 				payload: peopleInfo
 			} );
 		} );

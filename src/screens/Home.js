@@ -62,8 +62,13 @@ class Home extends Component {
 		navBarHidden: true
 	};
 
-	state = {
-		available: false
+	constructor( props ) {
+		super( props );
+		this.state = {
+			available: false
+		};
+
+		this._onSearchPress = this._onSearchPress.bind( this );
 	}
 
 	componentWillMount() {
@@ -92,6 +97,11 @@ class Home extends Component {
 
 	_onValueChange( value ) {
 		this.setState( { available: value } );
+	}
+
+	_onSearchPress() {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'peopleSearch' } );
 	}
 
 	_showPlacesList() {
@@ -164,7 +174,7 @@ class Home extends Component {
 							/>
 						</View>
 					</View>
-					<HomeSearch />
+					<HomeSearch onPress={this._onSearchPress} />
 				</ImageBackground>
 				{ connections.length > 0
 					? this.renderMyConnectionsSection( connections )
