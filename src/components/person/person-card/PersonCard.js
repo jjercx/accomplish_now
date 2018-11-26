@@ -8,7 +8,7 @@ import Spacing from '../../spacing/Spacing';
 import ProfileImage from '../../default-profile-image-on-loading/DefaultProfileImageOnLoading';
 
 const PersonCard = ( {
-	person, rating, meetingsCount, distance, onPress
+	person, rating, meetingsCount, distance, onPress, onUserPress
 } ) => (
 	<View style={styles.cardContainer}>
 		<View style={styles.distanceWrapper}>
@@ -18,9 +18,9 @@ const PersonCard = ( {
 			<Typography variant="xsmallBody" color="greyishBrown">{ distance === 0 ? 'Near you' : `${distance.toFixed( 2 )} miles` }</Typography>
 		</View>
 
-		<View style={styles.avatarWrapper}>
+		<TouchableOpacity style={styles.avatarWrapper} onPress={() => onUserPress( person.id )}>
 			<ProfileImage style={styles.avatar} source={{ uri: person.image }} />
-		</View>
+		</TouchableOpacity>
 		<View style={styles.personInfoWrapper}>
 			<Typography variant="midTitle" color="charcoalGrey">
 				{`${person.firstName} ${person.lastName}`}
@@ -78,14 +78,16 @@ PersonCard.propTypes = {
 	rating: PropTypes.number,
 	meetingsCount: PropTypes.number,
 	distance: PropTypes.number,
-	onPress: PropTypes.func
+	onPress: PropTypes.func,
+	onUserPress: PropTypes.func
 };
 
 PersonCard.defaultProps = {
 	rating: 0,
 	meetingsCount: 0,
 	distance: 0,
-	onPress: () => {}
+	onPress: () => {},
+	onUserPress: () => {}
 };
 
 export default PersonCard;

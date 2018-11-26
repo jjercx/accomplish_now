@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import {
+	View, ScrollView, StyleSheet
+} from 'react-native';
 import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
+import Firebase from 'react-native-firebase';
 import { HTP } from '../utils/dimensions';
 import { actLogOut } from '../actions/authentication';
 import NavigatorPropType from '../types/navigator';
@@ -106,7 +109,17 @@ class UserProfile extends Component {
 	}
 
 	render() {
-		const { user, editable, navigator: _navigator } = this.props;
+		const {
+			navigator: _navigator,
+			searchedUser // eslint-disable-line react/prop-types
+		} = this.props;
+
+		let { user } = this.props;
+		const currentUserId = Firebase.auth().currentUser.uid;
+		const editable = currentUserId === searchedUser.uid;
+		if ( Object.keys( searchedUser ).length ) user = searchedUser;
+
+		console.log( 'user', user );
 
 		let image = user.basicInfo.profilePhotoUrl
 			? { uri: user.basicInfo.profilePhotoUrl }
@@ -190,20 +203,15 @@ class UserProfile extends Component {
 	}
 }
 
-
 UserProfile.propTypes = {
 	navigator: NavigatorPropType.isRequired,
-	editable: PropTypes.bool,
 	actLogOutConnect: PropTypes.func.isRequired,
 	user: PropTypes.any.isRequired
 };
 
-UserProfile.defaultProps = {
-	editable: true
-};
-
 const mapStateToProps = store => ( {
-	user: store.authentication.user
+	user: store.authentication.user,
+	searchedUser: store.users.searchedUser
 } );
 
 const mapDispatchToProps = dispatch => bindActionCreators(
