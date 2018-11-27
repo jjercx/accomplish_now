@@ -439,6 +439,15 @@ class Meetings extends Component {
   	)
   ];
 
+  handleMettingPress = (meeting) => {
+	  console.log('meeting', meeting);
+	const { navigator } = this.props;
+	navigator.push( { screen: 'meetingDetail', 
+					animationType: 'fade', 
+					navigatorStyle: {navBarHidden: true},
+					passProps: {meeting: meeting} } );
+  }
+
   render() {
   	const { viewSelected, _notifications } = this.state;
   	const { navigator: _navigator } = this.props;
@@ -547,7 +556,7 @@ class Meetings extends Component {
 										: this._meetingsPast()
 							}
 							renderItem={( { item } ) => (
-								<MeetingPreview onPress={this._openNotification} {...item} />
+								<MeetingPreview onPress={this.handleMettingPress} {...item} />
 							)}
 						/>
 					</View>

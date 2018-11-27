@@ -22,6 +22,7 @@ import FilterPeople from './FilterPeople';
 import MessagesDetails from './messages/MessagesDetails';
 import Notifications from './messages/Notifications';
 import PlaceMapView from './places/placeMapView';
+import MeetingDetail from './meetings/meetingDetail';
 import PlaceDetails from './places/placeDetails';
 
 export function initApp( action ) {
@@ -74,5 +75,6 @@ export function registerScreens() {
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby, store, Provider );
 	Navigation.registerComponent( 'notifications', () => Notifications, store, Provider );
 	Navigation.registerComponent( 'placeMapView', () => PlaceMapView, store, Provider );
+	Navigation.registerComponent( 'meetingDetail', () => MeetingDetail, store, Provider );
 	Navigation.registerComponent( 'placeDetails', () => PlaceDetails );
 }

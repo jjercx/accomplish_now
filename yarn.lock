@@ -4697,6 +4697,12 @@ react-native-navigation@1.x.x:
   dependencies:
     lodash "4.x.x"
 
+"react-native-percentage-circle@https://github.com/hendiko/react-native-percentage-circle.git#master":
+  version "1.0.8"
+  resolved "https://github.com/hendiko/react-native-percentage-circle.git#489695223c478db97e3939fd6cea2ebb12f3c216"
+  dependencies:
+    react "^16.3.2"
+
 react-native-responsive-screen@^1.1.9:
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/react-native-responsive-screen/-/react-native-responsive-screen-1.1.9.tgz#1a9858731e9e7cc1f1312877eb9b94ac32f4500f"
@@ -4714,6 +4720,11 @@ react-native-vector-icons@^6.0.2:
     lodash "^4.0.0"
     prop-types "^15.6.2"
     yargs "^8.0.2"
+
+react-native-view-overflow@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-view-overflow/-/react-native-view-overflow-0.0.3.tgz#d7b08e8c1e5047a2cf07f3ece82025899f930674"
+  integrity sha512-CcX61kqFyO41WAmqARr/1A7YgTkd1GoQGJl0LYrzl+4CL5uw2CAu68T+1DPapt7RdgvSMLZIPlNvj4TzdJY/hw==
 
 react-native@0.56.0:
   version "0.56.0"
@@ -4818,6 +4829,16 @@ react@16.4.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+react@^16.3.2:
+  version "16.6.3"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.6.3.tgz#25d77c91911d6bbdd23db41e70fb094cc1e0871c"
+  integrity sha512-zCvmH2vbEolgKxtqXL2wmGCUxUyNheYn/C+PD1YAjfxHC54+MhdruyhO7QieQrYsYeTxrn93PM2y0jRH1zEExw==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.11.2"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
@@ -5211,6 +5232,14 @@ sc-errors@^1.4.0:
 sc-formatter@^3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/sc-formatter/-/sc-formatter-3.0.2.tgz#9abdb14e71873ce7157714d3002477bbdb33c4e6"
+
+scheduler@^0.11.2:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.11.2.tgz#a8db5399d06eba5abac51b705b7151d2319d33d3"
+  integrity sha512-+WCP3s3wOaW4S7C1tl3TEXp4l9lJn0ZK8G3W3WKRWmw77Z2cIFUW2MiNTMHn5sCjxN+t7N43HAOOgMjyAg5hlg==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
 
 "semver@2 || 3 || 4 || 5", semver@5.x, semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1:
   version "5.6.0"
