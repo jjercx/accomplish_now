@@ -4,7 +4,7 @@ import skills from './skills';
 import authentication from './authentication';
 import messages from './messages';
 import notifications from './notifications';
-import peopleNearby from './peopleNearby';
+import people from './people';
 import users from './users';
 
 const rootReducer = combineReducers( {
@@ -12,7 +12,7 @@ const rootReducer = combineReducers( {
 	authentication,
 	messages,
 	form: formReducer,
-	peopleNearby,
+	people,
 	notifications,
 	users
 } );

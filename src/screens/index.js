@@ -24,6 +24,7 @@ import Notifications from './messages/Notifications';
 import PlaceMapView from './places/placeMapView';
 import MeetingDetail from './meetings/meetingDetail';
 import PlaceDetails from './places/placeDetails';
+import PeopleSearch from './PeopleSearch';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -77,4 +78,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'placeMapView', () => PlaceMapView, store, Provider );
 	Navigation.registerComponent( 'meetingDetail', () => MeetingDetail, store, Provider );
 	Navigation.registerComponent( 'placeDetails', () => PlaceDetails );
+	Navigation.registerComponent( 'peopleSearch', () => PeopleSearch, store, Provider );
 }

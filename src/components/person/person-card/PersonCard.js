@@ -7,6 +7,8 @@ import styles from './styles';
 import Spacing from '../../spacing/Spacing';
 import ProfileImage from '../../default-profile-image-on-loading/DefaultProfileImageOnLoading';
 
+const avatarImg = require( '../../../assets/images/messages/phProfile.png' );
+
 const PersonCard = ( {
 	person, rating, meetingsCount, distance, onPress, onUserPress
 } ) => (
@@ -19,7 +21,10 @@ const PersonCard = ( {
 		</View>
 
 		<TouchableOpacity style={styles.avatarWrapper} onPress={() => onUserPress( person.id )}>
-			<ProfileImage style={styles.avatar} source={{ uri: person.image }} />
+			<ProfileImage
+				style={styles.avatar}
+				source={( person.image ) ? { uri: person.image } : avatarImg}
+			/>
 		</TouchableOpacity>
 		<View style={styles.personInfoWrapper}>
 			<Typography variant="midTitle" color="charcoalGrey">
@@ -50,7 +55,7 @@ const PersonCard = ( {
 		</View>
 
 
-		{ ( person.skills.length > 0 ) ? (
+		{ ( person.skills && person.skills.length > 0 ) ? (
 
 			<View style={[
 				styles.skillsWrapper,
@@ -59,11 +64,14 @@ const PersonCard = ( {
 					: null
 			]}
 			>
-				{person.skills.map( s => (
-					<View style={styles.skill} key={s}>
-						<Typography variant="xxsmallBody" color="greyishBrown">{s.skill.name}</Typography>
-					</View>
-				) ).slice( 0, 1 )
+				{person.skills.slice( 0, 1 ).map( ( s ) => {
+					console.log( s );
+					return (
+						<View style={styles.skill} key={s.skill.id}>
+							<Typography variant="xxsmallBody" color="greyishBrown">{s.skill.name}</Typography>
+						</View>
+					);
+				} )
 				}
 			</View>
 
