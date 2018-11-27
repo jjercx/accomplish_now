@@ -10,7 +10,7 @@ import ProfileImage from '../../default-profile-image-on-loading/DefaultProfileI
 const avatarImg = require( '../../../assets/images/messages/phProfile.png' );
 
 const PersonCard = ( {
-	person, rating, meetingsCount, distance, onPress
+	person, rating, meetingsCount, distance, onPress, onUserPress
 } ) => (
 	<View style={styles.cardContainer}>
 		<View style={styles.distanceWrapper}>
@@ -20,12 +20,12 @@ const PersonCard = ( {
 			<Typography variant="xsmallBody" color="greyishBrown">{ distance === 0 ? 'Near you' : `${distance.toFixed( 2 )} miles` }</Typography>
 		</View>
 
-		<View style={styles.avatarWrapper}>
+		<TouchableOpacity style={styles.avatarWrapper} onPress={() => onUserPress( person.id )}>
 			<ProfileImage
 				style={styles.avatar}
 				source={( person.image ) ? { uri: person.image } : avatarImg}
 			/>
-		</View>
+		</TouchableOpacity>
 		<View style={styles.personInfoWrapper}>
 			<Typography variant="midTitle" color="charcoalGrey">
 				{`${person.firstName} ${person.lastName}`}
@@ -64,11 +64,14 @@ const PersonCard = ( {
 					: null
 			]}
 			>
-				{person.skills.map( s => (
-					<View style={styles.skill} key={s.id}>
-						<Typography variant="xxsmallBody" color="greyishBrown">{s.skill.name}</Typography>
-					</View>
-				) ).slice( 0, 1 )
+				{person.skills.slice( 0, 1 ).map( ( s ) => {
+					console.log( s );
+					return (
+						<View style={styles.skill} key={s.skill.id}>
+							<Typography variant="xxsmallBody" color="greyishBrown">{s.skill.name}</Typography>
+						</View>
+					);
+				} )
 				}
 			</View>
 
@@ -83,14 +86,16 @@ PersonCard.propTypes = {
 	rating: PropTypes.number,
 	meetingsCount: PropTypes.number,
 	distance: PropTypes.number,
-	onPress: PropTypes.func
+	onPress: PropTypes.func,
+	onUserPress: PropTypes.func
 };
 
 PersonCard.defaultProps = {
 	rating: 0,
 	meetingsCount: 0,
 	distance: 0,
-	onPress: () => {}
+	onPress: () => {},
+	onUserPress: () => {}
 };
 
 export default PersonCard;

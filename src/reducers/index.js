@@ -5,6 +5,7 @@ import authentication from './authentication';
 import messages from './messages';
 import notifications from './notifications';
 import people from './people';
+import users from './users';
 
 const rootReducer = combineReducers( {
 	skills,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers( {
 	messages,
 	form: formReducer,
 	people,
-	notifications
+	notifications,
+	users
 } );
 
 export default rootReducer;

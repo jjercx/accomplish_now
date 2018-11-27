@@ -20,6 +20,8 @@ import Typography from '../components/typography/Typography';
 import PersonCard from '../components/person/person-card/PersonCard';
 import Header from '../components/header/Header';
 import { actGetPeopleNearby } from '../actions/peopleNearby';
+import { actGetUser } from '../actions/users';
+
 
 import Person, { PersonState } from '../entities/Person';
 import Skill, { ComputedSkill } from '../entities/Skill';
@@ -98,7 +100,14 @@ class PeopleNearby extends Component {
 
 	_buttonIcons = () => [
 		{ id: 1, icon: iconFilter, onPress: this._filter }
-	 ];
+	];
+
+	_onUserPress = ( userId ) => {
+		const { navigator, actGetUserInit } = this.props; // eslint-disable-line react/prop-types
+		actGetUserInit( userId );
+		// this.setState( { onGetSearchUserData: true } );
+		navigator.push( { screen: 'userProfile' } );
+	}
 
 	 _onPressBack() {
 		const { navigator } = this.props;
@@ -107,9 +116,9 @@ class PeopleNearby extends Component {
 
 	 // eslint-disable-next-line class-methods-use-this
 	 _filter() {
-    	// eslint-disable-next-line no-console
-    	console.log( 'Filter actions' );
-     }
+		// eslint-disable-next-line no-console
+			console.log( 'Filter actions' );
+	}
 
 
 	render() {
@@ -154,6 +163,7 @@ class PeopleNearby extends Component {
 								rating={item.rating}
 								meetingsCount={item.meetingsCount}
 								distance={item.distance}
+								onUserPress={this._onUserPress}
 							/>
 						) )}
 					/>
@@ -177,8 +187,8 @@ const mapStateToProps = state => ( {
 } );
 
 const mapDispatchProps = dispatch => bindActionCreators( {
-	getPeopleNearby: actGetPeopleNearby
+	getPeopleNearby: actGetPeopleNearby,
+	actGetUserInit: actGetUser
 }, dispatch );
-
 
 export default compose( connect( mapStateToProps, mapDispatchProps )( PeopleNearby ) );

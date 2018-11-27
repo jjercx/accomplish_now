@@ -13,6 +13,7 @@ import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import { actGetMessages } from '../actions/messages';
+import { actGetUser } from '../actions/users';
 import UserSection from '../components/home/header/UserSection';
 import { HTP, WTP } from '../utils/dimensions';
 import Typography from '../components/typography/Typography';
@@ -48,6 +49,15 @@ const styles = StyleSheet.create( {
 		alignItems: 'center',
 		width: '100%',
 		justifyContent: 'flex-end'
+	},
+	activityIndicatorContainer: {
+		position: 'relative',
+		backgroundColor: colors.white,
+		height: '100%',
+		width: '100%',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center'
 	}
 } );
 
@@ -95,8 +105,10 @@ class Home extends Component {
 		return connections;
 	}
 
-	_onValueChange( value ) {
-		this.setState( { available: value } );
+	_onUserPicturePress = ( userId ) => {
+		const { navigator, actGetUserInit } = this.props; // eslint-disable-line react/prop-types
+		actGetUserInit( userId );
+		navigator.push( { screen: 'userProfile' } );
 	}
 
 	_onSearchPress() {
@@ -109,11 +121,16 @@ class Home extends Component {
 		navigator.push( { screen: 'places' } );
 	}
 
+	_onValueChange( value ) {
+		this.setState( { available: value } );
+	}
+
 	/* eslint-disable class-methods-use-this */
 	renderMyConnectionsSection( connections ) {
 		return (
 			<MyConnectionsSection
 				connections={connections}
+				onPress={this._onUserPicturePress}
 			/>
 		);
 	}
@@ -149,7 +166,13 @@ class Home extends Component {
 			messages // eslint-disable-line react/prop-types
 		} = this.props;
 
-		if ( !user || isFetching ) return <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} />;
+		if ( !user || isFetching ) {
+			return (
+				<View style={styles.activityIndicatorContainer}>
+					<ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} />
+				</View>
+			);
+		}
 
 		let connections = this.getConnections( messages );
 
@@ -198,7 +221,9 @@ const mapStateToProps = store => ( {
 	isFetching: store.messages.isFetching
 } );
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-	{ actMessagesInit: actGetMessages }, dispatch );
+const mapDispatchToProps = dispatch => bindActionCreators( {
+	actMessagesInit: actGetMessages,
+	actGetUserInit: actGetUser
+}, dispatch );
 
 export default compose( connect( mapStateToProps, mapDispatchToProps )( Home ) );
