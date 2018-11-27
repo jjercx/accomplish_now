@@ -35,5 +35,6 @@ export default {
 	nextGray: '#A7A7A7',
 	timeCountGray: '#BBBDC0',
 	modalBackgroundColor: 'rgba(0,0,0,0.7)',
-	modalLineColor: '#A9A9A9'
+	modalLineColor: '#A9A9A9',
+	paleGreyFour: '#eff1f5'
 };

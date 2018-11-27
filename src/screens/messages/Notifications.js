@@ -13,6 +13,7 @@ import Typography from '../../components/typography/Typography';
 import Header from '../../components/register/Header';
 import NotificationPreview from '../../components/messages/NotificationPreview';
 import { actGetFromNotification, actGetToNotifications } from '../../actions/notifications';
+import { actGetUser } from '../../actions/users';
 
 const imageProfileDefault = require( '../../assets/images/messages/phProfile.png' );
 
@@ -116,8 +117,10 @@ class Notifications extends Component {
 
     _keyExtractor = item => item.id;
 
-	_openNotification = () => {
-		alert('open notification'); //eslint-disable-line
+	_openNotification = ( userId ) => {
+		const { navigator, actGetUserInit } = this.props; // eslint-disable-line react/prop-types
+		actGetUserInit( userId );
+		navigator.push( { screen: 'userProfile' } );
 	};
 
 	_onPressBack() {
@@ -202,7 +205,12 @@ class Notifications extends Component {
 									notification.uid = uid;
 									notification.id = index;
 								}
-								return <NotificationPreview onPress={this._openNotification} {...notification} />;
+								return (
+									<NotificationPreview
+										onPress={() => this._openNotification( notification.uid )}
+										{...notification}
+									/>
+								);
 							}}
 						/>
 					)}
@@ -221,10 +229,10 @@ const mapStateToProps = state => ( {
 	notifications: state.notifications
 } );
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-	{
-		fromNotificationInit: actGetFromNotification,
-		toNotificationInit: actGetToNotifications
-	}, dispatch );
+const mapDispatchToProps = dispatch => bindActionCreators( {
+	fromNotificationInit: actGetFromNotification,
+	toNotificationInit: actGetToNotifications,
+	actGetUserInit: actGetUser
+}, dispatch );
 
 export default compose( connect( mapStateToProps, mapDispatchToProps )( Notifications ) );

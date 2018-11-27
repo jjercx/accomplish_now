@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import {
+	View, ScrollView, StyleSheet
+} from 'react-native';
 import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
+import Firebase from 'react-native-firebase';
 import { HTP } from '../utils/dimensions';
 import { actLogOut } from '../actions/authentication';
 import NavigatorPropType from '../types/navigator';
@@ -106,7 +109,17 @@ class UserProfile extends Component {
 	}
 
 	render() {
-		const { user, editable, navigator: _navigator } = this.props;
+		const {
+			navigator: _navigator,
+			searchedUser // eslint-disable-line react/prop-types
+		} = this.props;
+
+		let { user } = this.props;
+		const currentUserId = Firebase.auth().currentUser.uid;
+		const editable = currentUserId === searchedUser.uid;
+		if ( Object.keys( searchedUser ).length ) user = searchedUser;
+
+		console.log( 'user', user );
 
 		let image = user.basicInfo.profilePhotoUrl
 			? { uri: user.basicInfo.profilePhotoUrl }
@@ -120,12 +133,12 @@ class UserProfile extends Component {
 			image,
 			user.skills ? this._skills( user.skills ) : null,
 			new AboutInfo(
-				user.aboutMe ? this._expertise( user.aboutMe.expertise ) : null,
-				user.aboutMe ? this._interest( user.aboutMe.interests ) : null
+				user.aboutMe ? this._expertise( user.aboutMe.expertise ) : [ '' ],
+				user.aboutMe ? this._interest( user.aboutMe.interests ) : [ '' ]
 			),
 			user.biggestChallenge,
 			user.workingOn,
-			user.accomplishments ? this._acomplishments( user.accomplishments ) : null,
+			user.accomplishments ? this._acomplishments( user.accomplishments ) : [],
 			user.basicInfo.availableStatus ? PersonState.AVAILABLE : null
 		);
 
@@ -158,44 +171,29 @@ class UserProfile extends Component {
 							)
 							: null}
 						<Spacing size="smallPlus" />
-						{user.aboutMe
-							? (
-								<AboutCard
-									aboutInfo={person.aboutMe}
-									onPressEdit={this._navigateTo( 'aboutMe' )}
-									editable={editable}
-								/>
-							)
-							: null}
+						<AboutCard
+							aboutInfo={person.aboutMe}
+							onPressEdit={this._navigateTo( 'aboutMe' )}
+							editable={editable}
+						/>
 						<Spacing size="smallPlus" />
-						{user.biggestChallenge
-							? (
-								<ChallengeCard
-									text={person.biggestChallenge}
-									onPressEdit={this._navigateTo( 'biggestChallenge' )}
-									editable={editable}
-								/>
-							)
-							: null}
+						<ChallengeCard
+							text={person.biggestChallenge ? person.biggestChallenge : ''}
+							onPressEdit={this._navigateTo( 'biggestChallenge' )}
+							editable={editable}
+						/>
 						<Spacing size="smallPlus" />
-						{user.workingOn
-							? (
-								<WorkingOnCard
-									text={person.currentlyWorkingOn}
-									onPressEdit={this._navigateTo( 'currentlyWorkingOn' )}
-									editable={editable}
-								/>
-							)
-							: null}
+						<WorkingOnCard
+							text={person.currentlyWorkingOn ? person.currentlyWorkingOn : ''}
+							onPressEdit={this._navigateTo( 'currentlyWorkingOn' )}
+							editable={editable}
+						/>
 						<Spacing size="smallPlus" />
-						{user.accomplishments ? (
-							<AccomplishmentsCard
-								accomplishments={person.accomplishments}
-								onPressAdd={this._navigateTo( 'addAccomplishment' )}
-								editable={editable}
-							/>
-						)
-							: null}
+						<AccomplishmentsCard
+							accomplishments={person.accomplishments}
+							onPressAdd={this._navigateTo( 'addAccomplishment' )}
+							editable={editable}
+						/>
 						<Spacing size="smallPlus" />
 					</ScrollView>
 				</View>
@@ -205,20 +203,15 @@ class UserProfile extends Component {
 	}
 }
 
-
 UserProfile.propTypes = {
 	navigator: NavigatorPropType.isRequired,
-	editable: PropTypes.bool,
 	actLogOutConnect: PropTypes.func.isRequired,
 	user: PropTypes.any.isRequired
 };
 
-UserProfile.defaultProps = {
-	editable: true
-};
-
 const mapStateToProps = store => ( {
-	user: store.authentication.user
+	user: store.authentication.user,
+	searchedUser: store.users.searchedUser
 } );
 
 const mapDispatchToProps = dispatch => bindActionCreators(

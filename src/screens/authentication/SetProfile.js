@@ -18,7 +18,7 @@ import {
 } from 'redux-form';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-picker';
-import { actUploadImg } from '../../actions/authentication';
+import { actUploadImg, actSetProfileData } from '../../actions/authentication';
 import Header from '../../components/register/Header';
 import BaseInputForm from '../../components/base-input/BaseInputForm';
 import ButtonForward from '../../components/button-icon/ButtonForward';
@@ -78,14 +78,31 @@ class SetProfile extends Component {
 		this.state = {
 			enabled: true,
 			avatarSource: null,
-			selectAvatar: false,
 			isLoading: false
 		};
 		this._callback = this._callback.bind( this );
 		this.uploadImage = this.uploadImage.bind( this );
 		this._onPressBack = this._onPressBack.bind( this );
+		this._onPressSave = this._onPressSave.bind( this );
+		this._saveCallback = this._saveCallback.bind( this );
 		this._onPressButtonFoward = this._onPressButtonFoward.bind( this );
 		this._onPressProfilePicture = this._onPressProfilePicture.bind( this );
+	}
+
+	componentWillMount() {
+		let { initialize, editing, user } = this.props;
+		if ( editing ) {
+			this.setState( { avatarSource: { uri: user.basicInfo && user.basicInfo.profilePhotoUrl } } );
+			initialize( {
+				basicInfo: {
+					'firstName': user.basicInfo && user.basicInfo.firstName,
+					'lastName': user.basicInfo && user.basicInfo.lastName,
+					'email': user.basicInfo && user.basicInfo.email,
+					'profilePhotoUrl': user.basicInfo && user.basicInfo.profilePhotoUrl,
+					'phoneNumber': user.basicInfo && user.basicInfo.phoneNumber
+				}
+			} );
+		}
 	}
 
 	_callback = ( res ) => {
@@ -110,17 +127,35 @@ class SetProfile extends Component {
 		}
 	}
 
+	_saveCallback() {
+		const { navigator } = this.props;
+		this.setState( { isLoading: false }, navigator.pop() );
+	}
+
 	_onPressBack() {
-  	const { navigator } = this.props;
-  	navigator.pop();
+		const { navigator } = this.props;
+		navigator.pop();
+	}
+
+	_onPressSave( values ) {
+  	const { actSetProfileData, photo } = this.props;
+		if ( photo ) {
+			this.setState( { isLoading: true }, actSetProfileData( values, this._saveCallback ) );
+		} else {
+			Alert.alert(
+				'Ups!',
+				'You must select a photo',
+				[
+					{ text: 'OK' }
+				],
+				{ cancelable: false }
+			);
+		}
 	}
 
 	/* eslint-disable no-console */
 	_onPressProfilePicture() {
-		let { dispatch } = this.props;
   	ImagePicker.showImagePicker( options, ( response ) => {
-  	  console.log( 'Response = ', response );
-
 		  if ( response.didCancel ) {
 		    console.log( 'User cancelled image picker' );
 		  } else if ( response.error ) {
@@ -137,7 +172,6 @@ class SetProfile extends Component {
 
 		    this.setState( {
 		      avatarSource: source,
-  				selectAvatar: true,
 					isLoading: true
 		    }, this.uploadImage( response.uri ) );
 		  }
@@ -152,14 +186,14 @@ class SetProfile extends Component {
 
 	render() {
 		let {
-			enabled, avatarSource, selectAvatar, isLoading
+			enabled, avatarSource, isLoading
 		} = this.state;
 		const { editing, handleSubmit } = this.props;
 
 		const isEnabled = enabled || editing;
 
 		const handlerOnPress = editing
-			? this._onPressBack
+			? this._onPressSave
 			: this._onPressButtonFoward;
 
   	/* eslint-disable react/jsx-indent */
@@ -172,7 +206,7 @@ class SetProfile extends Component {
 					style={localStyles.addPhotoButton}
 					onPress={this._onPressProfilePicture}
   			>
-  				<Image style={localStyles.imageProfile} source={!selectAvatar ? require( '../../assets/images/icons/addPhoto.png' ) : avatarSource} />
+  				<Image style={localStyles.imageProfile} source={!avatarSource ? require( '../../assets/images/icons/addPhoto.png' ) : avatarSource} />
   			</TouchableOpacity>
   			<View style={localStyles.inputsContainer}>
   				<View style={localStyles.inputRow}>
@@ -199,23 +233,32 @@ class SetProfile extends Component {
 
 SetProfile.propTypes = {
 	editing: PropTypes.bool,
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	initialize: PropTypes.func,
+	user: PropTypes.any.isRequired,
+	handleSubmit: PropTypes.func,
+	dispatch: PropTypes.func
 };
 
 SetProfile.defaultProps = {
-	editing: false
+	editing: false,
+	initialize: () => {},
+	handleSubmit: () => {},
+	dispatch: () => {}
 };
 
 const mapStateToProps = ( store ) => {
 	const selector = formValueSelector( 'createAccountForm' );
 	return {
-		photo: selector( store, 'basicInfo.profilePhotoUrl' )
+		photo: selector( store, 'basicInfo.profilePhotoUrl' ),
+		user: store.authentication.user
 	};
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-	{ actUploadImg }, dispatch );
+	{ actUploadImg, actSetProfileData }, dispatch );
 
 export default reduxForm( {
-	form: 'createAccountForm'
+	form: 'createAccountForm',
+	destroyOnUnmount: false
 } )( connect( mapStateToProps, mapDispatchToProps )( SetProfile ) );

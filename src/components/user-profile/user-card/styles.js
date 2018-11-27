@@ -18,13 +18,12 @@ const styles = StyleSheet.create( {
 	avatarWrapper: {
 		padding: hpd( HTP( 7 ) ),
 		backgroundColor: colors.white,
-		position: 'absolute',
-		top: hpd( HTP( -50 ) ),
 		borderRadius: 100
 	},
 	avatar: {
 		width: wpd( WTP( 100 ) ),
-		height: hpd( HTP( 100 ) )
+		height: hpd( HTP( 100 ) ),
+		borderRadius: wpd( WTP( 50 ) )
 	},
 	jobTextWrapper: {
 		marginTop: 4,
@@ -35,6 +34,10 @@ const styles = StyleSheet.create( {
 		position: 'absolute',
 		top: hpd( HTP( 20 ) ),
 		right: wpd( WTP( 20 ) )
+	},
+	viewOverflowContainer: {
+		position: 'absolute',
+		top: hpd( HTP( -50 ) )
 	}
 } );
 

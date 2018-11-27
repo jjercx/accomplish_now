@@ -2,6 +2,7 @@
 /* @flow */
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
 	View, StyleSheet, StatusBar, FlatList, Platform,
 	ActivityIndicator
@@ -12,9 +13,9 @@ import {
 } from 'react-native-responsive-screen';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-import moment from 'moment';
-import { actGetMessages } from '../../actions/messages';
+import { actGetMessages, actOpenConversation } from '../../actions/messages';
 import { HTP, WTP } from '../../utils/dimensions';
+import { formatDate } from '../../utils/formats';
 import NavigatorPropType from '../../types/navigator';
 import Typography from '../../components/typography/Typography';
 import MessagePreview from '../../components/messages/MessagePreview';
@@ -98,12 +99,12 @@ class Messages extends Component {
 
 	_messages = () => {
 		let { messages } = this.props;
-		return messages.map( msg => new Message( new Person( msg.id, msg.firstName, msg.lastName, '', msg.image ? { uri: msg.image } : avatarImg, '', '', '', '', '', '' ), msg.threadId, moment.unix( msg.createdOn ).format( 'ddd[,] MMM DD h:mm A' ), msg.text ) );
+		return messages.map( msg => new Message( new Person( msg.id, msg.firstName, msg.lastName, '', msg.image ? { uri: msg.image } : avatarImg, '', '', '', '', '', '' ), msg.threadId, formatDate( msg.createdOn ), msg.text ) );
 	}
 
 	_openMessageDetail = ( messageId ) => {
-		// TODO: save the messageId in redux
-
+		const { actOpenConversationInit } = this.props;
+		actOpenConversationInit( messageId );
 		const { navigator } = this.props;
 		navigator.push( { screen: 'messagesDetails' } );
 	}
@@ -157,7 +158,11 @@ class Messages extends Component {
 }
 
 Messages.propTypes = {
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	messages: PropTypes.arrayOf( PropTypes.any ).isRequired,
+	isFetching: PropTypes.bool.isRequired,
+	actMessagesInit: PropTypes.func.isRequired,
+	actOpenConversationInit: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ( {
@@ -165,7 +170,9 @@ const mapStateToProps = store => ( {
 	isFetching: store.messages.isFetching
 } );
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-	{ actMessagesInit: actGetMessages }, dispatch );
+const mapDispatchToProps = dispatch => bindActionCreators( {
+	actMessagesInit: actGetMessages,
+	actOpenConversationInit: actOpenConversation
+}, dispatch );
 
 export default compose( connect( mapStateToProps, mapDispatchToProps )( Messages ) );

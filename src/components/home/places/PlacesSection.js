@@ -8,34 +8,55 @@ import PlaceBox from '../../place/place-box/PlaceBox';
 import Spacing from '../../spacing/Spacing';
 import TitleSection from '../title-section/TitleSection';
 
-const PlacesSection = ( { places, onPressShowPlacesList } ) => (
-	<View style={styles.container}>
-		<TitleSection title="Places to work" onPressSeeAll={onPressShowPlacesList} />
-		<ScrollView horizontal style={styles.wrapperPlaces} showsHorizontalScrollIndicator={false}>
+const PlacesSection = ( {
+	places, onPressShowPlacesList, title, placesDetailActive
+} ) => (
+	<View
+		style={[
+			styles.container,
+			placesDetailActive ? styles.containerPlacesDetailActive : null ]}
+	>
+		<TitleSection
+			title={title}
+			placesDetailActive={placesDetailActive}
+			onPressSeeAll={onPressShowPlacesList}
+		/>
+		<ScrollView
+			horizontal
+			style={[
+				styles.wrapperPlaces,
+				placesDetailActive
+					? styles.wrapperPlacesPlacesDetailActive
+					: null
+			]}
+			showsHorizontalScrollIndicator={false}
+		>
 			{
 				places.map( place => (
 					<View key={place.id} style={{ flexDirection: 'row' }}>
 						<PlaceBox place={place} />
 						<Spacing size="medium" horizontal />
 					</View>
-				)
-				)
+				) )
 			}
 
 		</ScrollView>
 		<Spacing size="medium" />
-		<TitleSection title="Places" />
 	</View>
 );
 
 PlacesSection.propTypes = {
 	places: PropTypes.arrayOf( PropTypes.instanceOf( Place ) ),
-	onPressShowPlacesList: PropTypes.func
+	onPressShowPlacesList: PropTypes.func,
+	title: PropTypes.string,
+	placesDetailActive: PropTypes.bool
 };
 
 PlacesSection.defaultProps = {
 	places: [],
-	onPressShowPlacesList: () => {}
+	onPressShowPlacesList: () => {},
+	title: 'Places to work',
+	placesDetailActive: false
 };
 
 export default PlacesSection;

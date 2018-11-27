@@ -1,20 +1,33 @@
 /* @flow */
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
 	View,
 	StyleSheet,
 	Platform,
 	StatusBar,
 	ScrollView,
+	FlatList,
 	TextInput,
 	KeyboardAvoidingView,
-	TouchableOpacity
+	TouchableOpacity,
+	ActivityIndicator
 } from 'react-native';
+
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
+
 import {
-	heightPercentageToDP as hp
-} from 'react-native-responsive-screen';
+	actGetMessagesByThreadId,
+	actNewMessage,
+	actInputTextChanged
+} from '../../actions/messages';
+import { actGetUser } from '../../actions/users';
+
 import { HTP } from '../../utils/dimensions';
+import { formatDate } from '../../utils/formats';
 import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
 import ButtonIcon from '../../components/button-icon/ButtonIcon';
@@ -22,8 +35,6 @@ import Typography from '../../components/typography/Typography';
 import MessageReceived from '../../components/messages/MessageReceived';
 import MessageSended from '../../components/messages/MessageSended';
 import fonts from '../../theme/fonts';
-
-const imageProfileDefault = require( '../../assets/images/messages/phProfile.png' );
 
 const s = StyleSheet.create( {
 	container: {
@@ -43,9 +54,6 @@ const s = StyleSheet.create( {
 		marginRight: 35
 	},
 	conversationTime: {
-		flex: 1,
-		display: 'flex',
-		justifyContent: 'center',
 		alignItems: 'center',
 		padding: 20
 	},
@@ -69,52 +77,45 @@ const s = StyleSheet.create( {
 		alignItems: 'center',
 		justifyContent: 'center',
 		padding: 13
+	},
+	flatList: {
+		flex: 1,
+		marginTop: hp( HTP( 5 ) )
 	}
 } );
+
+const avatarImg = require( '../../assets/images/messages/phProfile.png' );
 
 class MessagesDetails extends Component {
 	static navigatorStyle = {
 		navBarHidden: true
 	};
 
+	constructor( props ) {
+		super( props );
+		this._onChangeText = this._onChangeText.bind( this );
+	}
+
 	state = {
-		person: {
-			firstName: 'Frank',
-			lastName: 'Doe'
-		},
-		date: '12:24 PM',
-		messages: [
-			{
-				send: false,
-				date: '1 hour ago',
-				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vehicula placerat libero.'
-			},
-			{
-				send: true,
-				date: '1 min ago',
-				text: 'Awesome! Tell me more!'
-			},
-			{
-				send: false,
-				date: '1 min ago',
-				text: 'Ok! Wait'
-			}
-		],
-		_textInputText: ''
+		date: '12:24 PM'
+	}
+
+	componentWillMount() {
+		const { actMessagesByThreadIdInit, threadId } = this.props;
+		actMessagesByThreadIdInit( threadId );
+	}
+
+	_onUserPress = ( userId ) => {
+		const { navigator, actGetUserInit } = this.props; // eslint-disable-line react/prop-types
+		actGetUserInit( userId );
+		navigator.push( { screen: 'userProfile' } );
 	}
 
 	_onSendMessage = () => {
-		const { messages, _textInputText } = this.state;
-		let _messages = messages.slice();
-		_messages.push( {
-			send: true,
-			date: 'Less than a minute ago',
-			text: _textInputText
-		} );
-		this.setState( {
-			messages: _messages,
-			_textInputText: ''
-		} );
+		const {
+			actNewMessageInit, threadId, user, inputMessageText
+		} = this.props;
+		actNewMessageInit( threadId, inputMessageText, user );
 	}
 
 	_onPressBack() {
@@ -122,12 +123,29 @@ class MessagesDetails extends Component {
 		navigator.pop();
 	}
 
-	render() {
-		const {
-			 person, date, messages, _textInputText
-		} = this.state;
+	_onChangeText( text ) {
+		const { actInputTextChangedInit } = this.props;
+		actInputTextChangedInit( text );
+	}
 
-		// const message = this.props.messages[this.props.messageId]; // redux
+	_fullName() {
+		const { messages } = this.props;
+		let participants = messages
+			.filter( message => !message.send )
+			.map( data => `${data.firstName} ${data.lastName}` );
+
+		participants = [ ...new Set( participants ) ];
+
+		return participants.join( ', ' );
+	}
+
+	render() {
+		const { date } = this.state;
+		const {
+			messages, isFetching, isSending, inputMessageText
+		} = this.props;
+
+		console.log( 'messages', messages );
 
 		return (
 			<KeyboardAvoidingView style={s.container} behavior={Platform.OS === 'ios' ? 'padding' : null}>
@@ -147,7 +165,7 @@ class MessagesDetails extends Component {
 							color="charcoalGrey"
 							textAlign="left"
 						>
-							{`${person.firstName} ${person.lastName}`}
+							{this._fullName()}
 						</Typography>
 					</View>
 				</View>
@@ -168,26 +186,32 @@ class MessagesDetails extends Component {
 						</Typography>
 					</View>
 
-					{messages.map( ( message ) => {
-						if ( message.send ) {
-							return (
-								<MessageSended
-									key={message.date + message.text}
-									text={message.text}
-									date={message.date}
-								/>
-							);
-						}
-						return (
-							<MessageReceived
-								key={message.date + message.text}
-								text={message.text}
-								image={imageProfileDefault}
-								date={message.date}
-							/>
-						);
-					} )}
-
+					{isFetching ? <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} /> : (
+						<FlatList
+							style={s.flatList}
+							data={messages}
+							keyExtractor={item => item.id}
+							renderItem={( { item } ) => (
+								item.send
+									? (
+										<MessageSended
+											key={item.id}
+											text={item.text}
+											date={formatDate( item.createdOn )}
+										/>
+									)
+									: (
+										<MessageReceived
+											key={item.id}
+											text={item.text}
+											image={item.image ? { uri: item.image } : avatarImg}
+											date={formatDate( item.createdOn )}
+											onUserPress={() => this._onUserPress( item.senderId )}
+										/>
+									)
+							)}
+						/>
+					)}
 				</ScrollView>
 
 				<View style={s.messageInputContainer}>
@@ -196,13 +220,16 @@ class MessagesDetails extends Component {
 							ref={( ref ) => { this.textInput = ref; }}
 							style={s.textInput}
 							placeholder="Your message"
-							value={_textInputText}
-							onChangeText={text => this.setState( { _textInputText: text } )}
+							value={inputMessageText}
+							onChangeText={this._onChangeText}
 							onFocus={() => setTimeout( () => this.scrollView.scrollToEnd(
 								{ animated: true } ), 500 )}
 						/>
 					</View>
-					<TouchableOpacity style={s.buttonSend} onPress={this._onSendMessage}>
+					<TouchableOpacity
+						style={s.buttonSend}
+						onPress={isSending ? () => {} : this._onSendMessage}
+					>
 						<Typography
 							variant="smallBody"
 							color="charcoalGrey"
@@ -219,7 +246,32 @@ class MessagesDetails extends Component {
 }
 
 MessagesDetails.propTypes = {
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	user: PropTypes.any.isRequired,
+	threadId: PropTypes.string.isRequired,
+	messages: PropTypes.arrayOf( PropTypes.any ).isRequired,
+	isFetching: PropTypes.bool.isRequired,
+	isSending: PropTypes.bool.isRequired,
+	inputMessageText: PropTypes.string.isRequired,
+	actMessagesByThreadIdInit: PropTypes.func.isRequired,
+	actNewMessageInit: PropTypes.func.isRequired,
+	actInputTextChangedInit: PropTypes.func.isRequired
 };
 
-export default MessagesDetails;
+const mapStateToProps = store => ( {
+	user: store.authentication.user,
+	threadId: store.messages.activeThreadId,
+	messages: store.messages.threadMessages,
+	isFetching: store.messages.isFetching,
+	isSending: store.messages.isSending,
+	inputMessageText: store.messages.inputText
+} );
+
+const mapDispatchToProps = dispatch => bindActionCreators( {
+	actMessagesByThreadIdInit: actGetMessagesByThreadId,
+	actNewMessageInit: actNewMessage,
+	actInputTextChangedInit: actInputTextChanged,
+	actGetUserInit: actGetUser
+}, dispatch );
+
+export default compose( connect( mapStateToProps, mapDispatchToProps )( MessagesDetails ) );
