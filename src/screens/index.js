@@ -13,6 +13,7 @@ import SetProfile from './authentication/SetProfile';
 import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin';
 import AboutMe from './authentication/AboutMe';
 import AddAccomplishment from './authentication/AddAccomplishment';
+import Settings from './authentication/Settings';
 import UserProfile from './UserProfile';
 import Places from './Places';
 import Meetings from './Meetings';
@@ -79,4 +80,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'meetingDetail', () => MeetingDetail, store, Provider );
 	Navigation.registerComponent( 'placeDetails', () => PlaceDetails );
 	Navigation.registerComponent( 'peopleSearch', () => PeopleSearch, store, Provider );
+	Navigation.registerComponent( 'settings', () => Settings );
 }

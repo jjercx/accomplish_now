@@ -49,11 +49,12 @@ class UserProfile extends Component {
 		navBarHidden: true
 	};
 
-	constructor() {
-		super();
+	constructor( props ) {
+		super( props );
 		this._logOut = this._logOut.bind( this );
 		this._callback = this._callback.bind( this );
 		this._onPressBack = this._onPressBack.bind( this );
+		this._onPressSettings = this._onPressSettings.bind( this );
 	}
 
 	_skills = ( skills ) => {
@@ -94,6 +95,11 @@ class UserProfile extends Component {
 	_onPressBack() {
 		const { navigator } = this.props;
 		navigator.pop();
+	}
+
+	_onPressSettings() {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'settings' } );
 	}
 
 	_navigateTo( screen ) {
@@ -151,7 +157,7 @@ class UserProfile extends Component {
 						style={styles.scroller}
 						contentContainerStyle={styles.scrollerContainer}
 					>
-						<Header onPressBack={this._onPressBack} />
+						<Header onPressBack={this._onPressBack} onPressSettings={this._onPressSettings} />
 						<UserCard
 							person={person}
 							onPress={this._logOut}

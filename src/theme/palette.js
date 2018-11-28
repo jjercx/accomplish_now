@@ -36,5 +36,7 @@ export default {
 	timeCountGray: '#BBBDC0',
 	modalBackgroundColor: 'rgba(0,0,0,0.7)',
 	modalLineColor: '#A9A9A9',
-	paleGreyFour: '#eff1f5'
+	paleGreyFour: '#eff1f5',
+	stripeBlue: '#078FDE',
+	stripeBlueStrong: '#1278B3'
 };
