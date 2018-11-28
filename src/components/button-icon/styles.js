@@ -28,9 +28,6 @@ export default {
 		fontSize: hp( HTP( 15 ) ),
 		fontWeight: '400'
 	},
-	buttonBack: {
-		top: '5%'
-	},
 	iconEdit: {
 		marginRight: wp( WTP( 8 ) )
 	},

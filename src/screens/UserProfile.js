@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-	View, ScrollView, StyleSheet
-} from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
-import { bindActionCreators, compose } from 'redux';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import Firebase from 'react-native-firebase';
 import { HTP } from '../utils/dimensions';
-import { actLogOut } from '../actions/authentication';
 import NavigatorPropType from '../types/navigator';
 import Spacing from '../components/spacing/Spacing';
 import NavBar from '../components/navbar/NavBar';
@@ -49,11 +46,10 @@ class UserProfile extends Component {
 		navBarHidden: true
 	};
 
-	constructor() {
-		super();
-		this._logOut = this._logOut.bind( this );
-		this._callback = this._callback.bind( this );
+	constructor( props ) {
+		super( props );
 		this._onPressBack = this._onPressBack.bind( this );
+		this._onPressSettings = this._onPressSettings.bind( this );
 	}
 
 	_skills = ( skills ) => {
@@ -76,24 +72,14 @@ class UserProfile extends Component {
 		} );
 	}
 
-	_callback() {
-		const { navigator } = this.props;
-		navigator.resetTo( {
-			screen: 'onboarding',
-			navigatorStyle: {
-				navBarHidden: true
-			}
-		} );
-	}
-
-	_logOut() {
-		const { actLogOutConnect } = this.props;
-		actLogOutConnect( this._callback );
-	}
-
 	_onPressBack() {
 		const { navigator } = this.props;
 		navigator.pop();
+	}
+
+	_onPressSettings() {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'settings' } );
 	}
 
 	_navigateTo( screen ) {
@@ -151,10 +137,9 @@ class UserProfile extends Component {
 						style={styles.scroller}
 						contentContainerStyle={styles.scrollerContainer}
 					>
-						<Header onPressBack={this._onPressBack} />
+						<Header onPressBack={this._onPressBack} onPressSettings={this._onPressSettings} />
 						<UserCard
 							person={person}
-							onPress={this._logOut}
 							onPressEdit={this._navigateTo( 'setProfile' )}
 							editable={editable}
 						/>
@@ -205,7 +190,6 @@ class UserProfile extends Component {
 
 UserProfile.propTypes = {
 	navigator: NavigatorPropType.isRequired,
-	actLogOutConnect: PropTypes.func.isRequired,
 	user: PropTypes.any.isRequired
 };
 
@@ -214,7 +198,4 @@ const mapStateToProps = store => ( {
 	searchedUser: store.users.searchedUser
 } );
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-	{ actLogOutConnect: actLogOut }, dispatch );
-
-export default compose( connect( mapStateToProps, mapDispatchToProps )( UserProfile ) );
+export default compose( connect( mapStateToProps )( UserProfile ) );
