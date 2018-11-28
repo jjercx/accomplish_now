@@ -1,17 +1,29 @@
 /* @flow */
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
+
 import {
-	View, Image, StyleSheet, TouchableOpacity, KeyboardAvoidingView
+	View,
+	Image,
+	StyleSheet,
+	TouchableOpacity,
+	KeyboardAvoidingView,
+	Alert
 } from 'react-native';
+
 import {
 	heightPercentageToDP as hp,
 	widthPercentageToDP as wp
 } from 'react-native-responsive-screen';
+
 import { HTP, WTP } from '../../utils/dimensions';
 import Header from '../../components/register/Header';
 import Typography from '../../components/typography/Typography';
 import ButtonIcon from '../../components/button-icon/ButtonIcon';
+import { actLogOut } from '../../actions/authentication';
 import NavigatorPropType from '../../types/navigator';
 import Colors from '../../theme/palette';
 import s from './styles';
@@ -100,11 +112,41 @@ class Settings extends Component {
 	constructor( props ) {
 		super( props );
 		this._onPressBack = this._onPressBack.bind( this );
+		this._logOut = this._logOut.bind( this );
+		this._callback = this._callback.bind( this );
 	}
 
 	_onPressBack() {
 		const { navigator } = this.props;
 		navigator.pop();
+	}
+
+	_logOut() {
+		Alert.alert(
+			'Logout',
+			'Are you sure?',
+			[
+	  			{ text: 'Cancel', onPress: () => {}, style: 'cancel' },
+	  			{
+					text: 'OK',
+					onPress: () => {
+						const { actLogOutConnect } = this.props;
+						actLogOutConnect( this._callback );
+				  }
+				}
+			],
+			{ cancelable: false }
+		);
+	}
+
+	_callback() {
+		const { navigator } = this.props;
+		navigator.resetTo( {
+			screen: 'onboarding',
+			navigatorStyle: {
+				navBarHidden: true
+			}
+		} );
 	}
 
 	render() {
@@ -143,7 +185,7 @@ class Settings extends Component {
 						</TouchableOpacity>
 					</View>
 					<View style={localStyles.logoutContainer}>
-						<TouchableOpacity style={localStyles.logout}>
+						<TouchableOpacity style={localStyles.logout} onPress={this._logOut}>
 							<Image style={localStyles.iconLogout} source={require( '../../assets/images/icons/logout.png' )} />
 							<Typography variant="smallTitle">Logout</Typography>
 						</TouchableOpacity>
@@ -155,7 +197,12 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	actLogOutConnect: PropTypes.func.isRequired
 };
 
-export default Settings;
+const mapDispatchToProps = dispatch => bindActionCreators( {
+	actLogOutConnect: actLogOut
+}, dispatch );
+
+export default compose( connect( null, mapDispatchToProps )( Settings ) );

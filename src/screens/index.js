@@ -80,5 +80,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'meetingDetail', () => MeetingDetail, store, Provider );
 	Navigation.registerComponent( 'placeDetails', () => PlaceDetails );
 	Navigation.registerComponent( 'peopleSearch', () => PeopleSearch, store, Provider );
-	Navigation.registerComponent( 'settings', () => Settings );
+	Navigation.registerComponent( 'settings', () => Settings, store, Provider );
 }
