@@ -138,7 +138,6 @@ class Home extends Component {
 			isFetching, // eslint-disable-line react/prop-types
 			messages // eslint-disable-line react/prop-types
 		} = this.props;
-
 		if ( !user || isFetching ) return <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} />;
 
 		let connections = this.getConnections( messages );

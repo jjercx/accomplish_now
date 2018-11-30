@@ -43,6 +43,8 @@ target 'accomplish' do
 
   # Pods for accomplish
 
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+
 end
 
 post_install do |installer|

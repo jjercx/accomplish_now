@@ -92,7 +92,7 @@ export default class AuthenticationServices {
 	}
 
 	static verifyLogin( ) {
-		return AuthenticationConfig.FirebaseConnector.verifyLogin( );
+		return AuthenticationConfig.FirebaseConnector.verifyLogin();
 	}
 
 	static getUserData( ) {

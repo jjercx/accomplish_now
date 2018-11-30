@@ -1,5 +1,8 @@
+import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
+import Firebase from 'react-native-firebase';
+import { Notification, RemoteMessage } from 'react-native-firebase';
 import store from '../store';
 import Onboarding from './Onboarding';
 import Home from './Home';
@@ -21,6 +24,7 @@ import PeopleNearby from './PeopleNearby';
 import MessagesDetails from './messages/MessagesDetails';
 import Notifications from './messages/Notifications';
 import PlaceMapView from './places/placeMapView';
+import NotificationHandler from './NotificationHandler';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -38,7 +42,7 @@ export function initApp( action ) {
 		default:
 			Navigation.startSingleScreenApp( {
 				screen: {
-					screen: 'onboarding',
+					screen: 'notificationHandler',
 					navigatorStyle: {
 						navBarHidden: true
 					}
@@ -70,4 +74,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'messagesDetails', () => MessagesDetails, store, Provider );
 	Navigation.registerComponent( 'notifications', () => Notifications );
 	Navigation.registerComponent( 'placeMapView', () => PlaceMapView, store, Provider );
+	Navigation.registerComponent( 'notificationHandler', () => NotificationHandler, store, Provider );
 }

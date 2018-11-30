@@ -107,7 +107,7 @@ export const actGetMessagesByThreadId = threadId => ( dispatch ) => {
 };
 
 
-export const actNewMessage = ( threadId, message, sender ) => ( dispatch ) => {
+export const actNewMessage = ( threadId, message, sender, userToken, receiverId ) => ( dispatch ) => {
 	let { currentUser } = Firebase.auth();
 	const newMessage = {
 		createdOn: Date.now(),
@@ -128,7 +128,7 @@ export const actNewMessage = ( threadId, message, sender ) => ( dispatch ) => {
 		}
 	} );
 
-	MessagesServices.putNewMessage( newMessage, () => {
+	MessagesServices.putNewMessage( newMessage, userToken, receiverId, () => {
 		dispatch( {
 			type: MESSAGE_ADDED_TO_THREAD
 		} );

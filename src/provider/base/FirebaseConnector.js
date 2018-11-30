@@ -1,4 +1,6 @@
 import Firebase from 'react-native-firebase';
+import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from '../../utils/AsyncStorage';
 
 export default class FirebaseConnector {
 	constructor( options = {} ) {
@@ -46,9 +48,9 @@ getByQuery = ( base, orderBy, equalTo, callback ) => {
 }
 
 currentUserData = path => new Promise( ( resolve, reject ) => {
-	const { currentUser } = Firebase.auth();
-	const { uid } = currentUser._user;
 	try {
+		const auth = Firebase.auth();
+		const { uid } = auth.currentUser;
 		if ( uid ) { path = `${path}/${uid}`; }
 		Firebase.database().ref( path ).once( 'value', ( snapshot ) => {
 			let snap = snapshot.val();
@@ -84,8 +86,10 @@ setPush = ( uri, obj ) => new Promise( ( resolve, reject ) => {
 } );
 
 update = ( path, data ) => new Promise( ( resolve, reject ) => {
+	console.log('sellama al update', path, data);
 	try {
 		Firebase.database().ref( `${path}` ).update( data ).then( () => {
+			console.log('me updatea al user');
 			resolve( 'ok' );
 		} );
 	} catch ( e ) {
@@ -102,7 +106,6 @@ listener = ( uri, callback ) => {
 
 login = ( user, pass ) => new Promise( async ( resolve, reject ) => {
 	try {
-		let auth = Firebase.auth();
 		let res = auth.signInWithEmailAndPassword( user, pass );
 		resolve( res );
 	} catch ( error ) {
@@ -125,13 +128,35 @@ createUserWithEmailAndPassword = ( user, onSuccess, onError ) => {
 verifyLogin = () => new Promise( async ( resolve, reject ) => {
 	Firebase.auth().onAuthStateChanged( ( user ) => {
 		if ( user ) {
-			user.getIdToken( true ).then( ( ) => {
-				resolve( user );
+			user.getIdToken( true ).then( ( token ) => {
+				this.setDeviceToken().then( () => {
+					resolve( token );
+				} );
 			} ).catch( ( error ) => {
 				reject( error );
 			} );
 		}
 	} );
+} )
+
+setDeviceToken = () => new Promise( async ( resolve, reject ) => {
+	const auth = Firebase.auth();
+	const { uid } = auth.currentUser;
+	let deviceId = DeviceInfo.getUniqueID();
+	Firebase
+		.messaging()
+		.getToken( true )
+		.then( ( fcmToken ) => {
+			if ( fcmToken ) {
+				this.set( `/users/${uid}/devicesToken`, { pushToken: fcmToken }, deviceId ).then( () => {
+					resolve( 'ok' );
+				} ).catch( ( e ) => {
+					reject( e );
+				} );
+			}
+		} ).catch( ( e ) => {
+			reject( e );
+		} );
 } )
 
 signWithCustomToken = token => new Promise( async ( resolve, reject ) => {

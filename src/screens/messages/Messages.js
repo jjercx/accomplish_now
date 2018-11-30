@@ -102,11 +102,16 @@ class Messages extends Component {
 		return messages.map( msg => new Message( new Person( msg.id, msg.firstName, msg.lastName, '', msg.image ? { uri: msg.image } : avatarImg, '', '', '', '', '', '' ), msg.threadId, formatDate( msg.createdOn ), msg.text ) );
 	}
 
-	_openMessageDetail = ( messageId ) => {
+	_openMessageDetail = ( messageId, receiverId ) => {
 		const { actOpenConversationInit } = this.props;
 		actOpenConversationInit( messageId );
 		const { navigator } = this.props;
-		navigator.push( { screen: 'messagesDetails' } );
+		navigator.push( {
+			screen: 'messagesDetails',
+			passProps: {
+				receiverId
+					  }
+		} );
 	}
 
 	_buttonIcons = () => [
@@ -146,7 +151,10 @@ class Messages extends Component {
 							data={messages ? this._messages() : []}
 							keyExtractor={item => item.messageId}
 							renderItem={( { item } ) => (
-								<MessagePreview onMessagePress={this._openMessageDetail} {...item} />
+								<MessagePreview
+									onMessagePress={id => this._openMessageDetail( id, item.person.id )}
+									{...item}
+								/>
 							)}
 						/>
 					) }
