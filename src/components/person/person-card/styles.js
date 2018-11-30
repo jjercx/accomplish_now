@@ -10,17 +10,24 @@ import colors from '../../../theme/palette';
 
 const styles = StyleSheet.create( {
 	cardContainer: {
-		marginHorizontal: wpd( WTP( 5 ) ),
-		marginVertical: wpd( WTP( 5 ) ),
+		marginHorizontal: wpd( WTP( 3 ) ),
+		marginVertical: wpd( WTP( 3 ) ),
 		paddingVertical: hpd( HTP( 10 ) ),
 		paddingHorizontal: wpd( WTP( 10 ) ),
 		backgroundColor: colors.white,
-		borderRadius: 5
+		borderRadius: 5,
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: '48%'
+	},
+	cardContainerFullWidth: {
+		width: '98%'
 	},
 	distanceWrapper: {
 		flexDirection: 'row',
 		justifyContent: 'flex-end',
 		alignItems: 'center',
+		width: '100%',
 		height: hpd( HTP( 20 ) )
 	},
 	avatarWrapper: {
