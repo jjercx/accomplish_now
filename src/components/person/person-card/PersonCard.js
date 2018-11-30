@@ -5,14 +5,20 @@ import Typography from '../../typography/Typography';
 import Person from '../../../entities/Person';
 import styles from './styles';
 import Spacing from '../../spacing/Spacing';
+import { iPhoneSE } from '../../../utils/dimensions';
 import ProfileImage from '../../default-profile-image-on-loading/DefaultProfileImageOnLoading';
 
 const avatarImg = require( '../../../assets/images/messages/phProfile.png' );
 
 const PersonCard = ( {
-	person, rating, meetingsCount, distance, onPress, onUserPress
+	person, rating, meetingsCount, distance, onPress, onUserPress, fullWidth
 } ) => (
-	<View style={styles.cardContainer}>
+	<View
+		style={[
+			styles.cardContainer,
+			( fullWidth || iPhoneSE() ) && styles.cardContainerFullWidth
+		]}
+	>
 		<View style={styles.distanceWrapper}>
 			<TouchableOpacity onPress={onPress}>
 				<Image style={styles.icon} source={require( '../../../assets/images/icons/location.png' )} />
@@ -64,15 +70,11 @@ const PersonCard = ( {
 					: null
 			]}
 			>
-				{person.skills.slice( 0, 1 ).map( ( s ) => {
-					console.log( s );
-					return (
-						<View style={styles.skill} key={s.skill.id}>
-							<Typography variant="xxsmallBody" color="greyishBrown">{s.skill.name}</Typography>
-						</View>
-					);
-				} )
-				}
+				{person.skills.slice( 0, 1 ).map( s => (
+					<View style={styles.skill} key={s.skill.id}>
+						<Typography variant="xxsmallBody" color="greyishBrown">{s.skill.name}</Typography>
+					</View>
+				) )}
 			</View>
 
 		) : (
@@ -87,7 +89,8 @@ PersonCard.propTypes = {
 	meetingsCount: PropTypes.number,
 	distance: PropTypes.number,
 	onPress: PropTypes.func,
-	onUserPress: PropTypes.func
+	onUserPress: PropTypes.func,
+	fullWidth: PropTypes.bool
 };
 
 PersonCard.defaultProps = {
@@ -95,7 +98,8 @@ PersonCard.defaultProps = {
 	meetingsCount: 0,
 	distance: 0,
 	onPress: () => {},
-	onUserPress: () => {}
+	onUserPress: () => {},
+	fullWidth: false
 };
 
 export default PersonCard;

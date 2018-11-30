@@ -41,14 +41,17 @@ const styles = StyleSheet.create( {
 		height: hpd( HTP( 60 ) )
 	},
 	resultsContainer: {
+		backgroundColor: colors.paleGreyThree,
+		width: '100%',
 		flex: 1,
-		backgroundColor: colors.paleGreyThree
+		paddingTop: hpd( HTP( 5 ) ),
+		marginBottom: hpd( HTP( 5 ) )
 	},
 	flatList: {
-		flex: 1,
-		marginTop: hpd( HTP( 15 ) ),
-		marginBottom: hpd( HTP( 40 ) ),
-		alignSelf: iPhoneSE() ? 'auto' : 'center'
+		width: '100%',
+		alignSelf: iPhoneSE() ? 'auto' : 'center',
+		justifyContent: 'space-between',
+		paddingBottom: hpd( HTP( 30 ) )
 	},
 	invisible: {
 		backgroundColor: 'transparent'
@@ -85,17 +88,18 @@ class PeopleSearch extends Component {
 		this._doSearch = this._doSearch.bind( this );
 	}
 
-	_keyExtractor = item => item.id;
+	_cardFullWidth = ( index, people ) => ( people.length % 2 !== 0 )
+		&& ( index === people.length - 1 )
 
-	 _onPressBack() {
+		// eslint-disable-next-line class-methods-use-this
+		_onPressFilter() {
+			// eslint-disable-next-line no-console
+				console.log( 'Filter actions' );
+		}
+
+	_onPressBack() {
 		const { navigator } = this.props;
 		navigator.pop();
-	}
-
-	// eslint-disable-next-line class-methods-use-this
-	_onPressFilter() {
-		// eslint-disable-next-line no-console
-    	console.log( 'Filter actions' );
 	}
 
 	_doSearch( searchText ) {
@@ -111,6 +115,7 @@ class PeopleSearch extends Component {
 		} = this.props;
 
 		const numberOfColumns = iPhoneSE() ? 1 : 2;
+		const realPeople = people.slice();
 
 		return (
 			<View style={styles.container}>
@@ -129,24 +134,26 @@ class PeopleSearch extends Component {
 					{isSearching ? <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} /> : (
 						<View style={styles.resultsContainer}>
 							<FlatList
-								style={styles.flatList}
+								contentContainerStyle={styles.flatList}
 								vertical
 								numColumns={numberOfColumns}
 								data={formatData( people, numberOfColumns )}
-								keyExtractor={this._keyExtractor}
-								renderItem={( { item } ) => ( ( item.empty ) ? (
-									<View style={styles.invisible} />
-							) : (
-								<PersonCard
-									person={item.person}
-									rating={item.rating}
-									meetingsCount={item.meetingsCount}
-									distance={item.distance}
-								/>
-							) )}
+								// keyExtractor={item => item.id}
+								keyExtractor={() => Math.random()}
+								renderItem={( { item, index } ) => ( ( item.empty )
+								? <View style={styles.invisible} />
+								: (
+									<PersonCard
+										fullWidth={this._cardFullWidth( index, realPeople )}
+										person={item.person}
+										rating={item.rating}
+										meetingsCount={item.meetingsCount}
+										distance={item.distance}
+									/>
+								) )}
 							/>
 						</View>
-)}
+				)}
 				</View>
 				<NavBar navigator={_navigator} />
 			</View>
