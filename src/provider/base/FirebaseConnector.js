@@ -1,6 +1,5 @@
 import Firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
-import AsyncStorage from '../../utils/AsyncStorage';
 
 export default class FirebaseConnector {
 	constructor( options = {} ) {

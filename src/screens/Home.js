@@ -13,6 +13,7 @@ import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import { actGetMessages } from '../actions/messages';
+import { actSetProfileData } from '../actions/authentication';
 import UserSection from '../components/home/header/UserSection';
 import { HTP, WTP } from '../utils/dimensions';
 import Typography from '../components/typography/Typography';
@@ -71,6 +72,31 @@ class Home extends Component {
 		actMessagesInit();
 	}
 
+	componentDidMount() {
+		let { user } = this.props; // eslint-disable-line react/prop-types
+		if ( user ) {
+			this.setState( { available: user.availableStatus ? user.availableStatus : false } );
+		}
+	}
+
+	callback = ( res ) => {
+		console.log( 'status', res );
+	}
+
+	_getMeetings = () => {
+		let { user } = this.props;
+		let meetings = [];
+		if ( user.meetings ) {
+			let objMeetings = Object.keys( user.meetings );
+			objMeetings.map( ( eachKey ) => {
+				let itemKey = user.meetings[ eachKey ];
+				return meetings.push( itemKey );
+			} );
+			return meetings.length + 1;
+		}
+		return meetings.length;
+	}
+
 	getConnections = ( messages ) => {
 		let connections = [];
 
@@ -91,6 +117,8 @@ class Home extends Component {
 	}
 
 	_onValueChange( value ) {
+		let { actStatus } = this.props; // eslint-disable-line react/prop-types
+		actStatus( { availableStatus: value }, this.callback );
 		this.setState( { available: value } );
 	}
 
@@ -148,14 +176,14 @@ class Home extends Component {
 					source={require( '../assets/images/home/header.png' )}
 					style={styles.imageBackground}
 				>
-					<UserSection userFirstName={user.basicInfo.firstName} meetings={12} />
+					<UserSection userFirstName={user.basicInfo.firstName} meetings={this._getMeetings()} />
 					<View style={styles.wrapperContainerAvailable}>
 						<View style={styles.wrapperAvailable}>
 							<Typography variant="smallTitle" color="white">{IM_AVAILABLE_TEXT}</Typography>
 							<Spacing size="small" horizontal />
 							<Switch
 								onValueChange={value => this._onValueChange( value )}
-								value={available}
+								value={user.availableStatus ? user.availableStatus : false}
 								onTintColor={colors.orange}
 								thumbTintColor={colors.switchThumbTintColor}
 								tintColor={colors.switchTintColor}
@@ -188,6 +216,6 @@ const mapStateToProps = store => ( {
 } );
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-	{ actMessagesInit: actGetMessages }, dispatch );
+	{ actMessagesInit: actGetMessages, actStatus: actSetProfileData }, dispatch );
 
 export default compose( connect( mapStateToProps, mapDispatchToProps )( Home ) );
