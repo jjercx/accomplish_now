@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable indent */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
 	View, StyleSheet, StatusBar, FlatList, Platform
 } from 'react-native';
@@ -10,12 +11,17 @@ import {
 	widthPercentageToDP as wpd
 } from 'react-native-responsive-screen';
 
+import { connect } from 'react-redux';
+import { bindActionCreators, compose } from 'redux';
 import { HTP, WTP, iPhoneSE } from '../utils/dimensions';
 import NavigatorPropType from '../types/navigator';
 import NavBar from '../components/navbar/NavBar';
 import Typography from '../components/typography/Typography';
 import PersonCard from '../components/person/person-card/PersonCard';
 import Header from '../components/header/Header';
+import { actGetPeopleNearby } from '../actions/peopleNearby';
+import { actGetUser } from '../actions/users';
+
 
 import Person, { PersonState } from '../entities/Person';
 import Skill, { ComputedSkill } from '../entities/Skill';
@@ -46,7 +52,7 @@ const styles = StyleSheet.create( {
 	}
 } );
 
-const iconFiltter = require( '../assets/images/icons/filterSmall.png' );
+const iconFilter = require( '../assets/images/icons/filterSmall.png' );
 
 const formatData = ( items, numberOfColumns ) => {
 	const numberOfFullItems = Math.floor( items.length, numberOfColumns );
@@ -70,6 +76,11 @@ class PeopleNearby extends Component {
 		navBarHidden: true
 	};
 
+	componentWillMount() {
+		const { getPeopleNearby } = this.props; // eslint-disable-line react/prop-types
+		getPeopleNearby();
+	}
+
 	_people = () => {
 		const skills = [
 			new ComputedSkill( new Skill( 1, 'Designer', null ), 0 ),
@@ -87,11 +98,16 @@ class PeopleNearby extends Component {
 		return people;
 	}
 
-	_keyExtractor = item => item.id;
-
 	_buttonIcons = () => [
-		{ id: 1, icon: iconFiltter, onPress: this._filter }
-	 ];
+		{ id: 1, icon: iconFilter, onPress: this._filter }
+	];
+
+	_onUserPress = ( userId ) => {
+		const { navigator, actGetUserInit } = this.props; // eslint-disable-line react/prop-types
+		actGetUserInit( userId );
+		// this.setState( { onGetSearchUserData: true } );
+		navigator.push( { screen: 'userProfile' } );
+	}
 
 	 _onPressBack() {
 		const { navigator } = this.props;
@@ -100,17 +116,16 @@ class PeopleNearby extends Component {
 
 	 // eslint-disable-next-line class-methods-use-this
 	 _filter() {
-    	// eslint-disable-next-line no-console
-    	console.log( 'Filter actions' );
-     }
+		// eslint-disable-next-line no-console
+			console.log( 'Filter actions' );
+	}
 
 
 	render() {
-		const { navigator: _navigator } = this.props;
-
-		const rating = 4.5;
-		const meetingCount = 562;
-		const distance = 1.5;
+		const {
+			navigator: _navigator,
+			people: { peopleNearby: people }
+		} = this.props;
 
 		const numberOfColumns = iPhoneSE() ? 1 : 2;
 
@@ -138,16 +153,17 @@ class PeopleNearby extends Component {
 						style={styles.flatList}
 						vertical
 						numColumns={numberOfColumns}
-						data={formatData( this._people(), numberOfColumns )}
-						keyExtractor={this._keyExtractor}
-						renderItem={( { item } ) => ( ( item.empty ) ? (
+						data={formatData( people, numberOfColumns )}
+						keyExtractor={item => item.id}
+						renderItem={( { item } ) => ( item.empty ? (
 							<View style={styles.invisible} />
 						) : (
 							<PersonCard
-								person={item}
-								rating={rating}
-								meetingsCount={meetingCount}
-								distance={distance}
+								person={item.person}
+								rating={item.rating}
+								meetingsCount={item.meetingsCount}
+								distance={item.distance}
+								onUserPress={this._onUserPress}
 							/>
 						) )}
 					/>
@@ -161,7 +177,18 @@ class PeopleNearby extends Component {
 /* eslint-enable react/prefer-stateless-function */
 
 PeopleNearby.propTypes = {
-	navigator: NavigatorPropType.isRequired
+	navigator: NavigatorPropType.isRequired,
+	people: PropTypes.any.isRequired,
+	getPeopleNearby: PropTypes.func.isRequired
 };
 
-export default PeopleNearby;
+const mapStateToProps = state => ( {
+	people: state.people
+} );
+
+const mapDispatchProps = dispatch => bindActionCreators( {
+	getPeopleNearby: actGetPeopleNearby,
+	actGetUserInit: actGetUser
+}, dispatch );
+
+export default compose( connect( mapStateToProps, mapDispatchProps )( PeopleNearby ) );

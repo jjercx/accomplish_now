@@ -24,6 +24,7 @@ import {
 	actNewMessage,
 	actInputTextChanged
 } from '../../actions/messages';
+import { actGetUser } from '../../actions/users';
 
 import { HTP } from '../../utils/dimensions';
 import { formatDate } from '../../utils/formats';
@@ -102,6 +103,12 @@ class MessagesDetails extends Component {
 	componentWillMount() {
 		const { actMessagesByThreadIdInit, threadId } = this.props;
 		actMessagesByThreadIdInit( threadId );
+	}
+
+	_onUserPress = ( userId ) => {
+		const { navigator, actGetUserInit } = this.props; // eslint-disable-line react/prop-types
+		actGetUserInit( userId );
+		navigator.push( { screen: 'userProfile' } );
 	}
 
 	_onSendMessage = () => {
@@ -196,6 +203,7 @@ class MessagesDetails extends Component {
 											text={item.text}
 											image={item.image ? { uri: item.image } : avatarImg}
 											date={formatDate( item.createdOn )}
+											onUserPress={() => this._onUserPress( item.senderId )}
 										/>
 									)
 							)}
@@ -262,7 +270,8 @@ const mapStateToProps = store => ( {
 const mapDispatchToProps = dispatch => bindActionCreators( {
 	actMessagesByThreadIdInit: actGetMessagesByThreadId,
 	actNewMessageInit: actNewMessage,
-	actInputTextChangedInit: actInputTextChanged
+	actInputTextChangedInit: actInputTextChanged,
+	actGetUserInit: actGetUser
 }, dispatch );
 
 export default compose( connect( mapStateToProps, mapDispatchToProps )( MessagesDetails ) );

@@ -4,13 +4,17 @@ import skills from './skills';
 import authentication from './authentication';
 import messages from './messages';
 import notifications from './notifications';
+import people from './people';
+import users from './users';
 
 const rootReducer = combineReducers( {
 	skills,
 	authentication,
 	messages,
+	form: formReducer,
+	people,
 	notifications,
-	form: formReducer
+	users
 } );
 
 export default rootReducer;

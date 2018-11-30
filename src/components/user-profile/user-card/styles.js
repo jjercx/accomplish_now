@@ -22,7 +22,8 @@ const styles = StyleSheet.create( {
 	},
 	avatar: {
 		width: wpd( WTP( 100 ) ),
-		height: hpd( HTP( 100 ) )
+		height: hpd( HTP( 100 ) ),
+		borderRadius: wpd( WTP( 50 ) )
 	},
 	jobTextWrapper: {
 		marginTop: 4,

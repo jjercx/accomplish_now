@@ -2,8 +2,9 @@
 /* eslint-disable no-trailing-spaces */
 import React from 'react';
 import {
-	View, Image, TouchableOpacity, Platform 
+	View, Image, TouchableOpacity, Platform
 } from 'react-native';
+import PropTypes from 'prop-types';
 import Typography from '../../typography/Typography';
 import Spacing from '../../spacing/Spacing';
 import s from './styles';
@@ -11,8 +12,8 @@ import s from './styles';
 const location = require( '../../../assets/images/icons/locationGray.png' );
 const fromNear = require( '../../../assets/images/icons/distanceGray.png' );
 
-const PlaceItem = ( { ...places } ) => (
-	<TouchableOpacity>
+const PlaceItem = ( { _onPress, ...places } ) => (
+	<TouchableOpacity onPress={() => _onPress()}>
 		<View style={{ flex: 1 }}>
 			<Image
 				style={Platform.OS === 'ios' ? s.widthImage : s.widthAndroid}
@@ -49,12 +50,15 @@ const PlaceItem = ( { ...places } ) => (
 					textAlign="left"
 				>
 					{places.distance}
-				</Typography> 
+				</Typography>
 			</View>
 			<Spacing size="smallPlus" />
 		</View>
 	</TouchableOpacity>
 );
 
+PlaceItem.propTypes = {
+	_onPress: PropTypes.func.isRequired
+};
 
 export default PlaceItem;

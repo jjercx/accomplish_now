@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import Firebase from 'react-native-firebase';
+import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
 import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
+import { actGetUser } from '../../../actions/users';
 import styles from './styles';
 import TabButton from '../tab-button/TabButton';
 import Spacing from '../../spacing/Spacing';
@@ -29,7 +33,8 @@ class NavBarOpen extends Component {
 	}
 
 	_onPressUserProfile = () => {
-		const { navigator } = this.props;
+		const { navigator, actGetUserInit } = this.props; // eslint-disable-line react/prop-types
+		actGetUserInit( Firebase.auth().currentUser.uid );
 		navigator.resetTo( { screen: 'userProfile', animationType: 'fade' } );
 	}
 
@@ -104,4 +109,8 @@ NavBarOpen.propTypes = {
 	navigator: NavigatorPropType.isRequired
 };
 
-export default NavBarOpen;
+const mapDispatchToProps = dispatch => bindActionCreators( {
+	actGetUserInit: actGetUser
+}, dispatch );
+
+export default compose( connect( null, mapDispatchToProps )( NavBarOpen ) );

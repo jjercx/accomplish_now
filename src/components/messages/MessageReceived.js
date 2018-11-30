@@ -1,17 +1,20 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import s from './styles';
 import Typography from '../typography/Typography';
+import Image from '../default-profile-image-on-loading/DefaultProfileImageOnLoading';
 
-const MessageReceived = ( { text, date, image } ) => (
+const MessageReceived = ( {
+	text, date, image, onUserPress
+} ) => (
 	<View style={s.mrContainer}>
-		<View style={s.mrImageContainer}>
+		<TouchableOpacity style={s.mrImageContainer} onPress={onUserPress}>
 			<Image
 				style={[ s.imageProfile ]}
 				source={image}
 			/>
-		</View>
+		</TouchableOpacity>
 		<View style={s.mrTextContainer}>
 			<View style={s.mrTextBuble}>
 				<Typography
@@ -39,7 +42,8 @@ const MessageReceived = ( { text, date, image } ) => (
 MessageReceived.propTypes = {
 	text: PropTypes.string.isRequired,
 	image: PropTypes.any.isRequired,
-	date: PropTypes.string.isRequired
+	date: PropTypes.string.isRequired,
+	onUserPress: PropTypes.func.isRequired
 };
 
 export default MessageReceived;

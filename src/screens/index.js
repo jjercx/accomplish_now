@@ -1,8 +1,5 @@
-import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
-import Firebase from 'react-native-firebase';
-import { Notification, RemoteMessage } from 'react-native-firebase';
 import store from '../store';
 import Onboarding from './Onboarding';
 import Home from './Home';
@@ -16,14 +13,19 @@ import SetProfile from './authentication/SetProfile';
 import CodeReceiveRegisterLogin from './authentication/CodeReceiveRegisterLogin';
 import AboutMe from './authentication/AboutMe';
 import AddAccomplishment from './authentication/AddAccomplishment';
+import Settings from './authentication/Settings';
 import UserProfile from './UserProfile';
 import Places from './Places';
 import Meetings from './Meetings';
 import Messages from './messages/Messages';
 import PeopleNearby from './PeopleNearby';
+import FilterPeople from './FilterPeople';
 import MessagesDetails from './messages/MessagesDetails';
 import Notifications from './messages/Notifications';
 import PlaceMapView from './places/placeMapView';
+import MeetingDetail from './meetings/meetingDetail';
+import PlaceDetails from './places/placeDetails';
+import PeopleSearch from './PeopleSearch';
 import NotificationHandler from './NotificationHandler';
 
 export function initApp( action ) {
@@ -71,8 +73,14 @@ export function registerScreens() {
 	Navigation.registerComponent( 'messages', () => Messages, store, Provider );
 	Navigation.registerComponent( 'meetings', () => Meetings );
 	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby );
+	Navigation.registerComponent( 'filterPeople', () => FilterPeople );
 	Navigation.registerComponent( 'messagesDetails', () => MessagesDetails, store, Provider );
-	Navigation.registerComponent( 'notifications', () => Notifications );
+	Navigation.registerComponent( 'peopleNearby', () => PeopleNearby, store, Provider );
+	Navigation.registerComponent( 'notifications', () => Notifications, store, Provider );
 	Navigation.registerComponent( 'placeMapView', () => PlaceMapView, store, Provider );
+	Navigation.registerComponent( 'meetingDetail', () => MeetingDetail, store, Provider );
+	Navigation.registerComponent( 'placeDetails', () => PlaceDetails );
+	Navigation.registerComponent( 'peopleSearch', () => PeopleSearch, store, Provider );
+	Navigation.registerComponent( 'settings', () => Settings, store, Provider );
 	Navigation.registerComponent( 'notificationHandler', () => NotificationHandler, store, Provider );
 }

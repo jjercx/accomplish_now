@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import { actGetMessages } from '../actions/messages';
 import { actSetProfileData } from '../actions/authentication';
+import { actGetUser } from '../actions/users';
 import UserSection from '../components/home/header/UserSection';
 import { HTP, WTP } from '../utils/dimensions';
 import Typography from '../components/typography/Typography';
@@ -49,6 +50,15 @@ const styles = StyleSheet.create( {
 		alignItems: 'center',
 		width: '100%',
 		justifyContent: 'flex-end'
+	},
+	activityIndicatorContainer: {
+		position: 'relative',
+		backgroundColor: colors.white,
+		height: '100%',
+		width: '100%',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center'
 	}
 } );
 
@@ -63,8 +73,13 @@ class Home extends Component {
 		navBarHidden: true
 	};
 
-	state = {
-		available: false
+	constructor( props ) {
+		super( props );
+		this.state = {
+			available: false
+		};
+
+		this._onSearchPress = this._onSearchPress.bind( this );
 	}
 
 	componentWillMount() {
@@ -116,10 +131,15 @@ class Home extends Component {
 		return connections;
 	}
 
-	_onValueChange( value ) {
-		let { actStatus } = this.props; // eslint-disable-line react/prop-types
-		actStatus( { availableStatus: value }, this.callback );
-		this.setState( { available: value } );
+	_onUserPicturePress = ( userId ) => {
+		const { navigator, actGetUserInit } = this.props; // eslint-disable-line react/prop-types
+		actGetUserInit( userId );
+		navigator.push( { screen: 'userProfile' } );
+	}
+
+	_onSearchPress() {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'peopleSearch' } );
 	}
 
 	_showPlacesList() {
@@ -127,11 +147,18 @@ class Home extends Component {
 		navigator.push( { screen: 'places' } );
 	}
 
+	_onValueChange( value ) {
+		let { actStatus } = this.props; // eslint-disable-line react/prop-types
+		actStatus( { availableStatus: value }, this.callback );
+		this.setState( { available: value } );
+	}
+
 	/* eslint-disable class-methods-use-this */
 	renderMyConnectionsSection( connections ) {
 		return (
 			<MyConnectionsSection
 				connections={connections}
+				onPress={this._onUserPicturePress}
 			/>
 		);
 	}
@@ -166,7 +193,14 @@ class Home extends Component {
 			isFetching, // eslint-disable-line react/prop-types
 			messages // eslint-disable-line react/prop-types
 		} = this.props;
-		if ( !user || isFetching ) return <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} />;
+
+		if ( !user || isFetching ) {
+			return (
+				<View style={styles.activityIndicatorContainer}>
+					<ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} />
+				</View>
+			);
+		}
 
 		let connections = this.getConnections( messages );
 
@@ -191,7 +225,7 @@ class Home extends Component {
 							/>
 						</View>
 					</View>
-					<HomeSearch />
+					<HomeSearch onPress={this._onSearchPress} />
 				</ImageBackground>
 				{ connections.length > 0
 					? this.renderMyConnectionsSection( connections )
@@ -215,7 +249,10 @@ const mapStateToProps = store => ( {
 	isFetching: store.messages.isFetching
 } );
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-	{ actMessagesInit: actGetMessages, actStatus: actSetProfileData }, dispatch );
+const mapDispatchToProps = dispatch => bindActionCreators( {
+	actMessagesInit: actGetMessages,
+	actGetUserInit: actGetUser,
+	actStatus: actSetProfileData
+}, dispatch );
 
 export default compose( connect( mapStateToProps, mapDispatchToProps )( Home ) );
