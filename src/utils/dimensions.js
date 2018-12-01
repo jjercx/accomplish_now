@@ -23,3 +23,7 @@ export const iPhoneSE = () => height < 570;
 export function responsiveSize( value ) {
 	return Math.round( value * REF_RATIO );
 }
+
+export function responsiveSizePlatForm( iphoneSize, androidSize ) {
+	return Platform.OS === 'ios' ? responsiveSize( iphoneSize ) : responsiveSize( androidSize );
+}
