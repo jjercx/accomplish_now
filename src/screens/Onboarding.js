@@ -87,12 +87,15 @@ const styles = {
 class Onboarding extends Component {
 	componentWillMount() {
 		const { actVerifyLoginConnect } = this.props;
-		actVerifyLoginConnect();
+		actVerifyLoginConnect( this.callback );
 	}
 
-	async componentDidMount() {
+	callback = ( res ) => {
+		if ( res === 'notLogged' ) {
+			return null;
+		}
 		const { navigator } = this.props;
-		await AsyncStorage.getUser().then( ( asyncUser ) => {
+			 AsyncStorage.getUser().then( ( asyncUser ) => {
 			if ( asyncUser ) navigator.push( { screen: 'home' } );
 		} );
 	}

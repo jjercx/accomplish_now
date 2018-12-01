@@ -9,8 +9,9 @@ export default class MessagesConfig {
 	}
 
 	static get membersPath() {
-		let { currentUser } = Firebase.auth();
-		return `members/${currentUser._user.uid}/uid`;
+		const auth = Firebase.auth();
+		const { uid } = auth.currentUser;
+		return `members/${uid}/uid`;
 	}
 
 	static get latestMessagePath() {

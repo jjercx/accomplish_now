@@ -130,6 +130,8 @@ export default class FirebaseConnector {
 				} ).catch( ( error ) => {
 					reject( error );
 				} );
+			} else {
+				reject( 'notLogged' );
 			}
 		} );
 	} )
