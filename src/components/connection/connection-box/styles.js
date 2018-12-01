@@ -1,5 +1,4 @@
-import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
-import { HTP, WTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 
 export default {
 	wrapperPerson: {
@@ -7,8 +6,8 @@ export default {
 		justifyContent: 'center'
 	},
 	imgPerson: {
-		width: wpd( WTP( 70 ) ),
-		height: hpd( HTP( 70 ) ),
+		width: responsiveSize( 70 ),
+		height: responsiveSize( 70 ),
 		borderRadius: 35
 	}
 };

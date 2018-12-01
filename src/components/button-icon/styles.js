@@ -1,6 +1,5 @@
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Colors from '../../theme/palette';
-import { HTP, WTP } from '../../utils/dimensions';
+import {  responsiveSize } from '../../utils/dimensions';
 
 export default {
 	button: {
@@ -8,28 +7,28 @@ export default {
 		alignItems: 'center'
 	},
 	buttonForwardContainer: {
-		width: wp( WTP( 60 ) ),
-		height: hp( HTP( 60 ) ),
-		borderRadius: hp( HTP( 60 ) ) / 2,
+		width: responsiveSize( 60 ),
+		height: responsiveSize( 60 ),
+		borderRadius: responsiveSize( 60 ) / 2,
 		backgroundColor: Colors.macaroneAndCheese,
 		alignItems: 'center',
 		justifyContent: 'center',
 		elevation: 10,
 		alignSelf: 'center',
-		marginTop: hp( HTP( 60 ) )
+		marginTop: responsiveSize( 60 )
 	},
 	icon: {
-		fontSize: hp( HTP( 25 ) ),
+		fontSize: responsiveSize( 25 ),
 		color: 'black',
-		margin: hp( HTP( 8 ) )
+		margin: responsiveSize( 8 )
 	},
 	label: {
 		textAlign: 'center',
-		fontSize: hp( HTP( 15 ) ),
+		fontSize: responsiveSize( 15 ),
 		fontWeight: '400'
 	},
 	iconEdit: {
-		marginRight: wp( WTP( 8 ) )
+		marginRight: responsiveSize( 8 )
 	},
 	buttonEdit: {
 		flexDirection: 'row',
@@ -38,6 +37,6 @@ export default {
 	},
 	buttonAdd: {
 		alignSelf: 'center',
-		marginVertical: hp( HTP( 10 ) )
+		marginVertical: responsiveSize( 10 )
 	}
 };

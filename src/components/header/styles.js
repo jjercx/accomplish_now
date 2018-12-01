@@ -1,8 +1,4 @@
-import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp
-} from 'react-native-responsive-screen';
-import { HTP, WTP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 
 export default {
 	headerButtonsContainer: {
@@ -15,10 +11,10 @@ export default {
 		alignItems: 'flex-start'
 	},
 	buttonAccomplish: {
-		paddingTop: hp( HTP( 10 ) ),
-		paddingBottom: hp( HTP( 5 ) ),
-		paddingLeft: wp( WTP( 5 ) ),
-		paddingRight: wp( WTP( 10 ) )
+		paddingTop: responsiveSize( 10 ),
+		paddingBottom: responsiveSize( 5 ),
+		paddingLeft: responsiveSize( 5 ),
+		paddingRight: responsiveSize( 10 )
 	},
 	headerButtonNotificationsContainer: {
 		flexDirection: 'row',
@@ -28,15 +24,15 @@ export default {
 	},
 	notification: {
 		backgroundColor: 'red',
-		width: wp( WTP( 8 ) ),
-		height: hp( HTP( 8 ) ),
+		width: responsiveSize( 8 ),
+		height: responsiveSize( 8 ),
 		borderRadius: 999,
 		position: 'absolute',
-		top: hp( HTP( 10 ) ),
-		right: wp( WTP( 11 ) )
+		top: responsiveSize( 10 ),
+		right: responsiveSize( 11 )
 	},
 	logo: {
-		width: wp( WTP( 18 ) ),
-		height: hp( HTP( 18 ) )
+		width: responsiveSize( 18 ),
+		height: responsiveSize( 18 )
 	}
 };

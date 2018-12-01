@@ -1,15 +1,14 @@
 import { StyleSheet } from 'react-native';
-import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
-import { HTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 
 const styles = StyleSheet.create( {
 	imageBackground: {
-		height: hpd( HTP( 132 ) ),
+		height: responsiveSize( 132 ),
 		width: '100%',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'flex-start',
-		paddingTop: hpd( HTP( 20 ) )
+		paddingTop: responsiveSize( 20 )
 	}
 } );
 

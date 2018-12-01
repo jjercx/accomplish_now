@@ -1,5 +1,4 @@
-import { widthPercentageToDP as wpd } from 'react-native-responsive-screen';
-import { WTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 
 export default {
 	container: {
@@ -9,7 +8,7 @@ export default {
 		alignItems: 'flex-start',
 		justifyContent: 'center',
 		flex: 1,
-		marginLeft: wpd( WTP( 22 ) ),
+		marginLeft: responsiveSize( 22 ),
 		marginTop: 5
 	}
 };

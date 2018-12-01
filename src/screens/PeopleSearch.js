@@ -11,14 +11,9 @@ import {
 	ActivityIndicator
 } from 'react-native';
 
-import {
-	heightPercentageToDP as hpd,
-	widthPercentageToDP as wpd
-} from 'react-native-responsive-screen';
-
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
-import { HTP, WTP, iPhoneSE } from '../utils/dimensions';
+import {  responsiveSize, iPhoneSE } from '../utils/dimensions';
 import NavigatorPropType from '../types/navigator';
 import NavBar from '../components/navbar/NavBar';
 import PersonCard from '../components/person/person-card/PersonCard';
@@ -34,11 +29,11 @@ const styles = StyleSheet.create( {
 	},
 	subContainer: {
 		flex: 1,
-		marginTop: hpd( HTP( Platform.OS === 'ios' ? 20 : 0 ) ),
-		marginHorizontal: wpd( WTP( 5 ) )
+		marginTop: responsiveSize( Platform.OS === 'ios' ? 20 : 0 ),
+		marginHorizontal: responsiveSize( 5 )
 	},
 	headerContainer: {
-		height: hpd( HTP( 60 ) )
+		height: responsiveSize( 60 )
 	},
 	resultsContainer: {
 		flex: 1,
@@ -46,8 +41,8 @@ const styles = StyleSheet.create( {
 	},
 	flatList: {
 		flex: 1,
-		marginTop: hpd( HTP( 15 ) ),
-		marginBottom: hpd( HTP( 40 ) ),
+		marginTop: responsiveSize( 15 ),
+		marginBottom: responsiveSize( 40 ),
 		alignSelf: iPhoneSE() ? 'auto' : 'center'
 	},
 	invisible: {

@@ -1,9 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp
-} from 'react-native-responsive-screen';
-import { HTP, WTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 import Colors from '../../../theme/palette';
 
 export default StyleSheet.create( {
@@ -12,7 +8,7 @@ export default StyleSheet.create( {
 		backgroundColor: Colors.paleGreyThree
 	},
 	imageContainer: {
-		height: hp( HTP( 280 ) ),
+		height: responsiveSize( 280 ),
 		width: '100%'
 	},
 	placeImage: {
@@ -20,57 +16,57 @@ export default StyleSheet.create( {
 	},
 	shadowStatusBar: {
 		backgroundColor: '#00000080',
-		height: hp( HTP( 18 ) ),
+		height: responsiveSize( 18 ),
 		width: '100%',
 		position: 'absolute',
 		zIndex: 50
 	},
 	headerIconsContainer: {
 		width: '100%',
-		top: hp( HTP( 18 ) ),
-		height: hp( HTP( 50 ) ),
+		top: responsiveSize( 18 ),
+		height: responsiveSize( 50 ),
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center'
 	},
 	content: {
 		flex: 1,
-		paddingTop: hp( HTP( 15 ) ),
-		paddingBottom: hp( HTP( 15 ) ),
-		paddingLeft: wp( WTP( 15 ) ),
-		paddingRight: wp( WTP( 15 ) )
+		paddingTop: responsiveSize( 15 ),
+		paddingBottom: responsiveSize( 15 ),
+		paddingLeft: responsiveSize( 15 ),
+		paddingRight: responsiveSize( 15 )
 	},
 	placeLocationContainer: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		marginBottom: hp( HTP( 15 ) ),
-		marginTop: hp( HTP( 3 ) )
+		marginBottom: responsiveSize( 15 ),
+		marginTop: responsiveSize( 3 )
 	},
 	placeLocationIcon: {
-		height: hp( HTP( 20 ) ),
-		width: wp( WTP( 20 ) ),
-		marginRight: wp( WTP( 5 ) )
+		height: responsiveSize( 20 ),
+		width: responsiveSize( 20 ),
+		marginRight: responsiveSize( 5 )
 	},
 	card: {
 		backgroundColor: Colors.white,
 		borderRadius: 5,
 		width: '100%',
-		marginBottom: hp( HTP( 10 ) ),
-		paddingTop: hp( HTP( 13 ) ),
-		paddingBottom: hp( HTP( 13 ) ),
-		paddingLeft: wp( WTP( 20 ) ),
-		paddingRight: wp( WTP( 20 ) )
+		marginBottom: responsiveSize( 10 ),
+		paddingTop: responsiveSize( 13 ),
+		paddingBottom: responsiveSize( 13 ),
+		paddingLeft: responsiveSize( 20 ),
+		paddingRight: responsiveSize( 20 )
 	},
 	cardHeader: {
 		flexDirection: 'row',
 		alignItems: 'center'
 	},
 	imageCardHeader: {
-		marginRight: wp( WTP( 20 ) )
+		marginRight: responsiveSize( 20 )
 	},
 	cardContent: {
-		paddingTop: hp( HTP( 15 ) ),
-		paddingBottom: hp( HTP( 10 ) )
+		paddingTop: responsiveSize( 15 ),
+		paddingBottom: responsiveSize( 10 )
 	},
 	openingHoursCardContent: {
 		flexDirection: 'row',
@@ -94,10 +90,10 @@ export default StyleSheet.create( {
 		borderRadius: 999,
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingTop: hp( HTP( 10 ) ),
-		paddingBottom: hp( HTP( 10 ) ),
-		paddingLeft: wp( WTP( 15 ) ),
-		paddingRight: wp( WTP( 15 ) )
+		paddingTop: responsiveSize( 10 ),
+		paddingBottom: responsiveSize( 10 ),
+		paddingLeft: responsiveSize( 15 ),
+		paddingRight: responsiveSize( 15 )
 	},
 	amenitiesCardContent: {
 		flexDirection: 'row',
@@ -109,13 +105,13 @@ export default StyleSheet.create( {
 		borderRadius: 999,
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingTop: hp( HTP( 5 ) ),
-		paddingBottom: hp( HTP( 5 ) ),
-		paddingLeft: wp( WTP( 13 ) ),
-		paddingRight: wp( WTP( 13 ) ),
-		marginRight: wp( WTP( 6 ) ),
-		marginLeft: wp( WTP( 6 ) ),
-		marginTop: hp( HTP( 5 ) ),
-		marginBottom: hp( HTP( 5 ) )
+		paddingTop: responsiveSize( 5 ),
+		paddingBottom: responsiveSize( 5 ),
+		paddingLeft: responsiveSize( 13 ),
+		paddingRight: responsiveSize( 13 ),
+		marginRight: responsiveSize( 6 ),
+		marginLeft: responsiveSize( 6 ),
+		marginTop: responsiveSize( 5 ),
+		marginBottom: responsiveSize( 5 )
 	}
 } );

@@ -5,11 +5,7 @@ import React, { Component } from 'react';
 import {
 	View, StyleSheet, StatusBar, FlatList, Platform
 } from 'react-native';
-import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp
-} from 'react-native-responsive-screen';
-import { HTP, WTP } from '../utils/dimensions';
+import { responsiveSize } from '../utils/dimensions';
 import NavigatorPropType from '../types/navigator';
 import NavBar from '../components/navbar/NavBar';
 import PlaceItem from '../components/place/place-item/PlaceItem';
@@ -28,13 +24,13 @@ const styles = StyleSheet.create( {
 		flex: 1
 	},
 	subContainer: {
-		marginTop: hp( HTP( Platform.OS === 'ios' ? 20 : 0 ) ),
-		marginLeft: wp( WTP( 15 ) )
+		marginTop: responsiveSize( Platform.OS === 'ios' ? 20 : 0 ),
+		marginLeft: responsiveSize( 15 )
 	},
 	flatList: {
 		flex: 1,
-		marginTop: hp( HTP( 5 ) ),
-		marginLeft: wp( WTP( 15 ) )
+		marginTop: responsiveSize( 5 ),
+		marginLeft: responsiveSize( 15 )
 	}
 } );
 

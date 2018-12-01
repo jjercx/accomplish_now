@@ -1,27 +1,23 @@
-import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp
-} from 'react-native-responsive-screen';
-import { HTP, WTP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 import Colors from '../../theme/palette';
 
 export default {
 	message: {
 		flex: 1,
 		flexDirection: 'row',
-		height: hp( HTP( 90 ) ),
-		paddingTop: hp( HTP( 15 ) ),
-		paddingBottom: hp( HTP( 10 ) ),
+		height: responsiveSize( 90 ),
+		paddingTop: responsiveSize( 15 ),
+		paddingBottom: responsiveSize( 10 ),
 		borderBottomWidth: 0.4,
 		borderBottomColor: Colors.pinkishGrey
 	},
 	imageProfile: {
-		width: wp( WTP( 50 ) ),
-		height: hp( HTP( 50 ) ),
-		borderRadius: hp( HTP( 50 ) ) / 2
+		width: responsiveSize( 50 ),
+		height: responsiveSize( 50 ),
+		borderRadius: responsiveSize( 50 ) / 2
 	},
 	imageContainer: {
-		paddingRight: wp( WTP( 30 ) ),
+		paddingRight: responsiveSize( 30 ),
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center'
@@ -34,7 +30,7 @@ export default {
 		alignItems: 'flex-end'
 	},
 	dateContainer: {
-		marginRight: wp( WTP( 10 ) )
+		marginRight: responsiveSize( 10 )
 	},
 	textButtonAndNameContainer: {
 		flex: 1,
@@ -44,7 +40,7 @@ export default {
 		flex: 1
 	},
 	iconContainer: {
-		marginTop: hp( HTP( 5 ) )
+		marginTop: responsiveSize( 5 )
 	},
 
 	// message received ─────────────────────────────────────────────────────────────────────────────
@@ -130,8 +126,8 @@ export default {
 		marginRight: 20
 	},
 	npImage: {
-		width: wp( WTP( 60 ) ),
-		height: hp( HTP( 60 ) ),
+		width: responsiveSize( 60 ),
+		height: responsiveSize( 60 ),
 		borderRadius: 30
 	}
 };

@@ -1,17 +1,13 @@
-import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp
-} from 'react-native-responsive-screen';
 import { Platform } from 'react-native';
-import { HTP, WTP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 import Colors from '../../theme/palette';
 
 export default {
 	meeting: {
 		flex: 1,
 		flexDirection: 'row',
-		height: hp( HTP( 120 ) ),
-		paddingTop: hp( HTP( 20 ) ),
+		height: responsiveSize( 120 ),
+		paddingTop: responsiveSize( 20 ),
 		borderBottomWidth: 0.1,
 		borderBottomColor: Colors.pinkishGrey,
 		backgroundColor: Colors.white,
@@ -23,15 +19,15 @@ export default {
 			width: 0,
 			height: 2
 		},
-		marginBottom: hp( HTP( 15 ) )
+		marginBottom: responsiveSize( 15 )
 	},
 	imageUser: {
-		width: wp( WTP( 65 ) ),
-		height: hp( HTP( 65 ) ),
+		width: responsiveSize( 65 ),
+		height: responsiveSize( 65 ),
 		flexShrink: 0,
 		alignSelf: 'flex-end',
-		marginLeft: wp( WTP( -35 ) ),
-		marginTop: wp( WTP( -62 ) ),
+		marginLeft: responsiveSize( -35 ),
+		marginTop: responsiveSize( -62 ),
 		borderWidth: 2.5,
 		borderRadius: 32.5,
 		borderColor: Colors.white,
@@ -39,27 +35,27 @@ export default {
 		overflow: 'hidden'
 	},
 	imageUserRight: {
-		width: wp( WTP( 60 ) ),
-		height: hp( HTP( 60 ) ),
+		width: responsiveSize( 60 ),
+		height: responsiveSize( 60 ),
 		flexShrink: 0
 	},
 	imageContainer: {
-		paddingLeft: wp( WTP( 15 ) ),
+		paddingLeft: responsiveSize( 15 ),
 		display: 'flex',
 		flexDirection: 'column',
-		width: wp( WTP( 115 ) )
+		width: responsiveSize( 115 )
 	},
 	bottomStatus: {
 		flex: 1,
 		flexDirection: 'row',
 		justifyContent: 'center',
-		width: wp( WTP( 125 ) ),
-		marginTop: wp( WTP( 5 ) )
+		width: responsiveSize( 125 ),
+		marginTop: responsiveSize( 5 )
 	},
 	dataContainer: {
 		flex: 1,
 		justifyContent: 'flex-start',
-		marginTop: hp( HTP( 5 ) )
+		marginTop: responsiveSize( 5 )
 	},
 	textButtonAndNameContainer: {
 		flex: 1,
@@ -70,7 +66,7 @@ export default {
 		flex: 1
 	},
 	iconContainer: {
-		marginTop: hp( HTP( 20 ) ),
-		marginRight: wp( WTP( 15 ) )
+		marginTop: responsiveSize( 20 ),
+		marginRight: responsiveSize( 15 )
 	}
 };

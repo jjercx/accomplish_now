@@ -1,31 +1,10 @@
 import { Dimensions, Platform, PixelRatio } from 'react-native';
-import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp
-} from 'react-native-responsive-screen';
+import { REF_RATIO } from './responsive';
 
 let { height, width } = Dimensions.get( 'window' );
 
 export const H = height;
 export const W = width;
-
-/**
- * Transform a number of pixels of height to the correspondent
- 	percent of the device screen
- */
-export function HTP( value ) {
-	const percentHeight = ( value / H ) * 100;
-	return percentHeight;
-}
-
-/**
- * Transform a number of pixels of width to the correspondent
- 	percent of the device screen
- */
-export function WTP( value ) {
-	const percentWidth = ( value / W ) * 100;
-	return percentWidth;
-}
 
 // based on iphone 5s's scale
 const scale = width / 320;
@@ -41,10 +20,6 @@ export function normalize( size ) {
 
 export const iPhoneSE = () => height < 570;
 
-export function normalizeHP( value ) {
-	return Math.round( hp( value ) );
-}
-
-export function normalizeWP( value ) {
-	return Math.round( wp( value ) );
+export function responsiveSize( value ) {
+	return Math.round( value * REF_RATIO );
 }

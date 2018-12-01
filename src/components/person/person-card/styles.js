@@ -1,19 +1,14 @@
 import { StyleSheet } from 'react-native';
 
-import {
-	heightPercentageToDP as hpd,
-	widthPercentageToDP as wpd
-} from 'react-native-responsive-screen';
-
-import { HTP, WTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 import colors from '../../../theme/palette';
 
 const styles = StyleSheet.create( {
 	cardContainer: {
-		marginHorizontal: wpd( WTP( 5 ) ),
-		marginVertical: wpd( WTP( 5 ) ),
-		paddingVertical: hpd( HTP( 10 ) ),
-		paddingHorizontal: wpd( WTP( 10 ) ),
+		marginHorizontal: responsiveSize( 5 ),
+		marginVertical: responsiveSize( 5 ),
+		paddingVertical: responsiveSize( 10 ),
+		paddingHorizontal: responsiveSize( 10 ),
 		backgroundColor: colors.white,
 		borderRadius: 5
 	},
@@ -21,42 +16,42 @@ const styles = StyleSheet.create( {
 		flexDirection: 'row',
 		justifyContent: 'flex-end',
 		alignItems: 'center',
-		height: hpd( HTP( 20 ) )
+		height: responsiveSize( 20 )
 	},
 	avatarWrapper: {
-		marginTop: hpd( HTP( 20 ) ),
+		marginTop: responsiveSize( 20 ),
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: colors.white,
 		borderRadius: 100
 	},
 	personInfoWrapper: {
-		paddingVertical: hpd( HTP( 15 ) )
+		paddingVertical: responsiveSize( 15 )
 	},
 	statsWrapper: {
 		flex: 1,
 		flexDirection: 'row',
 		justifyContent: 'center',
-		minWidth: wpd( WTP( 150 ) )
+		minWidth: responsiveSize( 150 )
 	},
 	ratingWrapper: {
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginHorizontal: wpd( WTP( 5 ) )
+		marginHorizontal: responsiveSize( 5 )
 	},
 	meetingsCountWrapper: {
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginHorizontal: wpd( WTP( 5 ) )
+		marginHorizontal: responsiveSize( 5 )
 	},
 	skillsWrapper: {
 		flex: 1,
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		marginTop: hpd( HTP( 20 ) ),
-		marginBottom: hpd( HTP( 10 ) )
+		marginTop: responsiveSize( 20 ),
+		marginBottom: responsiveSize( 10 )
 	},
 	fewSkillsWrapper: {
 		flexWrap: 'nowrap',
@@ -66,17 +61,17 @@ const styles = StyleSheet.create( {
 		flex: -1,
 		backgroundColor: colors.sliderCircles,
 		borderRadius: 100,
-		marginHorizontal: wpd( WTP( 5 ) ),
-		paddingVertical: hpd( HTP( 5 ) ),
-		paddingHorizontal: wpd( WTP( 8 ) )
+		marginHorizontal: responsiveSize( 5 ),
+		paddingVertical: responsiveSize( 5 ),
+		paddingHorizontal: responsiveSize( 8 )
 	},
 	avatar: {
-		width: wpd( WTP( 100 ) ),
-		height: hpd( HTP( 100 ) ),
+		width: responsiveSize( 100 ),
+		height: responsiveSize( 100 ),
 		borderRadius: 50
 	},
 	icon: {
-		marginRight: wpd( WTP( 5 ) )
+		marginRight: responsiveSize( 5 )
 	}
 } );
 

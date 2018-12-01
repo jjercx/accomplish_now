@@ -7,12 +7,8 @@ import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper';
 
-import {
-	widthPercentageToDP as wd,
-	heightPercentageToDP as hd
-} from 'react-native-responsive-screen';
 import AsyncStorage from '../utils/AsyncStorage';
-import { HTP, WTP } from '../utils/dimensions';
+import { responsiveSize } from '../utils/dimensions';
 import { actVerifyLogin } from '../actions/authentication';
 import OnboardingSlide from '../components/onboarding/onboarding-slide/OnboardingSlide';
 import NavigatorPropType from '../types/navigator';
@@ -46,15 +42,15 @@ const styles = {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		bottom: hd( '5%' ),
-		marginHorizontal: wd( WTP( spacings.medium ) )
+		bottom: responsiveSize( 30 ),
+		marginHorizontal: responsiveSize( spacings.medium )
 	},
 	slide: {
 		flex: 1
 	},
 	logo: {
-		width: wd( WTP( 192 ) ),
-		height: hd( HTP( 105 ) )
+		width: responsiveSize( 192 ),
+		height: responsiveSize( 105 )
 	},
 	wrapperButtons: {
 		flexDirection: 'row'
@@ -63,8 +59,8 @@ const styles = {
 		flex: 0.5
 	},
 	paginationStyle: {
-		bottom: hd( '25%' ),
-		marginRight: wd( WTP( 5 ) )
+		bottom: responsiveSize( '25%' ),
+		marginRight: responsiveSize( 5 )
 	},
 	circleOff: {
 		backgroundColor: colors.sliderCircles,

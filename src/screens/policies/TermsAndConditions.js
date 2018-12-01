@@ -5,23 +5,22 @@ import {
 	View,
 	ScrollView
 } from 'react-native';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Typography from '../../components/typography/Typography';
 import Header from '../../components/register/Header';
 import Spacing from '../../components/spacing/Spacing';
-import { HTP, WTP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 
 const styles = {
 	container: {
 		flex: 1
 	},
 	infoWrapper: {
-		marginLeft: wp( WTP( 24 ) ),
-		marginTop: hp( HTP( 20 ) ),
-		marginRight: wp( WTP( 33 ) )
+		marginLeft: responsiveSize( 24 ),
+		marginTop: responsiveSize( 20 ),
+		marginRight: responsiveSize( 33 )
 	},
 	scrollView: {
-		paddingBottom: hp( HTP( 20 ) )
+		paddingBottom: responsiveSize( 20 )
 	}
 };
 

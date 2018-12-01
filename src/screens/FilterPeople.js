@@ -5,14 +5,10 @@ import {
 	View, StyleSheet, Modal, Image, Slider, Switch
 } from 'react-native';
 
-import {
-	widthPercentageToDP as wpd
-} from 'react-native-responsive-screen';
-
 import Button from '../components/button/Button';
 import Spacing from '../components/spacing/Spacing';
 import Typography from '../components/typography/Typography';
-import { WTP } from '../utils/dimensions';
+import { responsiveSize } from '../utils/dimensions';
 
 import colors from '../theme/palette';
 
@@ -28,27 +24,27 @@ const styles = StyleSheet.create( {
 	},
 	buttonWrapper: {
 		marginTop: 40,
-		paddingHorizontal: wpd( WTP( 30 ) )
+		paddingHorizontal: responsiveSize( 30 )
 	},
 	modalContent: {
 		backgroundColor: colors.white,
 		borderRadius: 15,
-		marginHorizontal: wpd( WTP( 20 ) )
+		marginHorizontal: responsiveSize( 20 )
 	},
 	optionsWrapper: {
 		alignItems: 'center',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		marginVertical: wpd( WTP( 20 ) )
+		marginVertical: responsiveSize( 20 )
 	},
 	modalHeader: {
 		alignItems: 'center',
 		borderBottomColor: colors.pinkishGrey,
 		borderBottomWidth: 1,
-		paddingVertical: wpd( WTP( 30 ) )
+		paddingVertical: responsiveSize( 30 )
 	},
 	modalBody: {
-		paddingHorizontal: wpd( WTP( 40 ) )
+		paddingHorizontal: responsiveSize( 40 )
 	},
 	resizedComponent: {
 		transform: [ { scaleX: 0.8 }, { scaleY: 0.8 } ]

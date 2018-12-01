@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
-import { HTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 import colors from '../../../theme/palette';
 
 const styles = StyleSheet.create( {
@@ -19,11 +18,11 @@ const styles = StyleSheet.create( {
 		alignItems: 'center'
 	},
 	icon: {
-		marginBottom: hpd( HTP( 15 ) )
+		marginBottom: responsiveSize( 15 )
 	},
 	textWrapper: {
 		position: 'absolute',
-		bottom: hpd( HTP( -10 ) )
+		bottom: responsiveSize( -10 )
 	}
 } );
 

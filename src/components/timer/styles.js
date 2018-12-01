@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { normalizeHP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 
 export default StyleSheet.create( {
 	container: {
@@ -10,22 +10,22 @@ export default StyleSheet.create( {
 		alignItems: 'center'
 	},
 	imageContainer: {
-		width: normalizeHP( 15 ),
-		height: normalizeHP( 15 )
+		width: responsiveSize( 100 ),
+		height: responsiveSize( 100 )
 	},
 	timerCount: {
 		width: '60%',
-		marginTop: normalizeHP( 2 )
+		marginTop: responsiveSize( 12 )
 	},
 	buttonContainer: {
 		width: '100%',
-		height: normalizeHP( 10 ),
+		height: responsiveSize( 60 ),
 		flexDirection: 'row',
 		alignSelf: 'center'
 	},
 	buttonWrapper: {
 		flex: 1,
-		paddingVertical: normalizeHP( 1 ),
+		paddingVertical: responsiveSize( 6 ),
 		justifyContent: 'center',
 		alignItems: 'center'
 
