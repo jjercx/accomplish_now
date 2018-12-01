@@ -71,14 +71,19 @@ export const actVerifyAndSignIn = ( uid, code, callback ) => ( dispatch ) => {
 		} );
 };
 
-export const actVerifyLogin = () => ( dispatch ) => {
+export const actVerifyLogin = callback => ( dispatch ) => {
 	AuthenticationServices.verifyLogin().then( () => {
 		AuthenticationServices.getUserData().then( ( user ) => {
 			dispatch( {
 				type: SET_USER,
 				payload: user
 			} );
+			callback( 'ok' );
+		} ).catch( ( e ) => {
+			callback( e );
 		} );
+	} ).catch( ( e ) => {
+		callback( e );
 	} );
 };
 

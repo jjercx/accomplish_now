@@ -356,6 +356,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		841CD5A721AF62880008B9C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ABFB4BB6AF84EEEA61784C5 /* RNViewOverflow.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNViewOverflow;
+		};
 		848F774C218DE0DB00B4BBDF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A35C2D8B7BFD4AAEB269EC4E /* RNFirebase.xcodeproj */;
@@ -726,6 +733,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		841CD57A21AF62880008B9C7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				841CD5A821AF62880008B9C7 /* libRNViewOverflow.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8477CEAD217AB49300C7C14B /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -954,6 +969,10 @@
 				{
 					ProductGroup = 696403CD2187AC5F00F96AEC /* Products */;
 					ProjectRef = 696403CC2187AC5F00F96AEC /* RNImagePicker.xcodeproj */;
+				},
+				{
+					ProductGroup = 841CD57A21AF62880008B9C7 /* Products */;
+					ProjectRef = 5ABFB4BB6AF84EEEA61784C5 /* RNViewOverflow.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1245,6 +1264,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		841CD5A821AF62880008B9C7 /* libRNViewOverflow.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNViewOverflow.a;
+			remoteRef = 841CD5A721AF62880008B9C7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		848F774D218DE0DB00B4BBDF /* libRNFirebase.a */ = {
