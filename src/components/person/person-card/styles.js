@@ -68,7 +68,7 @@ const styles = StyleSheet.create( {
 	avatar: {
 		width: responsiveSize( 100 ),
 		height: responsiveSize( 100 ),
-		borderRadius: 50
+		borderRadius: responsiveSize( 50 )
 	},
 	icon: {
 		marginRight: responsiveSize( 5 )

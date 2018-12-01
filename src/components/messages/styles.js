@@ -128,6 +128,6 @@ export default {
 	npImage: {
 		width: responsiveSize( 60 ),
 		height: responsiveSize( 60 ),
-		borderRadius: 30
+		borderRadius: responsiveSize( 30 )
 	}
 };

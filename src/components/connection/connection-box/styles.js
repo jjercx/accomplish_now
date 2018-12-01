@@ -8,6 +8,6 @@ export default {
 	imgPerson: {
 		width: responsiveSize( 70 ),
 		height: responsiveSize( 70 ),
-		borderRadius: 35
+		borderRadius: responsiveSize( 35 )
 	}
 };

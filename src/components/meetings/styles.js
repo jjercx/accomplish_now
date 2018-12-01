@@ -29,7 +29,7 @@ export default {
 		marginLeft: responsiveSize( -35 ),
 		marginTop: responsiveSize( -62 ),
 		borderWidth: 2.5,
-		borderRadius: 32.5,
+		borderRadius: responsiveSize( 32.5 ),
 		borderColor: Colors.white,
 		resizeMode: 'cover',
 		overflow: 'hidden'

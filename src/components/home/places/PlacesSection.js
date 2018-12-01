@@ -16,6 +16,7 @@ const PlacesSection = ( {
 			styles.container,
 			placesDetailActive ? styles.containerPlacesDetailActive : null ]}
 	>
+		<Spacing size="small" />
 		<TitleSection
 			title={title}
 			placesDetailActive={placesDetailActive}

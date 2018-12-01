@@ -43,7 +43,6 @@ class NavBarOpen extends Component {
 	}
 
 	render() {
-		const percentSmaller = 0.10;
 		return (
 			<View style={styles.navBarOpenContainer}>
 				<View style={styles.navBarOpen}>
@@ -51,8 +50,8 @@ class NavBarOpen extends Component {
 						<TabButton
 							text="DASHBOARD"
 							image={require( '../../../assets/images/navbar/dashboardon.png' )}
-							imageWidth={responsiveSize( 29 )}
-							imageHeight={responsiveSize( 20 )}
+							imageWidth={responsiveSize( 29.7 )}
+							imageHeight={responsiveSize( 30.3 )}
 							onPress={() => this._onPressDashboard()}
 						/>
 						<Spacing size="base" horizontal />

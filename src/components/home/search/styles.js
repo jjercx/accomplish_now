@@ -9,10 +9,10 @@ export default {
 		width: '100%'
 	},
 	inputSearch: {
-		width: responsiveSize( 200 ),
+		width: responsiveSize( 280 ),
 		backgroundColor: colors.graySearchBar,
 		height: responsiveSize( 55 ),
-		borderRadius: 10,
+		borderRadius: responsiveSize( 10 ),
 		shadowColor: colors.shadowGray,
 		shadowOffset: {
 			width: 2,

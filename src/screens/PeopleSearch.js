@@ -13,7 +13,7 @@ import {
 
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
-import {  responsiveSize, iPhoneSE } from '../utils/dimensions';
+import { responsiveSize, iPhoneSE } from '../utils/dimensions';
 import NavigatorPropType from '../types/navigator';
 import NavBar from '../components/navbar/NavBar';
 import PersonCard from '../components/person/person-card/PersonCard';
