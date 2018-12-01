@@ -10,13 +10,20 @@ const styles = StyleSheet.create( {
 		paddingVertical: responsiveSize( 10 ),
 		paddingHorizontal: responsiveSize( 10 ),
 		backgroundColor: colors.white,
-		borderRadius: 5
+		borderRadius: 5,
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: '48%'
+	},
+	cardContainerFullWidth: {
+		width: '98%'
 	},
 	distanceWrapper: {
 		flexDirection: 'row',
 		justifyContent: 'flex-end',
 		alignItems: 'center',
-		height: responsiveSize( 20 )
+		height: responsiveSize( 20 ),
+		width: '100%'
 	},
 	avatarWrapper: {
 		marginTop: responsiveSize( 20 ),

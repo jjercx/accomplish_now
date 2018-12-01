@@ -1,4 +1,5 @@
 import GeoLib from 'geolib';
+import { Alert } from 'react-native';
 import PeopleServices from '../provider/people/PeopleServices';
 import {
 	GET_PEOPLE_SEARCH_RESULTS,
@@ -52,6 +53,15 @@ export const actGetPeopleSearchResults = searchText => ( dispatch ) => {
 			} );
 
 		navigator.geolocation.getCurrentPosition( ( position ) => {
+			if ( !position ) {
+				Alert.alert( 'You need to grant location permissions to use this function' );
+				dispatch( {
+					type: GET_PEOPLE_SEARCH_RESULTS,
+					payload: []
+				} );
+				return;
+			}
+
 			const { coords: { latitude, longitude } } = position;
 			const peopleInfo = peopleIds.map( ( k ) => {
 				const peopleAux = { ...people[ k ] };
@@ -90,6 +100,12 @@ export const actGetPeopleSearchResults = searchText => ( dispatch ) => {
 				type: GET_PEOPLE_SEARCH_RESULTS,
 				payload: peopleInfo
 			} );
-		} );
+		}, () => {
+			Alert.alert( 'You need to grant location permissions to use this function' );
+			dispatch( {
+				type: GET_PEOPLE_SEARCH_RESULTS,
+				payload: []
+			} );
+		 } );
 	} );
 };
