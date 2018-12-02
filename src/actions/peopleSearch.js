@@ -9,103 +9,74 @@ import {
 import Person, { PersonState } from '../entities/Person';
 import Skill, { ComputedSkill } from '../entities/Skill';
 
-// id: k, ...people[ k ]
+const gpsError = ( dispatch ) => {
+	Alert.alert( 'You need to grant location permissions to use this function' );
+	dispatch( { type: GET_PEOPLE_SEARCH_RESULTS, payload: [] } );
+};
+
 export const actGetPeopleSearchResults = searchText => ( dispatch ) => {
-	dispatch( {
-		type: START_SEARCHING_PEOPLE
-	} );
+	dispatch( { type: START_SEARCHING_PEOPLE } );
 	PeopleServices.getPeople( ( people ) => {
-		searchText = searchText.toLowerCase();
-		const peopleIds = Object.keys( people )
-			.filter( ( personId ) => {
-				if ( people[ personId ].basicInfo === undefined ) {
-					return false;
-				}
+		navigator.geolocation.getCurrentPosition( ( position ) => {
+			if ( !position ) { gpsError( dispatch ); return; }
+			const { coords: { latitude, longitude } } = position;
+			// ─────────────────────────────────────────────────────────────────
 
-				if ( people[ personId ].location === undefined ) {
-					return false;
-				}
-
-				const { firstName, lastName } = people[ personId ].basicInfo;
-				return ( firstName !== undefined ) && ( lastName !== undefined );
-			} )
-			.filter( ( personId ) => {
-				const {
-					basicInfo: { firstName, lastName },
-					skills = []
-				} = people[ personId ];
-
-				if (
-					( firstName.toLowerCase().includes( searchText ) )
-					|| ( lastName.toLowerCase().includes( searchText ) )
-				) {
-					return true;
-				}
-
-				if ( skills.some( ( skill ) => {
-					const { name } = skill;
-					return ( name !== undefined && name.toLowerCase().includes( searchText ) );
-				 } ) ) {
-					return true;
-				}
-
-				return false;
+			const peopleIds = Object.keys( people ).filter( personId => (
+				people[ personId ].basicInfo
+				&& people[ personId ].location
+				&& people[ personId ].basicInfo.firstName
+				&& people[ personId ].basicInfo.lastName
+			) ).filter( ( personId ) => {
+				searchText = searchText.toLowerCase();
+				const { basicInfo: { firstName, lastName }, skills = [] } = people[ personId ];
+				return (
+					firstName.toLowerCase().includes( searchText )
+					|| lastName.toLowerCase().includes( searchText )
+					|| skills.some( skill => skill.name && skill.name.toLowerCase().includes( searchText ) )
+				);
 			} );
 
-		navigator.geolocation.getCurrentPosition( ( position ) => {
-			if ( !position ) {
-				Alert.alert( 'You need to grant location permissions to use this function' );
-				dispatch( {
-					type: GET_PEOPLE_SEARCH_RESULTS,
-					payload: []
-				} );
-				return;
-			}
+			const peopleInfo = peopleIds.map( ( personId ) => {
+				const personData = people[ personId ];
+				let {
+					location: { coords },
+					basicInfo: { firstName, lastName, profilePhotoUrl }
+				} = personData;
 
-			const { coords: { latitude, longitude } } = position;
-			const peopleInfo = peopleIds.map( ( k ) => {
-				const peopleAux = { ...people[ k ] };
-				let job = null;
-				if ( peopleAux.aboutMe !== undefined ) {
-					job = ( peopleAux.aboutMe.expertise !== undefined )
-						? peopleAux.aboutMe.expertise.pop().desc
-						: null;
-				}
+				const skills = personData.skills && personData.skills.map( skill => (
+					new ComputedSkill( new Skill( skill.id, skill.description, null ), 0 ) ) );
 
-				let skills = null;
-				const meetingsCount = ( peopleAux.meetings !== undefined )
-					? Object.keys( peopleAux.meetings ).length
-					: 0;
-				if ( peopleAux.skills !== undefined ) {
-					skills = peopleAux.skills
-						.map( s => ( new ComputedSkill( new Skill( s.id, s.description, null ), 0 ) ) );
-				}
+				const distance = GeoLib.convertUnit( 'mi', GeoLib.getDistance( { latitude, longitude },
+					{ latitude: coords.latitude, longitude: coords.longitude } ) );
 
-				const { location: { coords } } = people[ k ];
+				const meetingsCount = personData.meetings && Object.keys( personData.meetings ).length;
 
-				const distance = GeoLib.getDistance( {
-					latitude,
-					longitude
-				},
-				{ latitude: coords.latitude, longitude: coords.longitude } );
-				const distanceMile = GeoLib.convertUnit( 'mi', distance );
-				const p = new Person( k, peopleAux.basicInfo.firstName,
-					peopleAux.basicInfo.lastName, job, peopleAux.basicInfo.profilePhotoUrl, skills, null, '', [], PersonState.AVAILABLE );
+				const expertise = personData.aboutMe && personData.aboutMe.expertise
+					&& personData.aboutMe.expertise.pop().desc;
+
+				const newPerson = new Person(
+					personId,
+					firstName,
+					lastName,
+					expertise,
+					profilePhotoUrl,
+					skills,
+					null, '', [],
+					PersonState.AVAILABLE
+				);
+
 				return {
-					id: k, distance: distanceMile, person: p, meetingsCount, rating: 0
+					id: personId,
+					distance,
+					person: newPerson,
+					meetingsCount,
+					rating: 0
 				};
 			} ).sort( ( a, b ) => ( a.distance - b.distance ) );
 
-			dispatch( {
-				type: GET_PEOPLE_SEARCH_RESULTS,
-				payload: peopleInfo
-			} );
-		}, () => {
-			Alert.alert( 'You need to grant location permissions to use this function' );
-			dispatch( {
-				type: GET_PEOPLE_SEARCH_RESULTS,
-				payload: []
-			} );
-		 } );
+			// ─────────────────────────────────────────────────────────────────
+			dispatch( { type: GET_PEOPLE_SEARCH_RESULTS, payload: peopleInfo } );
+		}, () => gpsError( dispatch ) );
 	} );
 };
