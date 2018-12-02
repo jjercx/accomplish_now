@@ -1,14 +1,10 @@
-import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp
-} from 'react-native-responsive-screen';
-import { HTP, WTP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 
 export default {
 	buttonIconSettings: {
-		marginRight: hp( HTP( 5 ) ),
-		marginLeft: hp( HTP( 5 ) ),
-		heigth: hp( HTP( 30 ) ),
-		width: wp( WTP( 30 ) )
+		marginRight: responsiveSize( 5 ),
+		marginLeft: responsiveSize( 5 ),
+		heigth: responsiveSize( 30 ),
+		width: responsiveSize( 30 )
 	}
 };

@@ -1,18 +1,17 @@
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { HTP, WTP, iPhoneSE } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 import colors from '../../theme/palette';
 
 export default {
 	container: {
-		height: hp( HTP( iPhoneSE() ? 40 : 50 ) ),
-		width: wp( WTP( iPhoneSE() ? 40 : 50 ) ),
+		height: responsiveSize( 50 ),
+		width: responsiveSize( 50 ),
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
 	line: {
-		height: hp( HTP( 1 ) ),
-		width: wp( WTP( iPhoneSE() ? 30 : 45 ) ),
+		height: responsiveSize( 1 ),
+		width: responsiveSize( 45 ),
 		borderRadius: 5
 	},
 	lineWithNumber: {

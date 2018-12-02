@@ -14,12 +14,7 @@ import {
 	Alert
 } from 'react-native';
 
-import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp
-} from 'react-native-responsive-screen';
-
-import { HTP, WTP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 import Header from '../../components/register/Header';
 import Typography from '../../components/typography/Typography';
 import ButtonIcon from '../../components/button-icon/ButtonIcon';
@@ -34,7 +29,7 @@ const localStyles = StyleSheet.create( {
 		justifyContent: 'space-between'
 	},
 	settingsContainer: {
-		marginTop: hp( HTP( 50 ) ),
+		marginTop: responsiveSize( 50 ),
 		borderColor: Colors.pinkishGrey,
 		borderBottomWidth: 0.5
 	},
@@ -45,42 +40,42 @@ const localStyles = StyleSheet.create( {
 	payments: {
 		flexDirection: 'row',
 		justifyContent: 'flex-start',
-		paddingHorizontal: wp( WTP( 25 ) )
+		paddingHorizontal: responsiveSize( 25 )
 	},
 	iconPayments: {
-		marginRight: wp( WTP( 20 ) )
+		marginRight: responsiveSize( 20 )
 	},
 	stripe: {
 		alignItems: 'center',
-		paddingVertical: hp( HTP( 25 ) )
+		paddingVertical: responsiveSize( 25 )
 	},
 	stripeButton: {
 		flexDirection: 'row',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
-		paddingVertical: hp( HTP( 15 ) ),
+		paddingVertical: responsiveSize( 15 ),
 		backgroundColor: Colors.stripeBlue,
 		borderRadius: 10
 	},
 	iconStripe: {
-		marginLeft: wp( WTP( 25 ) ),
-		marginRight: wp( WTP( 15 ) )
+		marginLeft: responsiveSize( 25 ),
+		marginRight: responsiveSize( 15 )
 	},
 	titleStripe: {
 		justifyContent: 'center',
 		borderColor: Colors.stripeBlueStrong,
 		borderLeftWidth: 1,
-		paddingLeft: wp( WTP( 30 ) ),
-		paddingRight: wp( WTP( 55 ) ),
-		height: hp( HTP( 25 ) )
+		paddingLeft: responsiveSize( 30 ),
+		paddingRight: responsiveSize( 55 ),
+		height: responsiveSize( 25 )
 	},
 	support: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingTop: hp( HTP( 40 ) ),
-		paddingBottom: hp( HTP( 30 ) ),
-		paddingHorizontal: wp( WTP( 25 ) ),
+		paddingTop: responsiveSize( 40 ),
+		paddingBottom: responsiveSize( 30 ),
+		paddingHorizontal: responsiveSize( 25 ),
 		borderColor: Colors.pinkishGrey,
 		borderTopWidth: 0.5
 	},
@@ -90,17 +85,17 @@ const localStyles = StyleSheet.create( {
 		alignItems: 'center'
 	},
 	iconSupport: {
-		marginRight: wp( WTP( 20 ) )
+		marginRight: responsiveSize( 20 )
 	},
 	logout: {
 		flexDirection: 'row',
 		justifyContent: 'flex-start',
-		paddingTop: hp( HTP( 40 ) ),
-		paddingBottom: hp( HTP( 35 ) ),
-		paddingLeft: wp( WTP( 35 ) )
+		paddingTop: responsiveSize( 40 ),
+		paddingBottom: responsiveSize( 35 ),
+		paddingLeft: responsiveSize( 35 )
 	},
 	iconLogout: {
-		marginRight: wp( WTP( 15 ) )
+		marginRight: responsiveSize( 15 )
 	}
 } );
 

@@ -1,19 +1,18 @@
-import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
-import { HTP, WTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 import colors from '../../../theme/palette';
 
 export default {
 	wrapperSearch: {
 		position: 'absolute',
-		marginTop: hpd( HTP( 145 ) ),
+		marginTop: responsiveSize( 145 ),
 		alignItems: 'center',
 		width: '100%'
 	},
 	inputSearch: {
-		width: wpd( '90%' ),
+		width: responsiveSize( 280 ),
 		backgroundColor: colors.graySearchBar,
-		height: hpd( HTP( 55 ) ),
-		borderRadius: 10,
+		height: responsiveSize( 55 ),
+		borderRadius: responsiveSize( 10 ),
 		shadowColor: colors.shadowGray,
 		shadowOffset: {
 			width: 2,
@@ -25,12 +24,12 @@ export default {
 		flexDirection: 'row'
 	},
 	searchIcon: {
-		width: wpd( WTP( 20 ) ),
-		height: hpd( HTP( 20 ) ),
-		marginLeft: wpd( WTP( 20 ) )
+		width: responsiveSize( 20 ),
+		height: responsiveSize( 20 ),
+		marginLeft: responsiveSize( ( 20 ) )
 	},
 	input: {
-		width: wpd( '70%' ),
-		marginLeft: wpd( WTP( 20 ) )
+		width: responsiveSize( 250 ),
+		marginLeft: responsiveSize( 20 )
 	}
 };

@@ -1,16 +1,12 @@
-import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp
-} from 'react-native-responsive-screen';
-import { HTP, WTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 import Colors from '../../../theme/palette';
 
 export default {
 	card: {
-		paddingTop: hp( HTP( 10 ) ),
-		paddingBottom: hp( HTP( 8 ) ),
-		paddingLeft: wp( WTP( 10 ) ),
-		paddingRight: wp( WTP( 10 ) ),
+		paddingTop: responsiveSize( 10 ),
+		paddingBottom: responsiveSize( 8 ),
+		paddingLeft: responsiveSize( 10 ),
+		paddingRight: responsiveSize( 10 ),
 		display: 'flex',
 		alignItems: 'center',
 		flexDirection: 'row',
@@ -20,8 +16,8 @@ export default {
 	},
 	text: {
 		color: Colors.greyishBrown,
-		marginLeft: wp( WTP( 8 ) ),
-		marginRight: wp( WTP( 15 ) ),
+		marginLeft: responsiveSize( 8 ),
+		marginRight: responsiveSize( 15 ),
 		flex: 1
 	},
 	addButton: {
@@ -31,13 +27,13 @@ export default {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingTop: hp( HTP( 4 ) ),
-		paddingBottom: hp( HTP( 4 ) ),
-		paddingLeft: wp( WTP( 15 ) ),
-		paddingRight: wp( WTP( 15 ) )
+		paddingTop: responsiveSize( 4 ),
+		paddingBottom: responsiveSize( 4 ),
+		paddingLeft: responsiveSize( 15 ),
+		paddingRight: responsiveSize( 15 )
 	},
 	addText: {
 		color: Colors.pinkishGreyTwo,
-		fontSize: hp( HTP( 11 ) )
+		fontSize: responsiveSize( 11 )
 	}
 };

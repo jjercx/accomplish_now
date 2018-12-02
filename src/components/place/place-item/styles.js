@@ -1,15 +1,14 @@
-import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
-import { HTP, WTP, iPhoneSE } from '../../../utils/dimensions';
+import {  responsiveSize } from '../../../utils/dimensions';
 
 export default {
 	widthImage: {
-		width: wpd( WTP( iPhoneSE() ? 300 : 350 ) ),
-		height: hpd( HTP( 215 ) ),
+		width: responsiveSize( 350 ),
+		height: responsiveSize( 215 ),
 		borderRadius: 13
 	},
 	widthAndroid: {
-		width: wpd( WTP( 380 ) ),
-		height: hpd( HTP( 215 ) ),
+		width: responsiveSize( 380 ),
+		height: responsiveSize( 215 ),
 		borderRadius: 13
 	},
 

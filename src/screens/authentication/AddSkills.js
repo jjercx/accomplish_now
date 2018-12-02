@@ -5,14 +5,10 @@ import PropTypes from 'prop-types';
 import {
 	View, Platform, ScrollView, KeyboardAvoidingView, Alert
 } from 'react-native';
-import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp
-} from 'react-native-responsive-screen';
 import { reduxForm, change, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { HTP, WTP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 import { actSetProfileData } from '../../actions/authentication';
 import Header from '../../components/register/Header';
 import BaseInput from '../../components/base-input/BaseInput';
@@ -52,32 +48,32 @@ const arrayAdd = ( array, toAdd, replace = true ) => {
 
 const localStyles = {
 	inputContainer: {
-		marginLeft: wp( WTP( 25 ) ),
-		marginTop: hp( HTP( 30 ) ),
-		marginRight: wp( WTP( 25 ) ),
+		marginLeft: responsiveSize( 25 ),
+		marginTop: responsiveSize( 30 ),
+		marginRight: responsiveSize( 25 ),
 		flexDirection: 'row'
 	},
 	buttonContainer: {
-		paddingTop: hp( HTP( 15 ) ),
-		paddingBottom: Platform.OS === 'ios' ? hp( HTP( 15 ) ) : hp( HTP( 50 ) ),
-		paddingLeft: wp( WTP( 24 ) ),
-		paddingRight: wp( WTP( 24 ) )
+		paddingTop: responsiveSize( 15 ),
+		paddingBottom: Platform.OS === 'ios' ? responsiveSize( 15 ) : responsiveSize( 50 ),
+		paddingLeft: responsiveSize( 24 ),
+		paddingRight: responsiveSize( 24 )
 	},
 	input: {
-		fontSize: hp( HTP( 14 ) ),
+		fontSize: responsiveSize( 14 ),
 		color: colors.darkSkyBlue
 	},
 	skillsContainer: {
-		paddingTop: hp( HTP( 15 ) ),
+		paddingTop: responsiveSize( 15 ),
 		display: 'flex',
 		flexDirection: 'row',
 		flexWrap: 'wrap'
 	},
 	contentContainer: {
 		flex: 1,
-		marginLeft: wp( WTP( 25 ) ),
-		marginRight: wp( WTP( 25 ) ),
-		paddingTop: hp( HTP( 3 ) ),
+		marginLeft: responsiveSize( 25 ),
+		marginRight: responsiveSize( 25 ),
+		paddingTop: responsiveSize( 3 ),
 		flexWrap: 'wrap'
 	},
 	suggestedSkillsContainer: {
@@ -237,7 +233,7 @@ class AddSkills extends Component {
 						textColor={colors.white}
 						buttonColor={colors.orange}
 						onPress={handleSubmit( this._onSaveAndStart )}
-						style={{ height: hp( HTP( 45 ) ) }}
+						style={{ height: responsiveSize( 45 ) }}
 					/>
 				</View>
 			</KeyboardAvoidingView>

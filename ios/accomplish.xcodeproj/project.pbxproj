@@ -335,6 +335,13 @@
 			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
 			remoteInfo = RNImagePicker;
 		};
+		69DC5B4821B2F48F00AF9DE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ABFB4BB6AF84EEEA61784C5 /* RNViewOverflow.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNViewOverflow;
+		};
 		69E48CD121779F2E003B56AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 69E48CA821779F2E003B56AA /* ReactNativeNavigation.xcodeproj */;
@@ -654,6 +661,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		69DC5B1B21B2F48F00AF9DE3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				69DC5B4921B2F48F00AF9DE3 /* libRNViewOverflow.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		69E48CA921779F2E003B56AA /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -880,8 +895,12 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = TUQB6WSS8J;
+						DevelopmentTeam = 2D6QBDDZA9;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 2D6QBDDZA9;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1245,6 +1264,13 @@
 			remoteRef = 696403F82187AC6000F96AEC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		69DC5B4921B2F48F00AF9DE3 /* libRNViewOverflow.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNViewOverflow.a;
+			remoteRef = 69DC5B4821B2F48F00AF9DE3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		69E48CD221779F2E003B56AA /* libReactNativeNavigation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1472,7 +1498,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = TUQB6WSS8J;
+				DEVELOPMENT_TEAM = 2D6QBDDZA9;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1506,7 +1532,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = TUQB6WSS8J;
+				DEVELOPMENT_TEAM = 2D6QBDDZA9;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
@@ -1536,9 +1562,11 @@
 			baseConfigurationReference = DBDF7969A8227D34CFF94827 /* Pods-accomplish.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2D6QBDDZA9;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
@@ -1554,6 +1582,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nextdots.accomplish-now.accomplish.app";
 				PRODUCT_NAME = accomplish;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1563,8 +1593,10 @@
 			baseConfigurationReference = C243F688FC8F27210314CC6B /* Pods-accomplish.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2D6QBDDZA9;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
@@ -1580,6 +1612,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nextdots.accomplish-now.accomplish.app";
 				PRODUCT_NAME = accomplish;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

@@ -1,5 +1,4 @@
-import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
-import { HTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 
 export default {
 	container: {
@@ -9,10 +8,10 @@ export default {
 		top: -40
 	},
 	wrapperPlaces: {
-		marginLeft: hpd( HTP( 32 ) ),
-		top: hpd( HTP( 50 ) )
+		marginLeft: responsiveSize( 32 ),
+		top: responsiveSize( 50 )
 	},
 	wrapperPlacesPlacesDetailActive: {
-		marginLeft: hpd( HTP( 15 ) )
+		marginLeft: responsiveSize( 15 )
 	}
 };
