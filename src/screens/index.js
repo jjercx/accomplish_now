@@ -26,8 +26,8 @@ import PlaceMapView from './places/placeMapView';
 import MeetingDetail from './meetings/meetingDetail';
 import PlaceDetails from './places/placeDetails';
 import PeopleSearch from './PeopleSearch';
-import MeetingRequest from './meetings/meetingRequest/meetingRequest';
-import ScheduleAddress from './meetings/meetingRequest/scheduleAddress';
+import MeetingRequest from './meetings/meeting-request/meetingRequest';
+import ScheduleAddress from './meetings/meeting-request/scheduleAddress';
 
 export function initApp( action ) {
 	switch ( action ) {
