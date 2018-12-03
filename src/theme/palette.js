@@ -9,6 +9,7 @@ export default {
 	skyBlue: '#68b8f7',
 	darkSkyBlue: '#42a4e4',
 	charcoalGrey: '#3e3e43',
+	charcoalGreyTwo: '#46464c',
 	greyishBrown: '#414141',
 	macaroneAndCheese: '#F2A133',
 	coolGrey: '#a9b2ba',

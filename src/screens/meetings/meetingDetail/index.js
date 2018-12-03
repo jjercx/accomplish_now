@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MeetingDetail from './layout';
-import Meeting from '../../../entities/Meeting';
 import NavigatorPropType from '../../../types/navigator';
 
 class MeetingDetailContainer extends Component {
@@ -29,7 +28,7 @@ MeetingDetailContainer.propTypes = {
 		date: PropTypes.string,
 		meetingId: PropTypes.string,
 		profilePict: PropTypes.number,
-		state: PropTypes.string,
+		state: PropTypes.number,
 		text: PropTypes.string
 	} ).isRequired,
 	navigator: NavigatorPropType.isRequired

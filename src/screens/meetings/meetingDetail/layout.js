@@ -55,7 +55,7 @@ MeetingDetail.propTypes = {
 		date: PropTypes.string,
 		meetingId: PropTypes.string,
 		profilePict: PropTypes.number,
-		state: PropTypes.string,
+		state: PropTypes.number,
 		text: PropTypes.string
 	} ).isRequired,
 	navigator: NavigatorPropType.isRequired
