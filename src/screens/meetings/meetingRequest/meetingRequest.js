@@ -20,7 +20,7 @@ const iconMeeting = require( '../../../assets/images/meetings/meetingsRequest.pn
 const photo1 = require( '../../../assets/images/meetings/frankDoeCopia3.png' );
 const photo2 = require( '../../../assets/images/meetings/jhonDoeCopia3.png' );
 
-class MeetingSchedule extends Component {
+class MeetingRequest extends Component {
 	static navigatorStyle = {
 		navBarHidden: true
 	};
@@ -364,4 +364,4 @@ class MeetingSchedule extends Component {
 }
 
 
-export default MeetingSchedule;
+export default MeetingRequest;

@@ -26,8 +26,8 @@ import PlaceMapView from './places/placeMapView';
 import MeetingDetail from './meetings/meetingDetail';
 import PlaceDetails from './places/placeDetails';
 import PeopleSearch from './PeopleSearch';
-import MeetingSchedule from './meetings/schedule';
-import ScheduleAddress from './meetings/schedule/scheduleAddress';
+import MeetingRequest from './meetings/meetingRequest/meetingRequest';
+import ScheduleAddress from './meetings/meetingRequest/scheduleAddress';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -83,6 +83,6 @@ export function registerScreens() {
 	Navigation.registerComponent( 'placeDetails', () => PlaceDetails );
 	Navigation.registerComponent( 'peopleSearch', () => PeopleSearch, store, Provider );
 	Navigation.registerComponent( 'settings', () => Settings, store, Provider );
-	Navigation.registerComponent( 'MeetingSchedule', () => MeetingSchedule, store, Provider );
+	Navigation.registerComponent( 'MeetingRequest', () => MeetingRequest, store, Provider );
 	Navigation.registerComponent( 'ScheduleAddress', () => ScheduleAddress, store, Provider );
 }

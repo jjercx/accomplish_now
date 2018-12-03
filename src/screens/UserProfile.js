@@ -84,7 +84,7 @@ class UserProfile extends Component {
 
 	_onPressSchedule() {
 		const { navigator } = this.props;
-		navigator.push( { screen: 'MeetingSchedule' } );
+		navigator.push( { screen: 'MeetingRequest' } );
 	}
 
 	_navigateTo( screen ) {
