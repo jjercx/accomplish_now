@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, ScrollView, StyleSheet } from 'react-native';
-import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import Firebase from 'react-native-firebase';
-import { HTP } from '../utils/dimensions';
+import { responsiveSize } from '../utils/dimensions';
 import NavigatorPropType from '../types/navigator';
 import Spacing from '../components/spacing/Spacing';
 import NavBar from '../components/navbar/NavBar';
@@ -36,7 +35,7 @@ const styles = StyleSheet.create( {
 	scrollerContainer: {
 		flexGrow: 1,
 		justifyContent: 'space-between',
-		paddingBottom: hpd( HTP( 30 ) )
+		paddingBottom: responsiveSize( 30 )
 	}
 } );
 

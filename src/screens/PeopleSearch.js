@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable indent */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -11,19 +9,16 @@ import {
 	ActivityIndicator
 } from 'react-native';
 
-import {
-	heightPercentageToDP as hpd,
-	widthPercentageToDP as wpd
-} from 'react-native-responsive-screen';
-
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
-import { HTP, WTP, iPhoneSE } from '../utils/dimensions';
+import { responsiveSize, iPhoneSE } from '../utils/dimensions';
 import NavigatorPropType from '../types/navigator';
 import NavBar from '../components/navbar/NavBar';
 import PersonCard from '../components/person/person-card/PersonCard';
 import Header from '../components/people-search/Header';
 import { actGetPeopleSearchResults } from '../actions/peopleSearch';
+import { actGetUser } from '../actions/users';
+import Typography from '../components/typography/Typography';
 
 import colors from '../theme/palette';
 
@@ -34,89 +29,88 @@ const styles = StyleSheet.create( {
 	},
 	subContainer: {
 		flex: 1,
-		marginTop: hpd( HTP( Platform.OS === 'ios' ? 20 : 0 ) ),
-		marginHorizontal: wpd( WTP( 5 ) )
+		marginTop: responsiveSize( Platform.OS === 'ios' ? 20 : 0 ),
+		marginHorizontal: responsiveSize( 5 )
 	},
 	headerContainer: {
-		height: hpd( HTP( 60 ) )
+		height: responsiveSize( 60 )
 	},
 	resultsContainer: {
 		backgroundColor: colors.paleGreyThree,
 		width: '100%',
 		flex: 1,
-		paddingTop: hpd( HTP( 5 ) ),
-		marginBottom: hpd( HTP( 5 ) )
+		paddingTop: responsiveSize( 5 ),
+		marginBottom: responsiveSize( 5 )
 	},
 	flatList: {
-		width: '100%',
-		alignSelf: iPhoneSE() ? 'auto' : 'center',
-		justifyContent: 'space-between',
-		paddingBottom: hpd( HTP( 30 ) )
+		flex: 1,
+		marginTop: responsiveSize( 15 ),
+		marginBottom: responsiveSize( 40 ),
+		alignSelf: iPhoneSE() ? 'auto' : 'center'
 	},
 	invisible: {
 		backgroundColor: 'transparent'
+	},
+	errorContainer: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		padding: 40,
+		marginBottom: 70,
+		opacity: 0.3
+	},
+	spinnerContainer: {
+		flex: 1
 	}
 } );
 
-const formatData = ( items, numberOfColumns ) => {
-	const numberOfFullItems = Math.floor( items.length, numberOfColumns );
-	let numberOfItemsLastRow = items.length - ( numberOfFullItems * numberOfColumns );
-
-	while ( ( numberOfItemsLastRow < numberOfColumns ) ) {
-		items.push( {
-			id: `blank-${numberOfItemsLastRow}`,
-			empty: true
-		} );
-
-		numberOfItemsLastRow += 1;
-	}
-
-	return items;
-};
-
-/* eslint-disable react/prefer-stateless-function */
 class PeopleSearch extends Component {
 	static navigatorStyle = {
 		navBarHidden: true
 	};
 
-	constructor( props ) {
-		super( props );
-
-		this._onPressBack = this._onPressBack.bind( this );
-		this._onPressFilter = this._onPressFilter.bind( this );
-		this._doSearch = this._doSearch.bind( this );
-	}
+	state = { isError: false }
 
 	_cardFullWidth = ( index, people ) => ( people.length % 2 !== 0 )
 		&& ( index === people.length - 1 )
 
-		// eslint-disable-next-line class-methods-use-this
-		_onPressFilter() {
-			// eslint-disable-next-line no-console
-				console.log( 'Filter actions' );
-		}
+	_onPressFilter = () => { // eslint-disable-line class-methods-use-this
+		console.log( 'Filter actions' ); // eslint-disable-line no-console
+	}
 
-	_onPressBack() {
+	_onPressBack = () => {
 		const { navigator } = this.props;
 		navigator.pop();
 	}
 
-	_doSearch( searchText ) {
-		const { getPeopleSearchResults } = this.props;
-		getPeopleSearchResults( searchText );
+	_doSearch = ( searchText ) => {
+		this.searchOnce = true;
+		if ( searchText.length < 3 ) {
+			this.setState( { isError: 'The search text must contain at least three letters' } );
+		} else {
+			this.setState( { isError: '' }, () => {
+				const { getPeopleSearchResults } = this.props;
+				getPeopleSearchResults( searchText );
+			} );
+		}
+	}
+
+	_onUserPress = ( userId ) => {
+		const { navigator, actGetUserInit } = this.props; // eslint-disable-line react/prop-types
+		actGetUserInit( userId );
+		navigator.push( { screen: 'userProfile' } );
 	}
 
 	render() {
-		let {
+		const {
 			navigator: _navigator,
-			searchResults: people,
-			isFetching: isSearching
+			isFetching: isSearching,
+			searchResults: people
 		} = this.props;
 
-		const numberOfColumns = iPhoneSE() ? 1 : 2;
-		const realPeople = people.slice();
+		const { isError } = this.state;
 
+		/* eslint-disable no-nested-ternary */
 		return (
 			<View style={styles.container}>
 				<View style={styles.subContainer}>
@@ -125,42 +119,52 @@ class PeopleSearch extends Component {
 					/>
 					<View style={styles.headerContainer}>
 						<Header
-							onPressBack={this._onPressBack.bind( this )}
-							onPressSetting={this._onPressFilter.bind( this )}
-							onSearchSubmit={this._doSearch.bind( this )}
+							onPressBack={this._onPressBack}
+							onPressSetting={this._onPressFilter}
+							onSearchSubmit={this._doSearch}
 						/>
 					</View>
 
-					{isSearching ? <ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} /> : (
+					{isError || people.length === 0 ? (
+						<View style={styles.errorContainer}>
+							<Typography variant="midTitle" color="black">
+								{isError || ( !this.searchOnce ? 'Search people by name or skill …' : 'No matches were found' )}
+							</Typography>
+						</View>
+					 ) : isSearching ? (
+						<View style={styles.spinnerContainer}>
+							<ActivityIndicator size="small" color="black" style={{ marginTop: 20 }} />
+						</View>
+					) : (
 						<View style={styles.resultsContainer}>
 							<FlatList
 								contentContainerStyle={styles.flatList}
 								vertical
-								numColumns={numberOfColumns}
-								data={formatData( people, numberOfColumns )}
-								// keyExtractor={item => item.id}
-								keyExtractor={() => Math.random()}
+								numColumns={iPhoneSE() ? 1 : 2}
+								data={people}
+								keyExtractor={item => item.id}
 								renderItem={( { item, index } ) => ( ( item.empty )
-								? <View style={styles.invisible} />
-								: (
-									<PersonCard
-										fullWidth={this._cardFullWidth( index, realPeople )}
-										person={item.person}
-										rating={item.rating}
-										meetingsCount={item.meetingsCount}
-										distance={item.distance}
-									/>
-								) )}
+									? <View style={styles.invisible} />
+									: (
+										<PersonCard
+											fullWidth={this._cardFullWidth( index, people )}
+											person={item.person}
+											rating={item.rating}
+											meetingsCount={item.meetingsCount}
+											distance={item.distance}
+											onUserPress={personId => this._onUserPress( personId )}
+										/>
+									) )}
 							/>
 						</View>
-				)}
+					)}
 				</View>
 				<NavBar navigator={_navigator} />
 			</View>
 		);
+		/* eslint-enable no-nested-ternary */
 	}
 }
-/* eslint-enable react/prefer-stateless-function */
 
 PeopleSearch.propTypes = {
 	navigator: NavigatorPropType.isRequired,
@@ -175,8 +179,8 @@ const mapStateToProps = state => ( {
 } );
 
 const mapDispatchProps = dispatch => bindActionCreators( {
-	getPeopleSearchResults: actGetPeopleSearchResults
+	getPeopleSearchResults: actGetPeopleSearchResults,
+	actGetUserInit: actGetUser
 }, dispatch );
-
 
 export default compose( connect( mapStateToProps, mapDispatchProps )( PeopleSearch ) );

@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { normalizeHP } from '../../../../utils/dimensions';
+import { responsiveSize } from '../../../../utils/dimensions';
 
 export default StyleSheet.create( {
 	container: {
 		flex: 1
 	},
 	countText: {
-		marginTop: normalizeHP( 1 )
+		marginTop: responsiveSize( 15 )
 	}
 } );

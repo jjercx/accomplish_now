@@ -1,41 +1,41 @@
 import { StyleSheet } from 'react-native';
 import colors from '../../theme/palette';
-import { normalizeHP, normalizeWP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 
 export default StyleSheet.create( {
 	card: {
 		backgroundColor: 'white',
-		borderRadius: normalizeHP( 1.5 ),
-		paddingTop: normalizeHP( 7 ),
-		marginHorizontal: normalizeWP( 4 )
+		borderRadius: responsiveSize( 20 ),
+		paddingTop: responsiveSize( 40 ),
+		marginHorizontal: responsiveSize( 30 )
 
 	},
 	cardWrapper: {
-		paddingHorizontal: normalizeHP( 10 )
+		paddingHorizontal: responsiveSize( 80 )
 	},
 	imageWrapper: {
-		width: normalizeHP( 7 ),
-		height: normalizeHP( 7 ),
+		width: responsiveSize( 40 ),
+		height: responsiveSize( 40 ),
 		alignSelf: 'center',
-		marginBottom: normalizeHP( 1.5 )
+		marginBottom: responsiveSize( 20 )
 	},
 	imageStyle: {
 		width: '100%',
 		height: '100%'
 	},
 	title: {
-		marginBottom: normalizeHP( 1.5 )
+		marginBottom: responsiveSize( 20 )
 	},
 	message: {
-		marginBottom: normalizeHP( 10 )
+		marginBottom: responsiveSize( 15 )
 	},
 	actionButton: {
 		width: '100%',
-		height: normalizeHP( 8 ),
+		height: responsiveSize( 50 ),
 		flexDirection: 'row',
 		backgroundColor: colors.modalLineColor,
-		borderBottomLeftRadius: normalizeHP( 1.5 ),
-		borderBottomRightRadius: normalizeHP( 1.5 ),
+		borderBottomLeftRadius: responsiveSize( 20 ),
+		borderBottomRightRadius: responsiveSize( 20 ),
 		paddingTop: 1,
 		justifyContent: 'space-between'
 	},
@@ -45,9 +45,9 @@ export default StyleSheet.create( {
 		backgroundColor: 'white'
 	},
 	buttonBorderBottomLeftRadius: {
-		borderBottomLeftRadius: normalizeHP( 1.5 )
+		borderBottomLeftRadius: responsiveSize( 20 )
 	},
 	buttonBorderBottomRightRadius: {
-		borderBottomRightRadius: normalizeHP( 1.5 )
+		borderBottomRightRadius: responsiveSize( 20 )
 	}
 } );

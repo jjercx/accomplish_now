@@ -1,5 +1,4 @@
-import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
-import { HTP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 
 export default {
 	container: {
@@ -20,7 +19,7 @@ export default {
 	containerClose: {
 		alignItems: 'center',
 		width: '100%',
-		height: hpd( HTP( 35 ) ),
+		height: responsiveSize( 35 ),
 		position: 'absolute',
 		bottom: 0
 	}

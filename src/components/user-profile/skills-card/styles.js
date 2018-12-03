@@ -1,21 +1,16 @@
 import { StyleSheet } from 'react-native';
 
-import {
-	heightPercentageToDP as hpd,
-	widthPercentageToDP as wpd
-} from 'react-native-responsive-screen';
-
-import { HTP, WTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 import colors from '../../../theme/palette';
 
 const styles = StyleSheet.create( {
 	contentWrapper: {
-		marginTop: hpd( HTP( 20 ) )
+		marginTop: responsiveSize( 20 )
 	},
 	itemWrapper: {
-		paddingVertical: hpd( HTP( 10 ) ),
-		paddingLeft: hpd( HTP( 15 ) ),
-		paddingRight: hpd( HTP( 25 ) ),
+		paddingVertical: responsiveSize( 10 ),
+		paddingLeft: responsiveSize( 15 ),
+		paddingRight: responsiveSize( 25 ),
 		backgroundColor: colors.tangerine,
 		flex: 1,
 		flexDirection: 'row',
@@ -25,10 +20,10 @@ const styles = StyleSheet.create( {
 	},
 	textWrapper: {
 		flex: 1,
-		paddingHorizontal: wpd( WTP( 10 ) )
+		paddingHorizontal: responsiveSize( 10 )
 	},
 	buttonAdd: {
-		marginTop: hpd( HTP( 25 ) ),
+		marginTop: responsiveSize( 25 ),
 		marginBottom: 0
 	}
 } );

@@ -1,11 +1,10 @@
-import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
-import { HTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 
 export default {
 	wrapperTitle: {
 		flexDirection: 'row',
-		height: hpd( HTP( 35 ) ),
-		top: hpd( HTP( 35 ) ),
+		height: responsiveSize( 35 ),
+		top: responsiveSize( 35 ),
 		width: '82%'
 	},
 	wrapperTitlePlacesDetailActive: {

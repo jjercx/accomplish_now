@@ -81,22 +81,19 @@ export const actVerifyAndSignIn = ( uid, code, callback ) => ( dispatch ) => {
 		} );
 };
 
-export const actVerifyLogin = () => ( dispatch ) => {
-	AuthenticationServices.verifyLogin().then( ( userToken ) => {
-		dispatch( {
-			type: SET_USER_TOKEN,
-			payload: userToken
-		} );
+export const actVerifyLogin = callback => ( dispatch ) => {
+	AuthenticationServices.verifyLogin().then( () => {
 		AuthenticationServices.getUserData().then( ( user ) => {
 			dispatch( {
 				type: SET_USER,
 				payload: user
 			} );
+			callback( 'ok' );
 		} ).catch( ( e ) => {
-			console.log( 'error getUserData', e );
+			callback( e );
 		} );
 	} ).catch( ( e ) => {
-		console.log( 'error verifyLogin', e );
+		callback( e );
 	} );
 };
 

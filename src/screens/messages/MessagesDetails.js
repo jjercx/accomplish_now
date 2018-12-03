@@ -15,7 +15,6 @@ import {
 	ActivityIndicator
 } from 'react-native';
 
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 
@@ -26,7 +25,7 @@ import {
 } from '../../actions/messages';
 import { actGetUser } from '../../actions/users';
 
-import { HTP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 import { formatDate } from '../../utils/formats';
 import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
@@ -39,7 +38,7 @@ import fonts from '../../theme/fonts';
 const s = StyleSheet.create( {
 	container: {
 		flex: 1,
-		marginTop: hp( HTP( Platform.OS === 'ios' ? 20 : 0 ) )
+		marginTop: responsiveSize( Platform.OS === 'ios' ? 20 : 0 )
 	},
 	headerContainer: {
 		flexDirection: 'row',
@@ -67,7 +66,7 @@ const s = StyleSheet.create( {
 		padding: 13
 	},
 	textInput: {
-		fontSize: hp( HTP( 17 ) ),
+		fontSize: responsiveSize( 17 ),
 		fontFamily: fonts.productSansRegular,
 		paddingBottom: 0,
 		paddingLeft: 0,
@@ -80,7 +79,7 @@ const s = StyleSheet.create( {
 	},
 	flatList: {
 		flex: 1,
-		marginTop: hp( HTP( 5 ) )
+		marginTop: responsiveSize( 5 )
 	}
 } );
 

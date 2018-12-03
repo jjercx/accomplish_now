@@ -5,7 +5,6 @@ import {
 	View, Text, Image, StyleSheet, Platform, KeyboardAvoidingView, Alert, ActivityIndicator
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
@@ -15,7 +14,7 @@ import BaseInputForm from '../../components/base-input/BaseInputForm';
 import ButtonForward from '../../components/button-icon/ButtonForward';
 import Header from '../../components/register/Header';
 import Colors from '../../theme/palette';
-import { HTP, WTP, iPhoneSE } from '../../utils/dimensions';
+import { responsiveSize, iPhoneSE } from '../../utils/dimensions';
 import fonts from '../../theme/fonts';
 import s from './styles';
 import NavigatorPropType from '../../types/navigator';
@@ -23,24 +22,24 @@ import { required } from '../../utils/Validations';
 
 const localStyles = StyleSheet.create( {
 	infoWrapper: {
-		marginLeft: wp( WTP( 24 ) ),
-		marginTop: hp( HTP( 20 ) ),
-		marginRight: wp( WTP( 33 ) )
+		marginLeft: responsiveSize( 24 ),
+		marginTop: responsiveSize( 20 ),
+		marginRight: responsiveSize( 33 )
 	},
 	inputWrapper: {
-		height: hp( HTP( 52 ) ),
+		height: responsiveSize( 52 ),
 		borderWidth: 1,
-		marginTop: hp( HTP( 25 ) ),
+		marginTop: responsiveSize( 25 ),
 		alignItems: 'center',
 		flexDirection: 'row',
-		marginHorizontal: hp( HTP( 24 ) ),
+		marginHorizontal: responsiveSize( 24 ),
 		borderRadius: 3,
 		borderColor: Colors.coolGrey
 	},
 	inputLeftContainer: {
-		width: wp( WTP( 62 ) ),
+		width: responsiveSize( 62 ),
 		borderRightWidth: 1,
-		height: hp( HTP( 52 ) ),
+		height: responsiveSize( 52 ),
 		justifyContent: 'center',
 		borderColor: Colors.coolGrey
 	},
@@ -50,16 +49,16 @@ const localStyles = StyleSheet.create( {
 		alignItems: 'center'
 	},
 	inputTextHint: {
-		marginRight: wp( WTP( 15 ) ),
-		marginLeft: wp( WTP( 10 ) )
+		marginRight: responsiveSize( 15 ),
+		marginLeft: responsiveSize( 10 )
 	},
 	inputText: {
-		fontSize: hp( HTP( 17 ) ),
+		fontSize: responsiveSize( 17 ),
 		flex: 1,
-		top: Platform === 'ios' ? 0 : hp( HTP( 1 ) )
+		top: Platform === 'ios' ? 0 : responsiveSize( 1 )
 	},
 	buttonStyle: {
-		marginBottom: Platform.OS === 'android' ? hp( HTP( 35 ) ) : hp( HTP( 15 ) )
+		marginBottom: Platform.OS === 'android' ? responsiveSize( 35 ) : responsiveSize( 15 )
 	},
 	contentContainer: {
 		flex: 1,
@@ -183,7 +182,7 @@ class CreateWelcomeAccount extends Component {
 				<View style={localStyles.contentContainer}>
 					<View style={[ iPhoneSE() ? localStyles.iPhoneSE : null ]}>
 						<View style={[ localStyles.infoWrapper,
-							{ marginBottom: createAccount ? 0 : hp( HTP( 33 ) ) } ]}
+							{ marginBottom: createAccount ? 0 : responsiveSize( 33 ) } ]}
 						>
 							{ createAccount ? (
 								<Typography variant="smallBody" color="charcoalGrey" textAlign="left">

@@ -11,12 +11,11 @@ import {
 import Firebase from 'react-native-firebase';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-import { widthPercentageToDP as wpd, heightPercentageToDP as hpd } from 'react-native-responsive-screen';
 import { actGetMessages } from '../actions/messages';
 import { actSetProfileData } from '../actions/authentication';
 import { actGetUser } from '../actions/users';
 import UserSection from '../components/home/header/UserSection';
-import { HTP, WTP } from '../utils/dimensions';
+import { responsiveSize } from '../utils/dimensions';
 import Typography from '../components/typography/Typography';
 import Spacing from '../components/spacing/Spacing';
 import colors from '../theme/palette';
@@ -35,18 +34,18 @@ const styles = StyleSheet.create( {
 		flex: 1
 	},
 	imageBackground: {
-		height: hpd( HTP( 180 ) ),
+		height: responsiveSize( 180 ),
 		width: '100%'
 	},
 	wrapperContainerAvailable: {
 		flexDirection: 'row',
 		width: '100%',
 		position: 'absolute',
-		top: hpd( '5%' )
+		top: responsiveSize( 30 )
 	},
 	wrapperAvailable: {
 		flexDirection: 'row',
-		marginLeft: wpd( WTP( -5 ) ),
+		marginLeft: responsiveSize( -5 ),
 		alignItems: 'center',
 		width: '100%',
 		justifyContent: 'flex-end'

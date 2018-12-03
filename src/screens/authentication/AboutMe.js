@@ -3,16 +3,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
-
-import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp
-} from 'react-native-responsive-screen';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actSetProfileData } from '../../actions/authentication';
-import { HTP, WTP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 import Header from '../../components/register/Header';
 import BaseInput from '../../components/base-input/BaseInputForm';
 import ButtonForward from '../../components/button-icon/ButtonForward';
@@ -22,15 +17,15 @@ import NavigatorPropType from '../../types/navigator';
 
 const localStyles = StyleSheet.create( {
 	inputContainer: {
-		marginLeft: wp( WTP( 25 ) ),
-		marginTop: hp( HTP( 40 ) ),
-		marginRight: wp( WTP( 25 ) )
+		marginLeft: responsiveSize( 25 ),
+		marginTop: responsiveSize( 40 ),
+		marginRight: responsiveSize( 25 )
 	},
 	input: {
-		fontSize: hp( HTP( 20 ) )
+		fontSize: responsiveSize( 20 )
 	},
 	label: {
-		marginBottom: hp( HTP( 11 ) )
+		marginBottom: responsiveSize( 11 )
 	},
 	buttonContainer: {
 		flex: 1,

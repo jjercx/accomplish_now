@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
+import { responsiveSize } from '../../../utils/dimensions';
 import colors from '../../../theme/palette';
 
 export default {
@@ -11,7 +11,7 @@ export default {
 	},
 	navBarOpen: {
 		width: '99%',
-		height: hpd( '33%' ),
+		height: responsiveSize( 200 ),
 		backgroundColor: colors.white,
 		borderTopLeftRadius: 24,
 		borderTopRightRadius: 24,

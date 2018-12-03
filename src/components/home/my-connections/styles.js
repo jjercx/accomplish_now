@@ -1,5 +1,4 @@
-import { heightPercentageToDP as hpd } from 'react-native-responsive-screen';
-import { HTP } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 
 export default {
 	container: {
@@ -7,8 +6,8 @@ export default {
 		justifyContent: 'center'
 	},
 	wrapperConnections: {
-		paddingLeft: hpd( HTP( 32 ) ),
-		top: hpd( HTP( 52 ) ),
+		paddingLeft: responsiveSize( 32 ),
+		top: responsiveSize( 52 ),
 		width: '100%'
 	}
 };

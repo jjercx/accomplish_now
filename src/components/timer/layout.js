@@ -8,7 +8,7 @@ import Button from '../button/Button';
 import colors from '../../theme/palette';
 import { statusTime } from './utils';
 import ConfirmationMessage from '../confirmationMessage';
-import { normalizeHP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 
 const timerImage = require( '../../assets/images/icons/timerImage.png' );
 
@@ -25,7 +25,7 @@ const Timer = ( {
 } ) => (
 	<View style={styles.container}>
 		<View style={styles.circleContainer}>
-			<PercentageCircle borderWidth={10} style={styles.container} radius={normalizeHP( 15 )} percent={percent} color="#009DF7">
+			<PercentageCircle borderWidth={responsiveSize( 10 )} style={styles.container} radius={responsiveSize( 100 )} percent={percent} color="#009DF7">
 				<Image style={styles.imageContainer} source={timerImage} />
 			</PercentageCircle>
 			<View style={styles.timerCount}>

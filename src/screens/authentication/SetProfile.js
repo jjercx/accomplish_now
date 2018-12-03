@@ -10,10 +10,6 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import {
-	widthPercentageToDP as wp,
-	heightPercentageToDP as hp
-} from 'react-native-responsive-screen';
-import {
 	reduxForm, Field, change, formValueSelector
 } from 'redux-form';
 import { connect } from 'react-redux';
@@ -22,7 +18,7 @@ import { actUploadImg, actSetProfileData } from '../../actions/authentication';
 import Header from '../../components/register/Header';
 import BaseInputForm from '../../components/base-input/BaseInputForm';
 import ButtonForward from '../../components/button-icon/ButtonForward';
-import { HTP, WTP } from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 import styles from './styles';
 import Colors from '../../theme/palette';
 import NavigatorPropType from '../../types/navigator';
@@ -30,30 +26,30 @@ import { required, validateEmail, onlyWords } from '../../utils/Validations';
 
 const localStyles = StyleSheet.create( {
 	SPInputSpace: {
-		marginRight: wp( WTP( 20 ) )
+		marginRight: responsiveSize( 20 )
 	},
 	SPButtonForward: {
-		marginTop: hp( HTP( 30 ) )
+		marginTop: responsiveSize( 30 )
 	},
 	addPhotoButton: {
-		width: wp( WTP( 87 ) ),
-		height: hp( HTP( 87 ) ),
-		borderRadius: hp( HTP( 87 ) ) / 2,
+		width: responsiveSize( 87 ),
+		height: responsiveSize( 87 ),
+		borderRadius: responsiveSize( 87 ) / 2,
 		alignSelf: 'center',
 		marginBottom: 0,
-		marginTop: hp( HTP( 11 ) )
+		marginTop: responsiveSize( 11 )
 	},
 	inputsContainer: {
-		padding: hp( HTP( 24 ) )
+		padding: responsiveSize( 24 )
 	},
 	inputRow: {
 		flexDirection: 'row',
-		marginBottom: hp( HTP( 36 ) )
+		marginBottom: responsiveSize( 36 )
 	},
 	imageProfile: {
-		width: wp( WTP( 87 ) ),
-		height: hp( HTP( 87 ) ),
-		borderRadius: hp( HTP( 87 ) ) / 2
+		width: responsiveSize( 87 ),
+		height: responsiveSize( 87 ),
+		borderRadius: responsiveSize( 87 ) / 2
 	}
 } );
 

@@ -151,6 +151,8 @@ setDeviceToken = () => new Promise( async ( resolve, reject ) => {
 				} ).catch( ( e ) => {
 					reject( e );
 				} );
+			} else {
+				reject( 'notLogged' );
 			}
 		} ).catch( ( e ) => {
 			reject( e );

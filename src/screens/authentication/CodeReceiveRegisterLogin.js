@@ -14,7 +14,6 @@ import {
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { actVerifyAndSignIn } from '../../actions/authentication';
 import Typography from '../../components/typography/Typography';
 import Button from '../../components/button/Button';
@@ -23,7 +22,7 @@ import Header from '../../components/register/Header';
 import Spacing from '../../components/spacing/Spacing';
 import colors from '../../theme/palette';
 import s from './styles';
-import { HTP, WTP, iPhoneSE } from '../../utils/dimensions';
+import { responsiveSize, iPhoneSE } from '../../utils/dimensions';
 import OneNumberInput from '../../components/one-number-input/OneNumberInput';
 import NavigatorPropType from '../../types/navigator';
 
@@ -32,30 +31,30 @@ const localStyles = {
 		flex: 1
 	},
 	infoWrapper: {
-		marginLeft: wp( WTP( 25 ) ),
-		marginTop: hp( HTP( 10 ) )
+		marginLeft: responsiveSize( 25 ),
+		marginTop: responsiveSize( 10 )
 	},
 	codeContainer: {
 		flexDirection: 'row',
-		paddingTop: hp( HTP( 20 ) ),
-		paddingBottom: hp( HTP( 10 ) ),
+		paddingTop: responsiveSize( 20 ),
+		paddingBottom: responsiveSize( 10 ),
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
 	codeViewContainer: {
-		paddingTop: hp( HTP( iPhoneSE() ? 5 : 20 ) ),
-		paddingBottom: hp( HTP( 20 ) ),
-		paddingLeft: wp( WTP( 30 ) ),
-		paddingRight: wp( WTP( 30 ) )
+		paddingTop: responsiveSize( 20 ),
+		paddingBottom: responsiveSize( 20 ),
+		paddingLeft: responsiveSize( 30 ),
+		paddingRight: responsiveSize( 30 )
 	},
 	buttonStyle: {
-		marginBottom: Platform.OS === 'android' ? hp( HTP( 55 ) ) : hp( HTP( 15 ) )
+		marginBottom: Platform.OS === 'android' ? responsiveSize( 55 ): responsiveSize( 15 )
 	},
 	buttonLoginContainer: {
-		paddingTop: hp( HTP( 20 ) ),
-		paddingBottom: Platform.OS === 'ios' ? hp( HTP( 15 ) ) : hp( HTP( 50 ) ),
-		paddingLeft: wp( WTP( 24 ) ),
-		paddingRight: wp( WTP( 24 ) )
+		paddingTop: responsiveSize( 20 ),
+		paddingBottom: Platform.OS === 'ios' ? responsiveSize( 15 ) : responsiveSize( 50 ),
+		paddingLeft: responsiveSize( 24 ),
+		paddingRight: responsiveSize( 24 )
 	},
 	buttonLoginContainer_codeRegister: {
 		display: 'flex',
