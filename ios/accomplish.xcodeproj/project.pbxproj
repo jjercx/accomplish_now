@@ -1004,11 +1004,7 @@
 					ProjectRef = 696403CC2187AC5F00F96AEC /* RNImagePicker.xcodeproj */;
 				},
 				{
-<<<<<<< HEAD
-					ProductGroup = 8493F9C521A6DE8B00A34E76 /* Products */;
-=======
 					ProductGroup = 841CD57A21AF62880008B9C7 /* Products */;
->>>>>>> master
 					ProjectRef = 5ABFB4BB6AF84EEEA61784C5 /* RNViewOverflow.xcodeproj */;
 				},
 			);
