@@ -49,6 +49,7 @@ class UserProfile extends Component {
 		super( props );
 		this._onPressBack = this._onPressBack.bind( this );
 		this._onPressSettings = this._onPressSettings.bind( this );
+		this._onPressSchedule = this._onPressSchedule.bind( this );
 	}
 
 	_skills = ( skills ) => {
@@ -79,6 +80,11 @@ class UserProfile extends Component {
 	_onPressSettings() {
 		const { navigator } = this.props;
 		navigator.push( { screen: 'settings' } );
+	}
+
+	_onPressSchedule() {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'MeetingSchedule' } );
 	}
 
 	_navigateTo( screen ) {
@@ -143,7 +149,7 @@ class UserProfile extends Component {
 							editable={editable}
 						/>
 						<Spacing size="smallPlus" />
-						<ActionsCard />
+						<ActionsCard onPressSchedule={this._onPressSchedule} />
 						<Spacing size="smallPlus" />
 						{user.skills
 							? (

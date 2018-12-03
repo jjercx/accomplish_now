@@ -38,5 +38,6 @@ export default {
 	modalLineColor: '#A9A9A9',
 	paleGreyFour: '#eff1f5',
 	stripeBlue: '#078FDE',
-	stripeBlueStrong: '#1278B3'
+	stripeBlueStrong: '#1278B3',
+	battleshipGrey: '#6b6b75'
 };
