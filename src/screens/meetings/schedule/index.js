@@ -179,6 +179,27 @@ class MeetingSchedule extends Component {
 							</View>
 						</View>
 					</View>
+					{( paidSwitch ) ? (
+						<View style={styles.rowContainer}>
+							<View style={styles.innerRow}>
+								<Typography
+									variant="midTitle"
+									color="battleshipGrey"
+									textAlign="center"
+								>
+									{'Advisor'}
+								</Typography>
+								<View style={styles.imageContainer}>
+									<View style={styles.imageOver}>
+										<Image source={photo2} resizeMode="contain" style={styles.image} />
+									</View>
+								</View>
+
+							</View>
+						</View>
+					) : (
+						<View />
+					)}
 					<View style={styles.rowContainer}>
 						<View style={styles.innerRow}>
 							<Typography
