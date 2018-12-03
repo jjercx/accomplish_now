@@ -13,10 +13,10 @@ const styles = StyleSheet.create( {
 		borderRadius: 5,
 		justifyContent: 'center',
 		alignItems: 'center',
-		width: '48%'
+		width: '46.8%'
 	},
 	cardContainerFullWidth: {
-		width: '98%'
+		width: '96.5%'
 	},
 	distanceWrapper: {
 		flexDirection: 'row',
@@ -39,7 +39,8 @@ const styles = StyleSheet.create( {
 		flex: 1,
 		flexDirection: 'row',
 		justifyContent: 'center',
-		minWidth: responsiveSize( 150 )
+		minWidth: responsiveSize( 150 ),
+		minHeight: responsiveSize( 20 )
 	},
 	ratingWrapper: {
 		flexDirection: 'row',

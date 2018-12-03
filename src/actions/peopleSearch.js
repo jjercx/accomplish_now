@@ -6,7 +6,7 @@ import {
 	START_SEARCHING_PEOPLE
 } from './types';
 
-import Person, { PersonState } from '../entities/Person';
+import Person from '../entities/Person';
 import Skill, { ComputedSkill } from '../entities/Skill';
 
 const gpsError = ( dispatch ) => {
@@ -21,27 +21,35 @@ export const actGetPeopleSearchResults = searchText => ( dispatch ) => {
 			if ( !position ) { gpsError( dispatch ); return; }
 			const { coords: { latitude, longitude } } = position;
 			// ─────────────────────────────────────────────────────────────────
-
-			const peopleIds = Object.keys( people ).filter( personId => (
+			let peopleIds = Object.keys( people ).filter( personId => (
 				people[ personId ].basicInfo
 				&& people[ personId ].location
 				&& people[ personId ].basicInfo.firstName
 				&& people[ personId ].basicInfo.lastName
-			) ).filter( ( personId ) => {
-				searchText = searchText.toLowerCase();
-				const { basicInfo: { firstName, lastName }, skills = [] } = people[ personId ];
-				return (
-					firstName.toLowerCase().includes( searchText )
-					|| lastName.toLowerCase().includes( searchText )
-					|| skills.some( skill => skill.name && skill.name.toLowerCase().includes( searchText ) )
-				);
-			} );
+			) );
+
+			if ( searchText ) {
+				peopleIds = peopleIds.filter( ( personId ) => {
+					searchText = searchText.toLowerCase();
+					const { basicInfo: { firstName, lastName }, skills = [] } = people[ personId ];
+					return (
+						firstName.toLowerCase().includes( searchText )
+						|| lastName.toLowerCase().includes( searchText )
+						|| skills.some( skill => skill.name && skill.name.toLowerCase().includes( searchText ) )
+					);
+				} );
+			}
 
 			const peopleInfo = peopleIds.map( ( personId ) => {
 				const personData = people[ personId ];
 				let {
 					location: { coords },
-					basicInfo: { firstName, lastName, profilePhotoUrl }
+					basicInfo: {
+						firstName,
+						lastName,
+						profilePhotoUrl,
+						availableStatus
+					}
 				} = personData;
 
 				const skills = personData.skills && personData.skills.map( skill => (
@@ -55,6 +63,10 @@ export const actGetPeopleSearchResults = searchText => ( dispatch ) => {
 				const expertise = personData.aboutMe && personData.aboutMe.expertise
 					&& personData.aboutMe.expertise.pop().desc;
 
+				const accomplishments = personData.accomplishments
+					&& Object.keys( personData.accomplishments )
+						.map( key => personData.accomplishments[ key ].description );
+
 				const newPerson = new Person(
 					personId,
 					firstName,
@@ -63,7 +75,8 @@ export const actGetPeopleSearchResults = searchText => ( dispatch ) => {
 					profilePhotoUrl,
 					skills,
 					null, '', [],
-					PersonState.AVAILABLE
+					accomplishments,
+					availableStatus
 				);
 
 				return {

@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable indent */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
-	View, StyleSheet, Modal, Image, Slider, Switch
+	View, StyleSheet, Modal, Image, Slider, Switch, TouchableOpacity
 } from 'react-native';
 
 import Button from '../components/button/Button';
@@ -56,14 +57,33 @@ const filterIcon = require( '../assets/images/icons/filterBig.png' );
 /* eslint-disable react/prefer-stateless-function */
 class FilterPeople extends Component {
 	state = {
-		modalVisible: true,
+		modalVisible: false,
 		filterDistance: 50,
 		currentlyAvailable: false,
 		paidMeetings: false
 	};
 
-	setModalVisible( visible ) {
-		this.setState( { modalVisible: visible } );
+	open = () => this.setState( { modalVisible: true } );
+
+	close = () => this.setState( { modalVisible: false } );
+
+	_onSubmit = () => {
+		this.close();
+		const { onSubmit } = this.props;
+		const { filterDistance, currentlyAvailable, paidMeetings } = this.state;
+		onSubmit( {
+			filterDistance,
+			currentlyAvailable,
+			paidMeetings
+		} );
+	}
+
+	_onResetOptions = () => {
+		this.setState( {
+			filterDistance: 50,
+			currentlyAvailable: false,
+			paidMeetings: false
+		} );
 	}
 
 	slideChange( value ) {
@@ -104,23 +124,27 @@ class FilterPeople extends Component {
 							</View>
 							<View>
 								<View style={styles.optionsWrapper}>
-									<Typography variant="midBody" color="charcoalGrey">Currently Available</Typography>
+									<TouchableOpacity
+										onPress={() => this.setState( { currentlyAvailable: !currentlyAvailable } )}
+									>
+										<Typography variant="midBody" color="charcoalGrey">Currently Available</Typography>
+									</TouchableOpacity>
 									<Switch
 										style={styles.resizedComponent}
 										value={currentlyAvailable}
-										onValueChange={( value ) => {
-											this.setState( { currentlyAvailable: value } );
-										}}
+										onValueChange={value => this.setState( { currentlyAvailable: value } )}
 									/>
 								</View>
 								<View style={styles.optionsWrapper}>
-									<Typography variant="midBody" color="charcoalGrey">Paid Meetings</Typography>
+									<TouchableOpacity
+										onPress={() => this.setState( { paidMeetings: !paidMeetings } )}
+									>
+										<Typography variant="midBody" color="charcoalGrey">Paid Meetings</Typography>
+									</TouchableOpacity>
 									<Switch
 										style={styles.resizedComponent}
 										value={paidMeetings}
-										onValueChange={( value ) => {
-											this.setState( { paidMeetings: value } );
-										}}
+										onValueChange={value => this.setState( { paidMeetings: value } )}
 									/>
 								</View>
 							</View>
@@ -131,6 +155,7 @@ class FilterPeople extends Component {
 								textColor={colors.white}
 								buttonColor={colors.orange}
 								style={{ height: 50 }}
+								onPress={() => this._onSubmit()}
 							/>
 							<Spacing size="smallPlus" />
 							<Button
@@ -138,6 +163,7 @@ class FilterPeople extends Component {
 								textColor={colors.darkSkyBlue}
 								buttonColor={colors.paleGreyThree}
 								style={{ height: 50 }}
+								onPress={() => this._onResetOptions()}
 							/>
 						</View>
 						<Spacing size="xLarge" />
@@ -148,5 +174,9 @@ class FilterPeople extends Component {
 	}
 }
 /* eslint-enable react/prefer-stateless-function */
+
+FilterPeople.propTypes = {
+	onSubmit: PropTypes.func.isRequired
+};
 
 export default FilterPeople;

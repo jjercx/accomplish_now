@@ -110,8 +110,6 @@ class UserProfile extends Component {
 		const editable = currentUserId === searchedUser.uid;
 		if ( Object.keys( searchedUser ).length ) user = searchedUser;
 
-		console.log( 'user', user );
-
 		let image = user.basicInfo.profilePhotoUrl
 			? { uri: user.basicInfo.profilePhotoUrl }
 			: require( '../assets/images/icons/addPhoto.png' );
