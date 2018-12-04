@@ -19,6 +19,7 @@ import Header from '../components/people-search/Header';
 import { actGetPeopleSearchResults } from '../actions/peopleSearch';
 import { actGetUser } from '../actions/users';
 import Typography from '../components/typography/Typography';
+import FilterPeopleModal from './FilterPeople';
 
 import colors from '../theme/palette';
 
@@ -29,24 +30,20 @@ const styles = StyleSheet.create( {
 	},
 	subContainer: {
 		flex: 1,
-		marginTop: responsiveSize( Platform.OS === 'ios' ? 20 : 0 ),
-		marginHorizontal: responsiveSize( 5 )
+		marginTop: responsiveSize( Platform.OS === 'ios' ? 20 : 0 )
 	},
 	headerContainer: {
 		height: responsiveSize( 60 )
 	},
 	resultsContainer: {
 		backgroundColor: colors.paleGreyThree,
-		width: '100%',
-		flex: 1,
-		paddingTop: responsiveSize( 5 ),
-		marginBottom: responsiveSize( 5 )
+		flex: 1
 	},
 	flatList: {
-		flex: 1,
-		marginTop: responsiveSize( 15 ),
-		marginBottom: responsiveSize( 40 ),
-		alignSelf: iPhoneSE() ? 'auto' : 'center'
+		// flex: 1,
+		marginTop: responsiveSize( 5 ),
+		alignItems: 'center',
+		paddingBottom: responsiveSize( 40 )
 	},
 	invisible: {
 		backgroundColor: 'transparent'
@@ -69,13 +66,23 @@ class PeopleSearch extends Component {
 		navBarHidden: true
 	};
 
-	state = { isError: false }
+	state = {
+		isError: false,
+		// paidMeetings: null,
+		currentlyAvailable: null,
+		filterDistance: null
+	}
+
+	componentDidMount() {
+		const { getPeopleSearchResults } = this.props;
+		getPeopleSearchResults( '' );
+	}
 
 	_cardFullWidth = ( index, people ) => ( people.length % 2 !== 0 )
 		&& ( index === people.length - 1 )
 
-	_onPressFilter = () => { // eslint-disable-line class-methods-use-this
-		console.log( 'Filter actions' ); // eslint-disable-line no-console
+	_onPressFilter = () => {
+		this.modal.open();
 	}
 
 	_onPressBack = () => {
@@ -95,20 +102,38 @@ class PeopleSearch extends Component {
 		}
 	}
 
+	filterPeople = ( prevPeople ) => {
+		const {
+			filterDistance,
+			currentlyAvailable
+			// paidMeetings,
+		} = this.state;
+		return prevPeople
+			.filter( person => ( filterDistance === null || ( person.distance <= filterDistance ) ) )
+			.filter( person => ( currentlyAvailable === null
+				|| ( person.person.state === currentlyAvailable ) ) );
+
+		// TODO: when people real data connect this
+		// .filter( person => ( paidMeetings === null || person.paidMeetings === paidMeetings ) )
+	}
+
 	_onUserPress = ( userId ) => {
 		const { navigator, actGetUserInit } = this.props; // eslint-disable-line react/prop-types
 		actGetUserInit( userId );
 		navigator.push( { screen: 'userProfile' } );
 	}
 
+	_onSubmit = filterData => this.setState( filterData );
+
 	render() {
-		const {
+		let {
 			navigator: _navigator,
 			isFetching: isSearching,
 			searchResults: people
 		} = this.props;
 
 		const { isError } = this.state;
+		people = this.filterPeople( people );
 
 		/* eslint-disable no-nested-ternary */
 		return (
@@ -160,6 +185,10 @@ class PeopleSearch extends Component {
 					)}
 				</View>
 				<NavBar navigator={_navigator} />
+				<FilterPeopleModal
+					ref={( ref ) => { this.modal = ref; }}
+					onSubmit={this._onSubmit}
+				/>
 			</View>
 		);
 		/* eslint-enable no-nested-ternary */
