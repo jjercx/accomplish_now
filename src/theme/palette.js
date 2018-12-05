@@ -35,9 +35,11 @@ export default {
 	nextGray: '#A7A7A7',
 	timeCountGray: '#BBBDC0',
 	modalBackgroundColor: 'rgba(0,0,0,0.7)',
-	modalLineColor: '#A9A9A9',
+	brownGrey: '#A9A9A9',
 	paleGreyFour: '#eff1f5',
 	stripeBlue: '#078FDE',
 	stripeBlueStrong: '#1278B3',
-	battleshipGrey: '#6b6b75'
+	battleshipGrey: '#6b6b75',
+	lightPeriwinkle: '#dfe1e6',
+	yellowishOrange: '#ff9e1b'
 };

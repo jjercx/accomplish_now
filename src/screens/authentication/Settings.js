@@ -111,9 +111,10 @@ class Settings extends Component {
 		this._callback = this._callback.bind( this );
 	}
 
-	_onPressBack() {
+	_support = () => {
 		const { navigator } = this.props;
-		navigator.pop();
+		// TODO: remove this, only for testing
+		navigator.push( { screen: 'rateThisMeeting' } );
 	}
 
 	_logOut() {
@@ -132,6 +133,11 @@ class Settings extends Component {
 			],
 			{ cancelable: false }
 		);
+	}
+
+	_onPressBack() {
+		const { navigator } = this.props;
+		navigator.pop();
 	}
 
 	_callback() {
@@ -168,7 +174,7 @@ class Settings extends Component {
 								</View>
 							</TouchableOpacity>
 						</View>
-						<TouchableOpacity style={localStyles.support}>
+						<TouchableOpacity style={localStyles.support} onPress={this._support}>
 							<View style={localStyles.supportItem}>
 								<Image style={localStyles.iconSupport} source={require( '../../assets/images/icons/message.png' )} />
 								<Typography variant="smallTitle">Support</Typography>

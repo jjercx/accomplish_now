@@ -28,6 +28,8 @@ import PlaceDetails from './places/placeDetails';
 import PeopleSearch from './PeopleSearch';
 import MeetingRequest from './meetings/meeting-request/meetingRequest';
 import ScheduleAddress from './meetings/meeting-request/scheduleAddress';
+import RateThisMeeting from './meetings/RateThisMeeting';
+import MeetingSummary from './meetings/MeetingSummary';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -85,4 +87,6 @@ export function registerScreens() {
 	Navigation.registerComponent( 'settings', () => Settings, store, Provider );
 	Navigation.registerComponent( 'MeetingRequest', () => MeetingRequest, store, Provider );
 	Navigation.registerComponent( 'ScheduleAddress', () => ScheduleAddress, store, Provider );
+	Navigation.registerComponent( 'rateThisMeeting', () => RateThisMeeting, store, Provider );
+	Navigation.registerComponent( 'meetingSummary', () => MeetingSummary, store, Provider );
 }
