@@ -15,10 +15,13 @@ import Colors from '../theme/palette';
 import NavigatorPropType from '../types/navigator';
 import ButtonIcon from '../components/button-icon/ButtonIcon';
 import Typography from '../components/typography/Typography';
-import MeetingPreview from '../components/meetings/meetingPreview';
 import NavBar from '../components/navbar/NavBar';
-import Meeting from '../entities/Meeting';
+import MeetingPreview, {
+	MeetingPreviewMode
+} from '../components/meetings/MeetingPreview';
+
 import Person from '../entities/Person';
+import Meeting, { MeetingState } from '../entities/Meeting';
 
 import imageProfileDefault from '../assets/images/meetings/frankDoeCopia3.png';
 import imageUserProfileDefault from '../assets/images/meetings/jhonDoeCopia3.png';
@@ -104,353 +107,366 @@ const s = StyleSheet.create( {
 } );
 
 class Meetings extends Component {
-  static navigatorStyle = {
-  	navBarHidden: true
-  };
+	static navigatorStyle = {
+		navBarHidden: true
+	};
 
-  state = {
-  	viewSelected: 'current',
-  	_notifications: true
-  };
+	state = {
+		viewSelected: 'current',
+		_notifications: true
+	};
 
-  _goToNotifications = () => {
-    alert("go to notifications screen"); //eslint-disable-line
-  };
+	_goToNotifications = () => {
+		alert("go to notifications screen"); //eslint-disable-line
+	};
 
-  _openNotification = () => {
-    alert("open notification"); //eslint-disable-line
-  };
+	_openNotification = () => {
+		alert("open notification"); //eslint-disable-line
+	};
 
-  _onPressBack = () => {
-  	const { navigator } = this.props;
-  	navigator.pop();
-  };
+	_onPressBack = () => {
+		const { navigator } = this.props;
+		navigator.pop();
+	};
 
-  _meetingsPast = () => [
-  	new Meeting(
-  		new Person(
-  			'1',
-  			'Frank',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'1',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'2',
-  			'Frank',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'2',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Rejected',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'3',
-  			'Frank',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'3',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'4',
-  			'Frank',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'4',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'5',
-  			'Frank',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'5',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	)
-  ];
+	_meetingsPast = () => [
+		new Meeting(
+			new Person(
+				'1',
+				'Frank',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'1',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.ACCEPTED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'2',
+				'Frank',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'2',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.REJECTED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'3',
+				'Frank',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'3',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.ACCEPTED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'4',
+				'Frank',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'4',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.ACCEPTED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'5',
+				'Frank',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'5',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.ACCEPTED,
+			'Lorem ipsum dolor sit amet.'
+		)
+	];
 
-  _meetingsCurrent = () => [
-  	new Meeting(
-  		new Person(
-  			'1',
-  			'John',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'1',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'2',
-  			'John',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'2',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Rejected',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'3',
-  			'John',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'3',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'4',
-  			'John',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'4',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'5',
-  			'John',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'5',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	)
-  ];
+	_meetingsCurrent = () => [
+		new Meeting(
+			new Person(
+				'1',
+				'John',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'6',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.ACCEPTED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'2',
+				'John',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'7',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.REJECTED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'3',
+				'John',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'8',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.FINISHED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'4',
+				'John',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'9',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.ACCEPTED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'5',
+				'John',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'10',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.ACCEPTED,
+			'Lorem ipsum dolor sit amet.'
+		)
+	];
 
-  _meetingsFuture = () => [
-  	new Meeting(
-  		new Person(
-  			'1',
-  			'Mike',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'1',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'2',
-  			'Mike',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'2',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Rejected',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'3',
-  			'Mike',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'3',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'4',
-  			'Mike',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'4',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	),
-  	new Meeting(
-  		new Person(
-  			'5',
-  			'Mike',
-  			'Doe',
-  			'',
-  			imageProfileDefault,
-  			'',
-  			'',
-  			'',
-  			'',
-  			'',
-  			''
-  		),
-  		'5',
-  		imageUserProfileDefault,
-  		'Fri, Oct 19, 08:07 PM',
-  		'Accepted',
-  		'Lorem ipsum dolor sit amet.'
-  	)
-  ];
+	_meetingsFuture = () => [
+		new Meeting(
+			new Person(
+				'1',
+				'Mike',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'11',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.ACCEPTED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'2',
+				'Mike',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'2',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.REJECTED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'3',
+				'Mike',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'3',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.ACCEPTED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'4',
+				'Mike',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'4',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.ACCEPTED,
+			'Lorem ipsum dolor sit amet.'
+		),
+		new Meeting(
+			new Person(
+				'5',
+				'Mike',
+				'Doe',
+				'',
+				imageProfileDefault,
+				'',
+				'',
+				'',
+				'',
+				'',
+				''
+			),
+			'5',
+			imageUserProfileDefault,
+			'Fri, Oct 19, 08:07 PM',
+			MeetingState.ACCEPTED,
+			'Lorem ipsum dolor sit amet.'
+		)
+	];
 
-  handleMettingPress = (meeting) => {
-	  console.log('meeting', meeting);
-	const { navigator } = this.props;
-	navigator.push( { screen: 'meetingDetail', 
-					animationType: 'fade', 
-					navigatorStyle: {navBarHidden: true},
-					passProps: {meeting: meeting} } );
-  }
+	handleMeetingPress = ( meeting ) => {
+		console.log( 'meeting', meeting );
+		const { navigator } = this.props;
+		navigator.push( {
+			screen: 'meetingDetail',
+			animationType: 'fade',
+			navigatorStyle: { navBarHidden: true },
+			passProps: { meeting }
+		} );
+	}
 
-  render() {
-  	const { viewSelected, _notifications } = this.state;
-  	const { navigator: _navigator } = this.props;
+	render() {
+		const { viewSelected, _notifications } = this.state;
+		const { navigator: _navigator } = this.props;
 
-  	return (
-  		<View style={s.container}>
-  			<View style={s.subContainer}>
+		const getData = ( selectedView ) => {
+			switch ( selectedView ) {
+				case 'future':
+					return this._meetingsFuture();
+				case 'current':
+					return this._meetingsCurrent();
+				default:
+					return this._meetingsPast();
+			}
+		};
+
+		return (
+			<View style={s.container}>
+				<View style={s.subContainer}>
 					<View style={s.content}>
 						<StatusBar
 							barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
@@ -470,25 +486,23 @@ class Meetings extends Component {
 									onPress={() => this._goToNotifications()}
 								/>
 								<View
-									style={[s.notification, { opacity: _notifications ? 1 : 0 }]}
+									style={[ s.notification, { opacity: _notifications ? 1 : 0 } ]}
 								/>
 							</View>
-
-
 						</View>
-						<View style={s.headerTitle} >
+						<View style={s.headerTitle}>
 							<Typography
 								variant="semiLargeTitle"
 								color="darkSkyBlue"
 								textAlign="left"
 							>
-								{'Messages'}
+								{'Meetings'}
 							</Typography>
 						</View>
-						<View style={s.headerNotificationType} >
+						<View style={s.headerNotificationType}>
 							<TouchableOpacity
 								style={
-									viewSelected == 'past'
+									viewSelected === 'past'
 										? s.notificationTypeSelected
 										: s.notificationTypeDeselected
 								}
@@ -497,7 +511,7 @@ class Meetings extends Component {
 								<Typography
 									variant="smallTitle"
 									color={
-										viewSelected == 'past' ? 'charcoalGrey' : 'pinkishGrey'
+										viewSelected === 'past' ? 'charcoalGrey' : 'pinkishGrey'
 									}
 									textAlign="left"
 								>
@@ -506,7 +520,7 @@ class Meetings extends Component {
 							</TouchableOpacity>
 							<TouchableOpacity
 								style={
-									viewSelected == 'current'
+									viewSelected === 'current'
 										? s.notificationTypeSelected
 										: s.notificationTypeDeselected
 								}
@@ -515,17 +529,16 @@ class Meetings extends Component {
 								<Typography
 									variant="smallTitle"
 									color={
-										viewSelected == 'current' ? 'charcoalGrey' : 'pinkishGrey'
+										viewSelected === 'current' ? 'charcoalGrey' : 'pinkishGrey'
 									}
 									textAlign="left"
 								>
 									{'Today'}
 								</Typography>
 							</TouchableOpacity>
-
 							<TouchableOpacity
 								style={
-									viewSelected == 'future'
+									viewSelected === 'future'
 										? s.notificationTypeSelected
 										: s.notificationTypeDeselected
 								}
@@ -534,7 +547,7 @@ class Meetings extends Component {
 								<Typography
 									variant="smallTitle"
 									color={
-										viewSelected == 'future' ? 'charcoalGrey' : 'pinkishGrey'
+										viewSelected === 'future' ? 'charcoalGrey' : 'pinkishGrey'
 									}
 									textAlign="left"
 								>
@@ -544,23 +557,21 @@ class Meetings extends Component {
 						</View>
 						<FlatList
 							style={s.flatList}
-							data={
-								viewSelected == 'future'
-									? this._meetingsFuture()
-									: viewSelected == 'current'
-										? this._meetingsCurrent()
-										: this._meetingsPast()
-							}
+							data={getData( viewSelected )}
 							renderItem={( { item } ) => (
-								<MeetingPreview onPress={this.handleMettingPress} {...item} />
+								<MeetingPreview
+									onPressStartMeeting={this.handleMeetingPress}
+									meeting={item}
+									mode={MeetingPreviewMode.OWNER}
+								/>
 							)}
 						/>
 					</View>
 				</View>
 				<NavBar navigator={_navigator} />
 			</View>
-  	);
-  }
+		);
+	}
 }
 
 Meetings.propTypes = {
