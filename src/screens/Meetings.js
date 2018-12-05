@@ -290,7 +290,7 @@ class Meetings extends Component {
 			'8',
 			imageUserProfileDefault,
 			'Fri, Oct 19, 08:07 PM',
-			MeetingState.ACCEPTED,
+			MeetingState.FINISHED,
 			'Lorem ipsum dolor sit amet.'
 		),
 		new Meeting(

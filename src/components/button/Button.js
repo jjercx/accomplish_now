@@ -13,7 +13,7 @@ const Button = ( {
 } ) => (
 	<TouchableOpacity
 		style={[ styles.button, { backgroundColor: buttonColor }, style ]}
-		activeOpacity={0.9}
+		activeOpacity={0.4}
 		onPress={onPress}
 	>
 		<Text style={[ styles.label, { color: textColor, fontFamily: fonts.productSansRegular } ]}>

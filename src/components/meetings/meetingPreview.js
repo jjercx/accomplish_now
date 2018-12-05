@@ -66,7 +66,7 @@ export default class MessagePreview extends Component {
 
 			return (
 				<Swipeout
-					backgroundColor={Colors.paleGreyThree}
+					backgroundColor="transparent"
 					right={confirmBtn}
 					buttonWidth={responsiveSize( 112 )}
 					openRight={swiped}
