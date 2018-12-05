@@ -59,7 +59,7 @@ const styles = {
 		flex: 0.5
 	},
 	paginationStyle: {
-		bottom: responsiveSize( '25%' ),
+		bottom: '25%',
 		marginRight: responsiveSize( 5 )
 	},
 	circleOff: {
@@ -86,10 +86,8 @@ class Onboarding extends Component {
 		actVerifyLoginConnect( this.callback );
 	}
 
-	callback = ( res ) => {
-		if ( res === 'notLogged' ) {
-			return null;
-		}
+	callback = ( res ) => { // eslint-disable-line consistent-return
+		if ( res === 'notLogged' ) return null;
 		const { navigator } = this.props;
 			 AsyncStorage.getUser().then( ( asyncUser ) => {
 			if ( asyncUser ) navigator.push( { screen: 'home' } );

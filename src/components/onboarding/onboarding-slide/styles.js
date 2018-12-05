@@ -7,12 +7,12 @@ export default {
 		alignItems: 'center'
 	},
 	wrapperOnboarding: {
-		bottom: responsiveSize( 200 ),
+		bottom: '28%',
 		position: 'absolute',
 		alignItems: 'center',
 		marginHorizontal: responsiveSize( spacings.medium )
 	},
 	wrapperSubTitle: {
-		height: responsiveSize( 150 )
+		height: responsiveSize( 50 )
 	}
 };
