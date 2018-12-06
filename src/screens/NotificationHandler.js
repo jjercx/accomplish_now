@@ -65,7 +65,7 @@ export default class NotificationHandler extends Component {
 					.setBody( notification.body )
 					.setData( notification.data )
 					.android.setChannelId( 'channelId' ) // e.g. the id you chose above
-					// .android.setSmallIcon( 'ic_stat_notification' ) // create this icon in Android Studio
+					.android.setSmallIcon( 'ic_launcher' ) // create this icon in Android Studio
 					.android.setColor( '#000000' ) // you can set a color here
 					.android.setPriority( Firebase.notifications.Android.Priority.High );
 

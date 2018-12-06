@@ -82,11 +82,15 @@ export const actVerifyAndSignIn = ( uid, code, callback ) => ( dispatch ) => {
 };
 
 export const actVerifyLogin = callback => ( dispatch ) => {
-	AuthenticationServices.verifyLogin().then( () => {
+	AuthenticationServices.verifyLogin().then( ( token ) => {
 		AuthenticationServices.getUserData().then( ( user ) => {
 			dispatch( {
 				type: SET_USER,
 				payload: user
+			} );
+			dispatch( {
+				type: SET_USER_TOKEN,
+				payload: token
 			} );
 			callback( 'ok' );
 		} ).catch( ( e ) => {
