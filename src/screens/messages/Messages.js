@@ -142,7 +142,11 @@ class Messages extends Component {
 							data={messages ? this._messages() : []}
 							keyExtractor={item => item.messageId}
 							renderItem={( { item } ) => (
-								<MessagePreview onMessagePress={this._openMessageDetail} {...item} />
+								<MessagePreview
+									key={item.messageId}
+									onMessagePress={this._openMessageDetail}
+									{...item}
+								/>
 							)}
 						/>
 					) }
