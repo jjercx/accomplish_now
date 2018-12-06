@@ -85,6 +85,16 @@ class Home extends Component {
 		actMessagesInit();
 	}
 
+	_goToPlaceDetails = () => {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'placeDetails' } );
+	}
+
+	_goToAllConnections = () => {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'meetings' } );
+	}
+
 	getConnections = ( messages ) => {
 		let connections = [];
 
@@ -130,6 +140,7 @@ class Home extends Component {
 			<MyConnectionsSection
 				connections={connections}
 				onPress={this._onUserPicturePress}
+				onPressSeeAll={this._goToAllConnections}
 			/>
 		);
 	}
@@ -141,6 +152,7 @@ class Home extends Component {
 			<PlacesSection
 				places={places}
 				onPressShowPlacesList={this._showPlacesList.bind( this )}
+				onPressPlace={this._goToPlaceDetails.bind( this )}
 			/>
 		);
 	}
