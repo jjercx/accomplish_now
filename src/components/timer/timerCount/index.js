@@ -26,7 +26,7 @@ const TimerCount = ( { count, hours } ) => {
 
 TimerCount.propTypes = {
 	count: PropTypes.number.isRequired,
-	hours: PropTypes.number.isRequired,
+	hours: PropTypes.number.isRequired
 };
 
 export default TimerCount;

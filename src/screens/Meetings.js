@@ -16,9 +16,9 @@ import NavigatorPropType from '../types/navigator';
 import ButtonIcon from '../components/button-icon/ButtonIcon';
 import Typography from '../components/typography/Typography';
 import NavBar from '../components/navbar/NavBar';
-import MeetingPreview, {
+import MeetingPreviews, {
 	MeetingPreviewMode
-} from '../components/meetings/MeetingPreview';
+} from '../components/meetings/MeetingPreviews';
 
 import Person from '../entities/Person';
 import Meeting, { MeetingState } from '../entities/Meeting';
@@ -559,7 +559,7 @@ class Meetings extends Component {
 							style={s.flatList}
 							data={getData( viewSelected )}
 							renderItem={( { item } ) => (
-								<MeetingPreview
+								<MeetingPreviews
 									onPressStartMeeting={this.handleMeetingPress}
 									meeting={item}
 									mode={MeetingPreviewMode.OWNER}

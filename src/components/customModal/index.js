@@ -27,11 +27,11 @@ class CustomModalContainer extends Component {
   	const { title, transparent, ...modalProps } = this.props;
   	return (
 	<CustomModal
-		isVisible={this.state.isVisible}
-		onPressOut={this.canCloseOutside}
-		transparent={transparent}
-  		{...modalProps}
-	/>
+	isVisible={this.state.isVisible}
+	onPressOut={this.canCloseOutside}
+	transparent={transparent}
+  			{...modalProps}
+  		/>
   	);
   }
 }

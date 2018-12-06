@@ -48,7 +48,7 @@ const localStyles = {
 		paddingRight: responsiveSize( 30 )
 	},
 	buttonStyle: {
-		marginBottom: Platform.OS === 'android' ? responsiveSize( 55 ): responsiveSize( 15 )
+		marginBottom: Platform.OS === 'android' ? responsiveSize( 55 ) : responsiveSize( 15 )
 	},
 	buttonLoginContainer: {
 		paddingTop: responsiveSize( 20 ),

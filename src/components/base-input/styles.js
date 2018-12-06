@@ -1,5 +1,5 @@
 import fonts from '../../theme/fonts';
-import { responsiveSize} from '../../utils/dimensions';
+import { responsiveSize } from '../../utils/dimensions';
 
 export default {
 	input: {
