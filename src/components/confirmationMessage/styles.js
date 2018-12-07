@@ -33,7 +33,7 @@ export default StyleSheet.create( {
 		width: '100%',
 		height: responsiveSize( 50 ),
 		flexDirection: 'row',
-		backgroundColor: colors.modalLineColor,
+		backgroundColor: colors.brownGrey,
 		borderBottomLeftRadius: responsiveSize( 20 ),
 		borderBottomRightRadius: responsiveSize( 20 ),
 		paddingTop: 1,

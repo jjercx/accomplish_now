@@ -1,6 +1,5 @@
 
 
-
 const format = time => ( time < 10 ? `0${time}` : `${time}` );
 
 export const formatTime = ( count, hours ) => {

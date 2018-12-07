@@ -18,14 +18,29 @@ export default {
 		alignSelf: 'center',
 		flexDirection: 'row'
 	},
+	cardSelected: {
+		backgroundColor: Colors.darkSkyBlue
+	},
+	largeCard: {
+		paddingRight: responsiveSize( 34 )
+	},
 	text: {
 		color: Colors.greyishBrown,
+		fontSize: responsiveSize( 15 ),
 		marginLeft: responsiveSize( 8 ),
 		marginRight: responsiveSize( 15 )
+	},
+	textOnCardSelected: {
+		color: Colors.white
 	},
 	icon: {
 		fontSize: responsiveSize( 13 ),
 		color: Colors.paleGrey,
+		margin: responsiveSize( 2 )
+	},
+	iconCheck: {
+		fontSize: responsiveSize( 20 ),
+		color: Colors.white,
 		margin: responsiveSize( 2 )
 	},
 	iconContainer: {

@@ -26,6 +26,10 @@ import PlaceMapView from './places/placeMapView';
 import MeetingDetail from './meetings/meetingDetail';
 import PlaceDetails from './places/placeDetails';
 import PeopleSearch from './PeopleSearch';
+import MeetingRequest from './meetings/meeting-request/meetingRequest';
+import ScheduleAddress from './meetings/meeting-request/scheduleAddress';
+import RateThisMeeting from './meetings/RateThisMeeting';
+import MeetingSummary from './meetings/MeetingSummary';
 import NotificationHandler from './NotificationHandler';
 
 export function initApp( action ) {
@@ -82,5 +86,9 @@ export function registerScreens() {
 	Navigation.registerComponent( 'placeDetails', () => PlaceDetails );
 	Navigation.registerComponent( 'peopleSearch', () => PeopleSearch, store, Provider );
 	Navigation.registerComponent( 'settings', () => Settings, store, Provider );
+	Navigation.registerComponent( 'MeetingRequest', () => MeetingRequest, store, Provider );
+	Navigation.registerComponent( 'ScheduleAddress', () => ScheduleAddress, store, Provider );
+	Navigation.registerComponent( 'rateThisMeeting', () => RateThisMeeting, store, Provider );
+	Navigation.registerComponent( 'meetingSummary', () => MeetingSummary, store, Provider );
 	Navigation.registerComponent( 'notificationHandler', () => NotificationHandler, store, Provider );
 }

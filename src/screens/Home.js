@@ -74,23 +74,12 @@ class Home extends Component {
 
 	constructor( props ) {
 		super( props );
-		this.state = {
-			available: false
-		};
-
 		this._onSearchPress = this._onSearchPress.bind( this );
 	}
 
 	componentWillMount() {
 		let { actMessagesInit } = this.props; // eslint-disable-line react/prop-types
 		actMessagesInit();
-	}
-
-	componentDidMount() {
-		let { user } = this.props; // eslint-disable-line react/prop-types
-		if ( user ) {
-			this.setState( { available: user.availableStatus ? user.availableStatus : false } );
-		}
 	}
 
 	callback = ( res ) => {
@@ -109,6 +98,16 @@ class Home extends Component {
 			return meetings.length + 1;
 		}
 		return meetings.length;
+	}
+
+	_goToPlaceDetails = () => {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'placeDetails' } );
+	}
+
+	_goToAllConnections = () => {
+		const { navigator } = this.props;
+		navigator.push( { screen: 'meetings' } );
 	}
 
 	getConnections = ( messages ) => {
@@ -149,7 +148,6 @@ class Home extends Component {
 	_onValueChange( value ) {
 		let { actStatus } = this.props; // eslint-disable-line react/prop-types
 		actStatus( { availableStatus: value }, this.callback );
-		this.setState( { available: value } );
 	}
 
 	/* eslint-disable class-methods-use-this */
@@ -158,6 +156,7 @@ class Home extends Component {
 			<MyConnectionsSection
 				connections={connections}
 				onPress={this._onUserPicturePress}
+				onPressSeeAll={this._goToAllConnections}
 			/>
 		);
 	}
@@ -169,6 +168,7 @@ class Home extends Component {
 			<PlacesSection
 				places={places}
 				onPressShowPlacesList={this._showPlacesList.bind( this )}
+				onPressPlace={this._goToPlaceDetails.bind( this )}
 			/>
 		);
 	}
@@ -184,7 +184,6 @@ class Home extends Component {
 	/* eslint-enable class-methods-use-this */
 
 	render() {
-		const { available } = this.state;
 		// eslint-disable-next-line react/prop-types
 		const {
 			navigator: _navigator,

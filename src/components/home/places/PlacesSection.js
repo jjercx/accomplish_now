@@ -9,7 +9,7 @@ import Spacing from '../../spacing/Spacing';
 import TitleSection from '../title-section/TitleSection';
 
 const PlacesSection = ( {
-	places, onPressShowPlacesList, title, placesDetailActive
+	places, onPressShowPlacesList, title, placesDetailActive, onPressPlace
 } ) => (
 	<View
 		style={[
@@ -35,7 +35,7 @@ const PlacesSection = ( {
 			{
 				places.map( place => (
 					<View key={place.id} style={{ flexDirection: 'row' }}>
-						<PlaceBox place={place} />
+						<PlaceBox place={place} onPress={onPressPlace} />
 						<Spacing size="medium" horizontal />
 					</View>
 				) )
@@ -50,12 +50,14 @@ PlacesSection.propTypes = {
 	places: PropTypes.arrayOf( PropTypes.instanceOf( Place ) ),
 	onPressShowPlacesList: PropTypes.func,
 	title: PropTypes.string,
-	placesDetailActive: PropTypes.bool
+	placesDetailActive: PropTypes.bool,
+	onPressPlace: PropTypes.func
 };
 
 PlacesSection.defaultProps = {
 	places: [],
 	onPressShowPlacesList: () => {},
+	onPressPlace: () => {},
 	title: 'Places to work',
 	placesDetailActive: false
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 export const required = value => ( value === null || value === '' || value === undefined
 	? 'Required Field.'
 	: undefined );

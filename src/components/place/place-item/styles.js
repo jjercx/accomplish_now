@@ -1,4 +1,4 @@
-import {  responsiveSize } from '../../../utils/dimensions';
+import { responsiveSize } from '../../../utils/dimensions';
 
 export default {
 	widthImage: {

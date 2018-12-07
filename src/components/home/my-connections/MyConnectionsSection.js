@@ -7,9 +7,9 @@ import ConnectionBox from '../../connection/connection-box/ConnectionBox';
 import Spacing from '../../spacing/Spacing';
 import TitleSection from '../title-section/TitleSection';
 
-const MyConnectionsSection = ( { connections, onPress } ) => (
+const MyConnectionsSection = ( { connections, onPress, onPressSeeAll } ) => (
 	<View style={styles.container}>
-		<TitleSection title="My Connections" />
+		<TitleSection title="My Connections" onPressSeeAll={onPressSeeAll} />
 		<ScrollView horizontal style={styles.wrapperConnections} showsHorizontalScrollIndicator={false}>
 			{
 				connections.map( person => (
@@ -26,11 +26,13 @@ const MyConnectionsSection = ( { connections, onPress } ) => (
 
 MyConnectionsSection.propTypes = {
 	connections: PropTypes.arrayOf( PropTypes.instanceOf( Person ) ),
-	onPress: PropTypes.func.isRequired
+	onPress: PropTypes.func.isRequired,
+	onPressSeeAll: PropTypes.func
 };
 
 MyConnectionsSection.defaultProps = {
-	connections: []
+	connections: [],
+	onPressSeeAll: () => {}
 };
 
 

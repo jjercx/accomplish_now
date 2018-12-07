@@ -9,6 +9,7 @@ export default {
 	skyBlue: '#68b8f7',
 	darkSkyBlue: '#42a4e4',
 	charcoalGrey: '#3e3e43',
+	charcoalGreyTwo: '#46464c',
 	greyishBrown: '#414141',
 	macaroneAndCheese: '#F2A133',
 	coolGrey: '#a9b2ba',
@@ -35,8 +36,11 @@ export default {
 	nextGray: '#A7A7A7',
 	timeCountGray: '#BBBDC0',
 	modalBackgroundColor: 'rgba(0,0,0,0.7)',
-	modalLineColor: '#A9A9A9',
+	brownGrey: '#A9A9A9',
 	paleGreyFour: '#eff1f5',
 	stripeBlue: '#078FDE',
-	stripeBlueStrong: '#1278B3'
+	stripeBlueStrong: '#1278B3',
+	battleshipGrey: '#6b6b75',
+	lightPeriwinkle: '#dfe1e6',
+	yellowishOrange: '#ff9e1b'
 };

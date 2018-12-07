@@ -149,6 +149,7 @@ class Messages extends Component {
 							renderItem={( { item } ) => (
 								<MessagePreview
 									onMessagePress={id => this._openMessageDetail( id, item.person.id )}
+									key={item.messageId}
 									{...item}
 								/>
 							)}
