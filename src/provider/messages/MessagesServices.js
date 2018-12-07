@@ -33,7 +33,7 @@ export default class MessagesServices {
 		);
 	}
 
-	static putNewMessage( newMessage, callback ) {
+	static putNewMessage( newMessage, userToken, receiverId, callback ) {
 		Promise.all( [
 			MessagesConfig.FirebaseConnector.setPush(
 				MessagesConfig.chatMessagesPath( newMessage.threadId ),
@@ -44,6 +44,38 @@ export default class MessagesServices {
 				newMessage,
 				MessagesConfig.latestMessagePath
 			)
-		] ).then( () => callback( null ) ).catch( e => callback( e ) );
+		] ).then( () => new Promise( async ( resolve, reject ) => {
+			try {
+				let response = await fetch(
+					'https://us-central1-accomplishtest-66926.cloudfunctions.net/SendPushNotification',
+					{
+						method: 'POST',
+						body: JSON.stringify( {
+							message: newMessage.text,
+							receiverUid: receiverId,
+							title: `${newMessage.sender.basicInfo.firstName} ${newMessage.sender.basicInfo.lastName}`
+						} ),
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${userToken}`
+						}
+					}
+				);
+				if ( response ) {
+					let body = JSON.parse( response._bodyInit );
+					if ( body.code !== 500 ) {
+						callback( null );
+						resolve( body );
+					} else {
+						callback( null );
+						reject( body );
+					}
+				}
+			} catch ( error ) {
+				callback( null );
+				reject( error );
+			}
+		} ) ).catch( e => callback( e ) );
 	}
 }

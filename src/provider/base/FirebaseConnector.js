@@ -1,4 +1,5 @@
 import Firebase from 'react-native-firebase';
+import DeviceInfo from 'react-native-device-info';
 
 export default class FirebaseConnector {
 	constructor( options = {} ) {
@@ -122,28 +123,50 @@ export default class FirebaseConnector {
 			} );
 	};
 
-	verifyLogin = () => new Promise( async ( resolve, reject ) => {
-		Firebase.auth().onAuthStateChanged( ( user ) => {
-			if ( user ) {
-				user.getIdToken( true ).then( ( ) => {
-					resolve( user );
-				} ).catch( ( error ) => {
-					reject( error );
+verifyLogin = () => new Promise( async ( resolve, reject ) => {
+	Firebase.auth().onAuthStateChanged( ( user ) => {
+		if ( user ) {
+			user.getIdToken( true ).then( ( token ) => {
+				this.setDeviceToken().then( () => {
+					resolve( token );
+				} );
+			} ).catch( ( error ) => {
+				reject( error );
+			} );
+		}
+	} );
+} )
+
+setDeviceToken = () => new Promise( async ( resolve, reject ) => {
+	const auth = Firebase.auth();
+	const { uid } = auth.currentUser;
+	let deviceId = DeviceInfo.getUniqueID();
+	Firebase
+		.messaging()
+		.getToken( true )
+		.then( ( fcmToken ) => {
+			if ( fcmToken ) {
+				this.set( `/users/${uid}/devicesToken`, { pushToken: fcmToken }, deviceId ).then( () => {
+					resolve( 'ok' );
+				} ).catch( ( e ) => {
+					reject( e );
 				} );
 			} else {
 				reject( 'notLogged' );
 			}
+		} ).catch( ( e ) => {
+			reject( e );
 		} );
-	} )
+} )
 
-	signWithCustomToken = token => new Promise( async ( resolve, reject ) => {
-		try {
-			let resp = Firebase.auth().signInWithCustomToken( token );
-			resolve( resp );
-		} catch ( error ) {
-			reject( error );
-		}
-	} )
+signWithCustomToken = token => new Promise( async ( resolve, reject ) => {
+	try {
+		let resp = Firebase.auth().signInWithCustomToken( token );
+		resolve( resp );
+	} catch ( error ) {
+		reject( error );
+	}
+} )
 
 	uploadImg = ( file, path ) => new Promise( async ( resolve, reject ) => {
 		try {

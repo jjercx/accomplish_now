@@ -8,6 +8,10 @@ export default class MessagesConfig {
 		return firebaseConnector;
 	}
 
+	static endpointSendMessage() {
+		return 'https://us-central1-accomplishtest-66926.cloudfunctions.net/SendPushNotification';
+	}
+
 	static get membersPath() {
 		const auth = Firebase.auth();
 		const { uid } = auth.currentUser;

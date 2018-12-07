@@ -31,6 +31,7 @@ import ScheduleAddress from './meetings/meeting-request/scheduleAddress';
 import RateThisMeeting from './meetings/RateThisMeeting';
 import MeetingSummary from './meetings/MeetingSummary';
 import CheckUserLogged from './CheckUserLogged';
+import NotificationHandler from './NotificationHandler';
 
 export function initApp( action ) {
 	switch ( action ) {
@@ -48,7 +49,7 @@ export function initApp( action ) {
 		case 'onboarding': {
 			Navigation.startSingleScreenApp( {
 				screen: {
-					screen: 'onboarding',
+					screen: 'notificationHandler',
 					navigatorStyle: {
 						navBarHidden: true
 					}
@@ -102,4 +103,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'rateThisMeeting', () => RateThisMeeting, store, Provider );
 	Navigation.registerComponent( 'meetingSummary', () => MeetingSummary, store, Provider );
 	Navigation.registerComponent( 'checkUserLogged', () => CheckUserLogged, store, Provider );
+	Navigation.registerComponent( 'notificationHandler', () => NotificationHandler, store, Provider );
 }

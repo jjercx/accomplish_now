@@ -335,13 +335,6 @@
 			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
 			remoteInfo = RNImagePicker;
 		};
-		69DC5B4821B2F48F00AF9DE3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5ABFB4BB6AF84EEEA61784C5 /* RNViewOverflow.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNViewOverflow;
-		};
 		69E48CD121779F2E003B56AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 69E48CA821779F2E003B56AA /* ReactNativeNavigation.xcodeproj */;
@@ -436,6 +429,7 @@
 		8477CEBC217AB59200C7C14B /* ProductSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProductSans-Bold.ttf"; sourceTree = "<group>"; };
 		8477CEBE217AB59300C7C14B /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		848F78BD218DFDB800B4BBDF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "accomplish/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		84C3AC2621B9617600A973FC /* accomplish.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = accomplish.entitlements; path = accomplish/accomplish.entitlements; sourceTree = "<group>"; };
 		A35C2D8B7BFD4AAEB269EC4E /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B50B50AB80D54272869DE2B0 /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
@@ -588,6 +582,7 @@
 		13B07FAE1A68108700A75B9A /* accomplish */ = {
 			isa = PBXGroup;
 			children = (
+				84C3AC2621B9617600A973FC /* accomplish.entitlements */,
 				848F78BD218DFDB800B4BBDF /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -664,14 +659,6 @@
 			isa = PBXGroup;
 			children = (
 				696403F92187AC6000F96AEC /* libRNImagePicker.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		69DC5B1B21B2F48F00AF9DE3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				69DC5B4921B2F48F00AF9DE3 /* libRNViewOverflow.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -916,6 +903,14 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 2D6QBDDZA9;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1279,13 +1274,6 @@
 			remoteRef = 696403F82187AC6000F96AEC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		69DC5B4921B2F48F00AF9DE3 /* libRNViewOverflow.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNViewOverflow.a;
-			remoteRef = 69DC5B4821B2F48F00AF9DE3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		69E48CD221779F2E003B56AA /* libReactNativeNavigation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1584,6 +1572,7 @@
 			baseConfigurationReference = DBDF7969A8227D34CFF94827 /* Pods-accomplish.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = accomplish/accomplish.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1615,6 +1604,7 @@
 			baseConfigurationReference = C243F688FC8F27210314CC6B /* Pods-accomplish.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = accomplish/accomplish.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

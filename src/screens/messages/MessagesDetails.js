@@ -112,9 +112,9 @@ class MessagesDetails extends Component {
 
 	_onSendMessage = () => {
 		const {
-			actNewMessageInit, threadId, user, inputMessageText
+			actNewMessageInit, threadId, user, inputMessageText, userToken, receiverId
 		} = this.props;
-		actNewMessageInit( threadId, inputMessageText, user );
+		actNewMessageInit( threadId, inputMessageText, user, userToken, receiverId );
 	}
 
 	_onPressBack() {
@@ -143,9 +143,6 @@ class MessagesDetails extends Component {
 		const {
 			messages, isFetching, isSending, inputMessageText
 		} = this.props;
-
-		console.log( 'messages', messages );
-
 		return (
 			<KeyboardAvoidingView style={s.container} behavior={Platform.OS === 'ios' ? 'padding' : null}>
 				<StatusBar
@@ -254,7 +251,9 @@ MessagesDetails.propTypes = {
 	inputMessageText: PropTypes.string.isRequired,
 	actMessagesByThreadIdInit: PropTypes.func.isRequired,
 	actNewMessageInit: PropTypes.func.isRequired,
-	actInputTextChangedInit: PropTypes.func.isRequired
+	actInputTextChangedInit: PropTypes.func.isRequired,
+	userToken: PropTypes.string.isRequired,
+	receiverId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = store => ( {
@@ -263,7 +262,8 @@ const mapStateToProps = store => ( {
 	messages: store.messages.threadMessages,
 	isFetching: store.messages.isFetching,
 	isSending: store.messages.isSending,
-	inputMessageText: store.messages.inputText
+	inputMessageText: store.messages.inputText,
+	userToken: store.authentication.user_token
 } );
 
 const mapDispatchToProps = dispatch => bindActionCreators( {

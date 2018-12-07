@@ -12,6 +12,7 @@ import Firebase from 'react-native-firebase';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import { actGetMessages } from '../actions/messages';
+import { actSetProfileData } from '../actions/authentication';
 import { actGetUser } from '../actions/users';
 import UserSection from '../components/home/header/UserSection';
 import { responsiveSize } from '../utils/dimensions';
@@ -73,16 +74,30 @@ class Home extends Component {
 
 	constructor( props ) {
 		super( props );
-		this.state = {
-			available: false
-		};
-
 		this._onSearchPress = this._onSearchPress.bind( this );
 	}
 
 	componentWillMount() {
 		let { actMessagesInit } = this.props; // eslint-disable-line react/prop-types
 		actMessagesInit();
+	}
+
+	callback = ( res ) => {
+		console.log( 'status', res );
+	}
+
+	_getMeetings = () => {
+		let { user } = this.props;
+		let meetings = [];
+		if ( user.meetings ) {
+			let objMeetings = Object.keys( user.meetings );
+			objMeetings.map( ( eachKey ) => {
+				let itemKey = user.meetings[ eachKey ];
+				return meetings.push( itemKey );
+			} );
+			return meetings.length + 1;
+		}
+		return meetings.length;
 	}
 
 	_goToPlaceDetails = () => {
@@ -131,7 +146,8 @@ class Home extends Component {
 	}
 
 	_onValueChange( value ) {
-		this.setState( { available: value } );
+		let { actStatus } = this.props; // eslint-disable-line react/prop-types
+		actStatus( { availableStatus: value }, this.callback );
 	}
 
 	/* eslint-disable class-methods-use-this */
@@ -168,7 +184,6 @@ class Home extends Component {
 	/* eslint-enable class-methods-use-this */
 
 	render() {
-		const { available } = this.state;
 		// eslint-disable-next-line react/prop-types
 		const {
 			navigator: _navigator,
@@ -193,14 +208,14 @@ class Home extends Component {
 					source={require( '../assets/images/home/header.png' )}
 					style={styles.imageBackground}
 				>
-					<UserSection userFirstName={user.basicInfo.firstName} meetings={12} />
+					<UserSection userFirstName={user.basicInfo.firstName} meetings={this._getMeetings()} />
 					<View style={styles.wrapperContainerAvailable}>
 						<View style={styles.wrapperAvailable}>
 							<Typography variant="smallTitle" color="white">{IM_AVAILABLE_TEXT}</Typography>
 							<Spacing size="small" horizontal />
 							<Switch
 								onValueChange={value => this._onValueChange( value )}
-								value={available}
+								value={user.availableStatus ? user.availableStatus : false}
 								onTintColor={colors.orange}
 								thumbTintColor={colors.switchThumbTintColor}
 								tintColor={colors.switchTintColor}
@@ -234,7 +249,8 @@ const mapStateToProps = store => ( {
 
 const mapDispatchToProps = dispatch => bindActionCreators( {
 	actMessagesInit: actGetMessages,
-	actGetUserInit: actGetUser
+	actGetUserInit: actGetUser,
+	actStatus: actSetProfileData
 }, dispatch );
 
 export default compose( connect( mapStateToProps, mapDispatchToProps )( Home ) );

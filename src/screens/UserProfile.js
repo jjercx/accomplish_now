@@ -128,7 +128,7 @@ class UserProfile extends Component {
 			user.biggestChallenge,
 			user.workingOn,
 			user.accomplishments ? this._acomplishments( user.accomplishments ) : [],
-			user.basicInfo.availableStatus ? PersonState.AVAILABLE : null
+			user.availableStatus ? PersonState.AVAILABLE : null
 		);
 
 		return (

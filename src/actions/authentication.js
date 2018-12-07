@@ -13,6 +13,7 @@ export const actCreateAccount = ( phone, callback ) => ( dispatch ) => {
 			callback( payload.user );
 		} )
 		.catch( ( e ) => {
+			console.log( 'error createAccount', e );
 			callback( e );
 		} );
 };
@@ -27,6 +28,7 @@ export const actLoginUser = ( phone, callback ) => ( dispatch ) => {
 			callback( payload.user );
 		} )
 		.catch( ( e ) => {
+			console.log( 'error loginUser', e );
 			callback( e );
 		} );
 };
@@ -45,6 +47,9 @@ export const actLogOut = callback => ( dispatch ) => {
 		Firebase.auth().signOut().then( () => {
 			callback();
 		} );
+	} ).catch( ( e ) => {
+		console.log( 'error actLogOut', e );
+		callback( e );
 	} );
 };
 
@@ -55,7 +60,7 @@ export const actVerifyAndSignIn = ( uid, code, callback ) => ( dispatch ) => {
 				type: SET_USER_TOKEN,
 				payload: token.token
 			} );
-			AuthenticationServices.signWithToken( token.token ).then( ( ) => {
+			AuthenticationServices.signWithToken( token.token ).then( () => {
 				AuthenticationServices.getUserData().then( ( user ) => {
 					dispatch( {
 						type: SET_USER,
@@ -63,20 +68,29 @@ export const actVerifyAndSignIn = ( uid, code, callback ) => ( dispatch ) => {
 					} );
 					AsyncStorage.setUser( token.token );
 					callback( 'ok' );
+				} ).catch( ( e ) => {
+					console.log( 'error getUserData', e );
 				} );
+			} ).catch( ( e ) => {
+				console.log( 'error signWithToken', e );
 			} );
 		} )
 		.catch( ( e ) => {
+			console.log( 'error verifyAndSignIn', e );
 			callback( e );
 		} );
 };
 
 export const actVerifyLogin = callback => ( dispatch ) => {
-	AuthenticationServices.verifyLogin().then( () => {
+	AuthenticationServices.verifyLogin().then( ( token ) => {
 		AuthenticationServices.getUserData().then( ( user ) => {
 			dispatch( {
 				type: SET_USER,
 				payload: user
+			} );
+			dispatch( {
+				type: SET_USER_TOKEN,
+				payload: token
 			} );
 			callback( 'ok' );
 		} ).catch( ( e ) => {
@@ -95,7 +109,11 @@ export const actSetProfileData = ( userData, callback ) => ( dispatch ) => {
 				payload: user
 			} );
 			callback( 'ok' );
+		} ).catch( ( e ) => {
+			console.log( 'error getUserData', e );
 		} );
+	} ).catch( ( e ) => {
+		console.log( 'error setUserProfile', e );
 	} );
 };
 
@@ -107,7 +125,11 @@ export const actPushAccomplisment = ( userData, callback ) => ( dispatch ) => {
 				payload: user
 			} );
 			callback( 'ok' );
+		} ).catch( ( e ) => {
+			console.log( 'error getUserData', e );
 		} );
+	} ).catch( ( e ) => {
+		console.log( 'error pushUserAccomplishment', e );
 	} );
 };
 

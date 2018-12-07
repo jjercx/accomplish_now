@@ -140,6 +140,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-device-info')
     implementation project(':react-native-view-overflow')
     implementation project(':react-native-firebase')
     implementation project(':react-native-blur')

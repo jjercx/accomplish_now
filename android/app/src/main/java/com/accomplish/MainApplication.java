@@ -3,6 +3,7 @@ package com.accomplish;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.entria.views.RNViewOverflowPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.cmcewen.blurview.BlurViewPackage;
@@ -41,6 +42,7 @@ public class MainApplication extends NavigationApplication implements ReactAppli
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new RNDeviceInfo(),
             new RNViewOverflowPackage(),
             new RNFirebasePackage(),
             new RNFirebaseAuthPackage(),
