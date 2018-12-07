@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
 	View, Image
 } from 'react-native';
@@ -7,7 +6,6 @@ import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper';
 
-import AsyncStorage from '../utils/AsyncStorage';
 import { responsiveSize } from '../utils/dimensions';
 import { actVerifyLogin } from '../actions/authentication';
 import OnboardingSlide from '../components/onboarding/onboarding-slide/OnboardingSlide';
@@ -81,18 +79,9 @@ const styles = {
 };
 
 class Onboarding extends Component {
-	componentWillMount() {
-		const { actVerifyLoginConnect } = this.props;
-		actVerifyLoginConnect( this.callback );
-	}
-
-	callback = ( res ) => { // eslint-disable-line consistent-return
-		if ( res === 'notLogged' ) return null;
-		const { navigator } = this.props;
-			 AsyncStorage.getUser().then( ( asyncUser ) => {
-			if ( asyncUser ) navigator.push( { screen: 'home' } );
-		} );
-	}
+	static navigatorStyle = {
+		navBarHidden: true
+	};
 
 	_onPressNewAccount() {
 		const { navigator } = this.props;
@@ -180,8 +169,7 @@ class Onboarding extends Component {
 }
 
 Onboarding.propTypes = {
-	navigator: NavigatorPropType.isRequired,
-	actVerifyLoginConnect: PropTypes.func.isRequired
+	navigator: NavigatorPropType.isRequired
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(
