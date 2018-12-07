@@ -30,10 +30,11 @@ import MeetingRequest from './meetings/meeting-request/meetingRequest';
 import ScheduleAddress from './meetings/meeting-request/scheduleAddress';
 import RateThisMeeting from './meetings/RateThisMeeting';
 import MeetingSummary from './meetings/MeetingSummary';
+import CheckUserLogged from './CheckUserLogged';
 
 export function initApp( action ) {
 	switch ( action ) {
-		case 'start': {
+		case 'home': {
 			Navigation.startSingleScreenApp( {
 				screen: {
 					screen: 'home',
@@ -44,10 +45,21 @@ export function initApp( action ) {
 			} );
 			break;
 		}
-		default:
+		case 'onboarding': {
 			Navigation.startSingleScreenApp( {
 				screen: {
 					screen: 'onboarding',
+					navigatorStyle: {
+						navBarHidden: true
+					}
+				}
+			} );
+			break;
+		}
+		default:
+			Navigation.startSingleScreenApp( {
+				screen: {
+					screen: 'checkUserLogged',
 					navigatorStyle: {
 						navBarHidden: true
 					}
@@ -89,4 +101,5 @@ export function registerScreens() {
 	Navigation.registerComponent( 'ScheduleAddress', () => ScheduleAddress, store, Provider );
 	Navigation.registerComponent( 'rateThisMeeting', () => RateThisMeeting, store, Provider );
 	Navigation.registerComponent( 'meetingSummary', () => MeetingSummary, store, Provider );
+	Navigation.registerComponent( 'checkUserLogged', () => CheckUserLogged, store, Provider );
 }
